@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/19 09:16:21 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/19 13:11:31 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,28 @@ class Allocator = std::allocator<T>
 
 
 
-	public:
-		explicit vector (const allocator_type& alloc = allocator_type())
-		{
-			this->_alloc = alloc;
-			this->_tab = NULL;
-			this->_size = 0;
-			std::cout << "ok" << std::endl;
-		}
-		~vector();
-
 	private:
 		allocator_type	_alloc;
 		value_type		*_tab;
 		size_type		_size;
+		size_type		_capacity;
+
+	public:
+		explicit vector (const allocator_type& alloc = allocator_type())
+		{
+			this->_alloc = alloc;
+			this->_tab = this->_alloc.allocate(0);
+			this->_size = 0;
+			this->_capacity = 0;
+			std::cout << "ok" << std::endl;
+		}
+		~vector() {}
+
+		iterator begin( void )
+		{
+
+		}
+
 
 };
 
