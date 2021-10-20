@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:39:26 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/19 15:28:44 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/20 19:04:48 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define ITERATOR_HPP
 
 #include <iostream>
+#include <memory>
+#include "../includes/iterator.hpp"
 
 namespace ft
 {
@@ -21,72 +23,83 @@ namespace ft
 template<
 typename T,
 typename Category,
-bool isConst = false
+bool isConst
 > class iterator
 {
-
-	typedef	Category		iterator_category;
-	typedef	T				value_type;
-	typedef	std::ptrdiff_t	difference_type;
-	typedef T* pointer;
-	typedef T& reference;
+	public:
+		typedef	Category		iterator_category;
+		typedef	T				value_type;
+		typedef	std::ptrdiff_t	difference_type;
+		typedef T* pointer;
+		typedef T& reference;
 
 	private:
-		value_type*		_n;
+		value_type*		_val;
 
 	public:
-		iterator( void ): _n( NULL ) {}
-		iterator(iterator const & cpy) { *this = cpy; }
-		~iterator( void );
+		/*   ALL CATEGORIES   */
 
-		// = += -=
+		iterator( void ): _val( NULL ) {}
+		explicit iterator( pointer val ): _val( val ) {}
+		iterator(iterator const & cpy) { *this = cpy; }
+
+		~iterator( void ) {}
 
 		iterator& operator=(iterator const & rhs)
 		{
 			if ( this != &rhs )
-				this->_n = rhs._n;
+				this->_val = rhs._val;
 			return (*this);
 		}
-
-		iterator&	operator+=	(difference_type n)
-		{
-			_ptr += n;
-			return (*this);
-		}
-
-		iterator&	operator-=	(difference_type n)
-		{
-			_ptr -= n;
-			return (*this);
-		}
-
-		// x++ x-- ++x --x
 
 		iterator& operator++( void )
 		{
-			this->_n++;
+			this->_val++;
 			return (*this);
 		}
 		iterator& operator--( void )
 		{
-			this->_n--;
+			this->_val--;
 			return (*this);
 		}
 
 		iterator operator++(int)
 		{
-			iterator	cpy(*this);
+			iterator	cpy = *this;
 
-			cpy._n++;
+			this->_val++;
 			return (cpy);
 		}
+
 		iterator operator--(int)
 		{
-			iterator	cpy(*this);
+			iterator	cpy = *this;
 
-			cpy._n--;
+			this->_val--;
 			return (cpy);
 		}
+
+
+		/*   INPUT   */
+
+		bool operator ==(const iterator<T, Category, false> &rhs) const { return (rhs._val == this->_val); }
+		bool operator !=(const iterator<T, Category, false> &rhs) const { return (rhs._val != this->_val); }
+		value_type& operator*( void ) { return ( *this->_val ); }
+
+
+
+		iterator&	operator+=(difference_type n)
+		{
+			_val += n;
+			return (*this);
+		}
+
+		iterator&	operator-=(difference_type n)
+		{
+			_val -= n;
+			return (*this);
+		}
+
 	};
 
 }
