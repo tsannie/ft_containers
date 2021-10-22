@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/22 15:13:44 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/22 19:32:22 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,44 @@ public:
 
 
 	/*   CAPACITY   */
-	size_type size( void ) const { return (this->_size); }
-	size_type max_size( void ) const { return (this->_capacity); }
 
-	//void resize (size_type n, value_type val = value_type()) {}
+	size_type size( void ) const { return (this->_size); }
+
+	size_type max_size( void ) const { return (this->_alloc.max_size()); }
+
+	void resize(size_type n, value_type val = value_type())
+	{
+		if (n < this->size())
+		{
+			for (size_type i = n ; i < this->size() ; i++)
+				this->_alloc.destroy(this->_tab + i);
+			this->_size = n;
+		}
+		else if (n > this->size())
+		{
+			if (n > this->capacity() * 2)
+				this->reserve(n);
+			else
+				this->reserve(this->capacity() * 2);
+			for (size_type i = this->size() ; i < n ; i++)
+			{
+				this->_size++;
+				this->_alloc.construct(this->_tab + i, val);
+			}
+		}
+	}
+
 	size_type capacity() const { return (this->_capacity); }
+
 	bool empty() const { return (this->_size == 0); }
 
 	void reserve(size_type n)
 	{
+		T		*ret;
+
 		if (n > this->capacity())
 		{
-			T		*ret = this->_alloc.allocate(n);
+			ret = this->_alloc.allocate(n);
 			for (size_type i = 0 ; i < this->size() ; i++)
 			{
 				this->_alloc.construct(ret + i, this->_tab[i]);
@@ -127,10 +153,17 @@ public:
 
 	/*   MODIFIERS   */
 
+	//template <class InputIterator>
+	//void assign (InputIterator first, InputIterator last);
+
+	//void assign (size_type n, const value_type& val);
+
 	void push_back ( const value_type& val )
 	{
-		if (this->size() == this->capacity())
-			this->reserve(this->capacity() + 1);
+		if (this->capacity() == 0)
+			this->reserve(1);
+		else if (this->size() == this->capacity())
+			this->reserve(this->capacity() * 2);
 		this->_alloc.construct(this->_tab + this->_size, val);
 		this->_size++;
 	}

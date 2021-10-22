@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:00:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/22 15:58:23 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/22 19:30:32 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,16 @@
 
 int main ()
 {
-	std::vector<int>				cont;
+	ft::vector<int>				cont;
 
- 	cont.push_back(42);
+	//cont.reserve(25);
+	//for (int i = 0 ; i < 9 ; i++)
+	//	cont.push_back(i);
 
-	cont.push_back(96);
-	cont.push_back(96);
-	cont.push_back(96);
-	cont.push_back(96);
-	cont.push_back(96);
-	cont.push_back(96);
-	cont.push_back(96);
-	cont.push_back(96);
-	//cont.reserve(6);
+	cont.reserve(10);
+	cont.resize(15, 5);
 
+	//cont.push_back(6);
 	//std::cout << ((it == end) ? "equal" : "not equal") << std::endl;
 
 	//std::cout << ((it == end) ? "equal" : "not equal") << std::endl;
@@ -42,14 +38,15 @@ int main ()
 	//std::cout << ((it < end) ? "true" : "false") << std::endl;
 	//std::cout << ((it > end) ? "true" : "false") << std::endl;
 
-	std::vector<int>::iterator end = cont.end();
-	std::vector<int>::iterator it = cont.begin();
+	ft::vector<int>::iterator end = cont.end();
+	ft::vector<int>::iterator it = cont.begin();
 
 	end = cont.end();
 	for (it = cont.begin() ; it != end ; it++)
 		std::cout << *it << " ";
 	std::cout << std::endl;
 
+	std::cout << "max = " << cont.max_size() << std::endl;
 	std::cout << "capacity = " << cont.capacity() << std::endl;
 	std::cout << "size = " << cont.size() << std::endl;
 	//std::vector<int>				cont;
