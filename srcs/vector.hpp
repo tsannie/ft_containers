@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/22 21:26:36 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/22 23:27:11 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,10 @@ public:
 		const allocator_type& alloc = allocator_type())
 	{
 		this->_alloc = alloc;
-		this->_tab = this->alloc.allocate(n);
-		this->size = n;
-		this->capacity = 0;
-		for (size_type i = 0 ; i < n ; i++)
-			this->_alloc.construct(this->_tab + i, val);
+		this->_tab = this->_alloc.allocate(0);
+		this->_size = 0;
+		this->_capacity = 0;
+		this->resize(n, val);
 	}
 
 	~vector() {}
@@ -175,7 +174,7 @@ public:
 		this->_alloc.destroy(this->_tab + this->size());
 	}
 
-	iterator insert ( iterator position, const value_type& val )
+	/*iterator insert ( iterator position, const value_type& val )
 	{
 		ft::vector<int>::iterator	it;
 		ft::vector<int>::iterator	end;
@@ -191,7 +190,7 @@ public:
 	void insert ( iterator position, size_type n, const value_type& val ) {}
 	{
 
-	}
+	}*/
 
 	/* template <class InputIterator>
 	void insert (iterator position, InputIterator first, InputIterator last) {}
