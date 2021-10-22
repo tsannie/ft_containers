@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:00:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/20 18:59:55 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/22 15:58:23 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,43 @@
 #include <vector>
 #include "../../srcs/vector.hpp"
 
+/* TEST CONST */
+	//ft::vector<int>::const_iterator end = cont.end();
+	//ft::vector<int>::const_iterator it = cont.begin();
+
 int main ()
 {
-	ft::vector<int>				cont;
-	ft::vector<int>::iterator	it;
-	ft::vector<int>::iterator	end;
+	std::vector<int>				cont;
 
-	cont.push_back(42);
+ 	cont.push_back(42);
+
 	cont.push_back(96);
-	cont.push_back(51);
-	cont.push_back(12);
-	cont.push_back(21);
+	cont.push_back(96);
+	cont.push_back(96);
+	cont.push_back(96);
+	cont.push_back(96);
+	cont.push_back(96);
+	cont.push_back(96);
+	cont.push_back(96);
+	//cont.reserve(6);
 
-	std::cout << ((it == end) ? "equal" : "not equal") << std::endl;
+	//std::cout << ((it == end) ? "equal" : "not equal") << std::endl;
 
-	it = cont.begin();
-	it++;
-	std::cout << *it << std::endl;
+	//std::cout << ((it == end) ? "equal" : "not equal") << std::endl;
+
+	//std::cout << ((it < end) ? "true" : "false") << std::endl;
+	//std::cout << ((it > end) ? "true" : "false") << std::endl;
+
+	std::vector<int>::iterator end = cont.end();
+	std::vector<int>::iterator it = cont.begin();
 
 	end = cont.end();
 	for (it = cont.begin() ; it != end ; it++)
 		std::cout << *it << " ";
 	std::cout << std::endl;
+
+	std::cout << "capacity = " << cont.capacity() << std::endl;
+	std::cout << "size = " << cont.size() << std::endl;
 	//std::vector<int>				cont;
 
 	//cont.push_back(5);

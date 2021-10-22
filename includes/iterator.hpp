@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:39:26 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/20 19:04:48 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/22 13:49:38 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,81 +26,136 @@ typename Category,
 bool isConst
 > class iterator
 {
-	public:
-		typedef	Category		iterator_category;
-		typedef	T				value_type;
-		typedef	std::ptrdiff_t	difference_type;
-		typedef T* pointer;
-		typedef T& reference;
 
-	private:
-		value_type*		_val;
+public:
+	typedef	Category		iterator_category;
+	typedef	T				value_type;
+	typedef	std::ptrdiff_t	difference_type;
+	typedef	T*				pointer;
+	typedef	T&				reference;
 
-	public:
-		/*   ALL CATEGORIES   */
+private:
+	value_type*		_val;
 
-		iterator( void ): _val( NULL ) {}
-		explicit iterator( pointer val ): _val( val ) {}
-		iterator(iterator const & cpy) { *this = cpy; }
+public:
+	/*   ALL CATEGORIES   */
 
-		~iterator( void ) {}
+	iterator( void ): _val( NULL ) {}
+	explicit iterator( pointer val ): _val( val ) {}
+	iterator( iterator const &cpy ) { *this = cpy; }
 
-		iterator& operator=(iterator const & rhs)
-		{
-			if ( this != &rhs )
-				this->_val = rhs._val;
-			return (*this);
-		}
+	iterator&	operator=( iterator const &rhs )
+	{
+		if ( this != &rhs )
+			this->_val = rhs._val;
+		return (*this);
+	}
 
-		iterator& operator++( void )
-		{
-			this->_val++;
-			return (*this);
-		}
-		iterator& operator--( void )
-		{
-			this->_val--;
-			return (*this);
-		}
+	iterator&	operator++( void )
+	{
+		this->_val++;
+		return (*this);
+	}
 
-		iterator operator++(int)
-		{
-			iterator	cpy = *this;
+	iterator	operator++( int )
+	{
+		iterator	cpy = *this;
+		this->_val++;
+		return (cpy);
+	}
 
-			this->_val++;
-			return (cpy);
-		}
-
-		iterator operator--(int)
-		{
-			iterator	cpy = *this;
-
-			this->_val--;
-			return (cpy);
-		}
+	/*   INPUT   */
 
 
-		/*   INPUT   */
+	bool		operator==( const iterator<T, Category, false> &rhs ) const
+	{
+		return (rhs._val == this->_val);
+	}
 
-		bool operator ==(const iterator<T, Category, false> &rhs) const { return (rhs._val == this->_val); }
-		bool operator !=(const iterator<T, Category, false> &rhs) const { return (rhs._val != this->_val); }
-		value_type& operator*( void ) { return ( *this->_val ); }
+	bool		operator!=( const iterator<T, Category, false> &rhs ) const
+	{
+		return (rhs._val != this->_val);
+	}
+
+	value_type&	operator*( void ) { return (*this->_val); }
+
+	pointer*	operator->( void ) { return (this->_val); }
 
 
+	/*   OUTPUT   */
+	// ??
 
-		iterator&	operator+=(difference_type n)
-		{
-			_val += n;
-			return (*this);
-		}
 
-		iterator&	operator-=(difference_type n)
-		{
-			_val -= n;
-			return (*this);
-		}
+	/*   FORWARD   */
+	// ??
 
-	};
+
+	/*   BIDIRECTIONAL   */
+
+	iterator&	operator--( void )
+	{
+		this->_val--;
+		return (*this);
+	}
+
+	iterator	operator--( int )
+	{
+		iterator	cpy = *this;
+		this->_val--;
+		return (cpy);
+	}
+
+	/*   RANDOM ACCESS   */
+
+
+	iterator operator+( const difference_type &b ) const
+	{
+		return (iterator(this->_val + b));
+	}
+
+	iterator operator-( const difference_type &b ) const
+	{
+		return (iterator(this->_val - b));
+	}
+
+	bool operator <(const iterator &b) const { return (this->_val < b._val); }
+
+	bool operator >(const iterator &b) const { return (this->_val > b._val); }
+
+	iterator&	operator+=( difference_type n )
+	{
+		_val += n;
+		return (*this);
+	}
+
+	iterator&	operator-=( difference_type n )
+	{
+		_val -= n;
+		return (*this);
+	}
+};
+
+template<
+typename T,
+typename Category,
+bool isConst
+> iterator<T, Category, isConst>	operator+(
+	const typename iterator<T, Category, isConst>::difference_type &b,
+	const iterator<T, Category, isConst> &rhs )
+{
+	return (iterator<T, Category, isConst>(rhs + b));
+}
+
+template<
+typename T,
+typename Category,
+bool isConst
+> iterator<T, Category, isConst>	operator-(
+	const typename iterator<T, Category, isConst>::difference_type &b,
+	const iterator<T, Category, isConst> &rhs)
+{
+	return (iterator<T, Category, isConst>(rhs - b));
+}
 
 }
 
