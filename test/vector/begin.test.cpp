@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:00:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/22 19:30:32 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/22 21:11:22 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ int main ()
 {
 	ft::vector<int>				cont;
 
-	//cont.reserve(25);
-	//for (int i = 0 ; i < 9 ; i++)
-	//	cont.push_back(i);
+	for (int i = 0 ; i < 16 ; i++)
+		cont.push_back(i);
 
-	cont.reserve(10);
-	cont.resize(15, 5);
+	std::cout << "capacity = " << cont.capacity() << std::endl;
+	std::cout << "size = " << cont.size() << std::endl;
 
+	ft::vector<int>::iterator rep = cont.begin() + 13;
+	ft::vector<int>::iterator ret = cont.insert(rep, 96);
+	std::cout << *ret << std::endl;
 	//cont.push_back(6);
 	//std::cout << ((it == end) ? "equal" : "not equal") << std::endl;
 
@@ -46,7 +48,7 @@ int main ()
 		std::cout << *it << " ";
 	std::cout << std::endl;
 
-	std::cout << "max = " << cont.max_size() << std::endl;
+	//std::cout << "max = " << cont.max_size() << std::endl;
 	std::cout << "capacity = " << cont.capacity() << std::endl;
 	std::cout << "size = " << cont.size() << std::endl;
 	//std::vector<int>				cont;

@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/22 19:32:22 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/22 21:26:36 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ public:
 
 	void reserve(size_type n)
 	{
-		T		*ret;
+		value_type	*ret;
 
 		if (n > this->capacity())
 		{
@@ -167,6 +167,37 @@ public:
 		this->_alloc.construct(this->_tab + this->_size, val);
 		this->_size++;
 	}
+
+	void pop_back( void )
+	{
+		this->_size--;
+		std::cout << "size = " << this->size() << std::endl;
+		this->_alloc.destroy(this->_tab + this->size());
+	}
+
+	iterator insert ( iterator position, const value_type& val )
+	{
+		ft::vector<int>::iterator	it;
+		ft::vector<int>::iterator	end;
+
+
+		for (it = this->begin() ; it != position ; it++)
+
+
+		return ();
+	}
+
+
+	void insert ( iterator position, size_type n, const value_type& val ) {}
+	{
+
+	}
+
+	/* template <class InputIterator>
+	void insert (iterator position, InputIterator first, InputIterator last) {}
+	{
+
+	}*/
 };
 
 }
