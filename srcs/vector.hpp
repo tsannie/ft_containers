@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/22 23:27:11 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/24 18:54:12 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,24 @@ public:
 		const allocator_type& alloc = allocator_type())
 	{
 		this->_alloc = alloc;
-		this->_tab = this->_alloc.allocate(0);
+		this->_tab = NULL;
 		this->_size = 0;
 		this->_capacity = 0;
 		this->resize(n, val);
 	}
+
+/*	template <class InputIterator>
+	vector (InputIterator first, InputIterator last,
+		const allocator_type& alloc = allocator_type())
+	{
+		size_type n = 0;
+		for (InputIterator it = first ; n < 50 ; it++)
+		{
+			n++;
+			std::cout << "n\t=\t" << n << std::endl;
+			std::cout << "*it\t=\t" << *it << std::endl;
+		}
+	}*/
 
 	~vector() {}
 
@@ -114,7 +127,7 @@ public:
 		{
 			if (n > this->capacity() * 2)
 				this->reserve(n);
-			else
+			else									// to check
 				this->reserve(this->capacity() * 2);
 			for (size_type i = this->size() ; i < n ; i++)
 			{
@@ -140,22 +153,65 @@ public:
 				this->_alloc.construct(ret + i, this->_tab[i]);
 				this->_alloc.destroy(this->_tab + i);
 			}
-			this->_alloc.deallocate(this->_tab, this->_capacity);
+			if (this->_tab)
+				this->_alloc.deallocate(this->_tab, this->_capacity);
 			this->_capacity = n;
 			this->_tab = ret;
 		}
 	}
 
+
 	/*   ELEMENT ACCESS   */
-	reference operator[]( size_type n ) { return ( this->_tab[n] ); }
-	const_reference operator[](size_type n) const { return ( this->_tab[n] ); }
+
+	reference operator[]( size_type n ) { return (this->_tab[n]); }
+
+	const_reference operator[]( size_type n ) const { return (this->_tab[n]); }
+
+//vector::_M_range_check: __n (which is 182) >= this->size() (which is 182)
+
+	reference at( size_type n )
+	{
+		if (n >= this->size())
+			throw std::out_of_range("vector::_M_range_check: __n (which is "
+			+ std::to_string(n) + ") >= this->size() (which is "
+			+ std::to_string(this->size()) + ")");
+		return (this->_tab[n]);
+	}
+
+	const_reference at( size_type n ) const
+	{
+		if (n >= this->size())
+			throw std::out_of_range("vector::_M_range_check: __n (which is "
+			+ std::to_string(n) + ") >= this->size() (which is "
+			+ std::to_string(this->size()) + ")");
+		return (this->_tab[n]);
+	}
+
+	reference front( void ) { return (this->_tab[0]); }
+	const_reference front( void ) const { return (this->_tab[0]); }
+
+	reference back( void ) { return (this->_tab[this->size() - 1]); }
+	const_reference back( void ) const { return (this->_tab[this->size() - 1]); }
 
 	/*   MODIFIERS   */
 
-	//template <class InputIterator>
-	//void assign (InputIterator first, InputIterator last);
+	/*template <class InputIterator>
+	void assign (InputIterator first, InputIterator last)
+	{
 
-	//void assign (size_type n, const value_type& val);
+	}*/
+
+	void assign (size_type n, const value_type& val)
+	{
+		if (n > this->capacity())
+			this->reserve(n);
+		for (size_type i = 0 ; i < this->size() ; i++)
+			this->_alloc.destroy(this->_tab + i);
+		this->_size = n;
+		for (size_type i = 0 ; i < n ; i++)
+			this->_alloc.construct(this->_tab + i, val);
+
+	}
 
 	void push_back ( const value_type& val )
 	{
@@ -184,13 +240,36 @@ public:
 
 
 		return ();
-	}
-
-
-	void insert ( iterator position, size_type n, const value_type& val ) {}
-	{
-
 	}*/
+
+
+	void insert ( iterator position, size_type n, const value_type& val )
+	{
+		size_type	start = position - this->begin();
+
+		if (n + this->size() > this->capacity() * 2)
+		{
+			std::cout << "enter1" << std::endl;
+			this->reserve(n + this->size());
+		}
+		else
+		{
+			std::cout << "enter2" << std::endl;
+			this->reserve(this->capacity() * 2);
+		}
+
+		for (size_type	i = this->size() + n ; i > start + n ; i--)
+			this->_alloc.construct(this->_tab + i, this->_tab[i - n]);
+		for (size_type i = 0 ; i < n ; i++)
+			this->_tab[start + i] = val;
+		this->_size += n;
+
+		//for (size_type i = this->size() ; i < n ; i++)
+		//{
+		//		this->_size++;
+		//		this->_alloc.construct(this->_tab + i, val);
+		//}
+	}
 
 	/* template <class InputIterator>
 	void insert (iterator position, InputIterator first, InputIterator last) {}

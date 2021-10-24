@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:39:26 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/22 13:49:38 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/24 01:32:20 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,8 @@
 namespace ft
 {
 
-template<
-typename T,
-typename Category,
-bool isConst
-> class iterator
+template<typename T, typename Category, bool isConst = false>
+class iterator
 {
 
 public:
@@ -108,19 +105,23 @@ public:
 	/*   RANDOM ACCESS   */
 
 
-	iterator operator+( const difference_type &b ) const
+	iterator	operator+( const difference_type &b ) const
 	{
 		return (iterator(this->_val + b));
 	}
 
-	iterator operator-( const difference_type &b ) const
+	iterator	operator-( const difference_type &b ) const
 	{
 		return (iterator(this->_val - b));
 	}
+	difference_type	operator-	(const iterator & x) const
+	{
+		return (this->_val - x._val);
+	}
 
-	bool operator <(const iterator &b) const { return (this->_val < b._val); }
+	bool operator<(const iterator &b) const { return (this->_val < b._val); }
 
-	bool operator >(const iterator &b) const { return (this->_val > b._val); }
+	bool operator>(const iterator &b) const { return (this->_val > b._val); }
 
 	iterator&	operator+=( difference_type n )
 	{
