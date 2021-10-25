@@ -6,18 +6,17 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:00:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/24 18:31:40 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/25 17:03:33 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <ostream>
 #include <vector>
-#include "../../srcs/vector.hpp"
+#include "../../vector.hpp"
 
 /* TEST CONST */
-	//ft::vector<int>::const_iterator end = cont.end();
-	//ft::vector<int>::const_iterator it = cont.begin();
+
 
 
 template <typename T>
@@ -35,26 +34,35 @@ void printVec(T &vec)
 	std::cout << "size = " << vec.size() << std::endl << std::endl;
 }
 
-int main ()
+template <class T, class Alloc>
+void	cmp(const std::vector<T, Alloc> &lhs, const std::vector<T, Alloc> &rhs)
 {
-	ft::vector<int>	cont;
+	static int i = 0;
 
-	cont.reserve(50);
-	for (int i = 0 ; i < 40 ; i++)
-	cont.push_back(i);
-	printVec(cont);
+	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
+	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
+	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
+}
 
-	ft::vector<int>::iterator	pos(cont.begin());
-	cont.insert(pos + 10, 5, 99);
+int		main(void)
+{
+	std::vector<int> vct(4);
+	std::vector<int> vct2(4);
 
-	printVec(cont);
-	//printVec(vec);
+	vct2.resize(10);
 
+	cmp(vct, vct2); // 2
+	cmp(vct2, vct); // 3
 
-	/*std::vector<int>::iterator	first = cont.begin() + 20;
-	ft::vector<int>::iterator	last = cont.end();
-	ft::vector<char>	vec(first, last);*/
-	//std::cout << ((it < end) ? "true" : "false") << std::endl;
+	vct[2] = 42;
 
-	return 0;
+	cmp(vct, vct2); // 4
+	cmp(vct2, vct); // 5
+
+	swap(vct, vct2);
+
+	cmp(vct, vct2); // 6
+	cmp(vct2, vct); // 7*/
+
+	return (0);
 }

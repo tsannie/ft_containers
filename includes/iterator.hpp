@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:39:26 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/24 01:32:20 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/25 16:04:42 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 namespace ft
 {
 
-template<typename T, typename Category, bool isConst = false>
-class iterator
+template<typename T,
+typename Category,
+bool isConst = false
+> class iterator
 {
 
 public:
@@ -35,16 +37,20 @@ private:
 	value_type*		_val;
 
 public:
-	/*   ALL CATEGORIES   */
 
 	iterator( void ): _val( NULL ) {}
 	explicit iterator( pointer val ): _val( val ) {}
 	iterator( iterator const &cpy ) { *this = cpy; }
 
+	operator iterator<const T, Category, true>() const
+	{
+		return iterator<const T, Category, true> (this->_val);
+	}
+
 	iterator&	operator=( iterator const &rhs )
 	{
 		if ( this != &rhs )
-			this->_val = rhs._val;
+			this->_val = rhs.getVal();
 		return (*this);
 	}
 
@@ -61,33 +67,65 @@ public:
 		return (cpy);
 	}
 
-	/*   INPUT   */
-
-
-	bool		operator==( const iterator<T, Category, false> &rhs ) const
+	bool		operator==( iterator<T, Category, false> const &b ) const
 	{
-		return (rhs._val == this->_val);
+		return (this->_val == b.getVal());
 	}
 
-	bool		operator!=( const iterator<T, Category, false> &rhs ) const
+	bool		operator!=( iterator<T, Category, false> const &b ) const
 	{
-		return (rhs._val != this->_val);
+		return (this->_val != b.getVal());
 	}
 
-	value_type&	operator*( void ) { return (*this->_val); }
+	bool		operator<( iterator<T, Category, false> const &b ) const
+	{
+		return (this->_val < b.getVal());
+	}
 
-	pointer*	operator->( void ) { return (this->_val); }
+	bool		operator>( iterator<T, Category, false> const &b ) const
+	{
+		return (this->_val > b.getVal());
+	}
 
+	bool		operator<=( iterator<T, Category, false> const &b ) const
+	{
+		return (this->_val <= b.getVal());
+	}
 
-	/*   OUTPUT   */
-	// ??
+	bool		operator>=( iterator<T, Category, false> const &b ) const
+	{
+		return (this->_val >= b.getVal());
+	}
 
+	bool		operator==( iterator<T const, Category, true> const &b ) const
+	{
+		return (this->_val == b.getVal());
+	}
 
-	/*   FORWARD   */
-	// ??
+	bool		operator!=( iterator<T const, Category, true> const &b ) const
+	{
+		return (this->_val != b.getVal());
+	}
 
+	bool		operator<( iterator<T const, Category, true> const &b ) const
+	{
+		return (this->_val < b.getVal());
+	}
 
-	/*   BIDIRECTIONAL   */
+	bool		operator>( iterator<T const, Category, true> const &b ) const
+	{
+		return (this->_val > b.getVal());
+	}
+
+	bool		operator<=( iterator<T const, Category, true> const &b ) const
+	{
+		return (this->_val <= b.getVal());
+	}
+
+	bool		operator>=( iterator<T const, Category, true> const &b ) const
+	{
+		return (this->_val >= b.getVal());
+	}
 
 	iterator&	operator--( void )
 	{
@@ -102,26 +140,34 @@ public:
 		return (cpy);
 	}
 
-	/*   RANDOM ACCESS   */
+	reference	operator[]( difference_type b ) const
+	{
+		return (this->_val[b]);
+	}
 
+	value_type&	operator*( void ) const { return (*this->_val); }
 
-	iterator	operator+( const difference_type &b ) const
+	pointer		operator->( void ) const { return (this->_val); }
+
+	iterator	operator+( difference_type const &b ) const
 	{
 		return (iterator(this->_val + b));
 	}
 
-	iterator	operator-( const difference_type &b ) const
+	iterator	operator-( difference_type const &b ) const
 	{
 		return (iterator(this->_val - b));
 	}
-	difference_type	operator-	(const iterator & x) const
+
+	difference_type	operator-( iterator<T, Category, false> const & x ) const
 	{
-		return (this->_val - x._val);
+		return (this->_val - x.getVal());
 	}
 
-	bool operator<(const iterator &b) const { return (this->_val < b._val); }
-
-	bool operator>(const iterator &b) const { return (this->_val > b._val); }
+	difference_type	operator-( iterator<T const, Category, true> const & x) const
+	{
+		return (this->_val - x.getVal());
+	}
 
 	iterator&	operator+=( difference_type n )
 	{
@@ -134,6 +180,9 @@ public:
 		_val -= n;
 		return (*this);
 	}
+
+	value_type*	getVal( void ) const { return (this->_val); }
+
 };
 
 template<
@@ -145,17 +194,6 @@ bool isConst
 	const iterator<T, Category, isConst> &rhs )
 {
 	return (iterator<T, Category, isConst>(rhs + b));
-}
-
-template<
-typename T,
-typename Category,
-bool isConst
-> iterator<T, Category, isConst>	operator-(
-	const typename iterator<T, Category, isConst>::difference_type &b,
-	const iterator<T, Category, isConst> &rhs)
-{
-	return (iterator<T, Category, isConst>(rhs - b));
 }
 
 }
