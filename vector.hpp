@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/25 17:03:08 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/25 23:10:02 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 # define VECTOR_HPP
 
 #include <memory>
+#include <cstddef>
 #include <iostream>
 #include "includes/iterator.hpp"
 #include "includes/algorithm.hpp"
+#include "includes/string.hpp"
 
 
 namespace ft
@@ -74,18 +76,13 @@ public:
 		this->resize(n, val);
 	}
 
-/*	template <class InputIterator>
+	template <class InputIterator>
 	vector (InputIterator first, InputIterator last,
 		const allocator_type& alloc = allocator_type())
 	{
-		size_type n = 0;
-		for (InputIterator it = first ; n < 50 ; it++)
-		{
-			n++;
-			std::cout << "n\t=\t" << n << std::endl;
-			std::cout << "*it\t=\t" << *it << std::endl;
-		}
-	}*/
+		std::cout << "*first\t=\t" << *first << std::endl;
+		std::cout << "*last\t=\t" << *last << std::endl;
+	}
 
 	vector (const vector& x)
 	{
@@ -103,11 +100,6 @@ public:
 		this->clear();
 		this->_alloc.deallocate(this->_tab, this->_capacity);
 	}
-
-/* 	bool		operator==( iterator<T, Category, false> const &b ) const
-	{
-		return (this->_val == b.getVal());
-	} */
 
 	vector& operator=( const vector& x )
 	{
@@ -206,8 +198,8 @@ public:
 	{
 		if (n >= this->size())
 			throw std::out_of_range("vector::_M_range_check: __n (which is "
-			+ std::to_string(n) + ") >= this->size() (which is "
-			+ std::to_string(this->size()) + ")");
+			+ ft::to_string(n) + ") >= this->size() (which is "
+			+ ft::to_string(this->size()) + ")");
 		return (this->_tab[n]);
 	}
 
@@ -215,8 +207,8 @@ public:
 	{
 		if (n >= this->size())
 			throw std::out_of_range("vector::_M_range_check: __n (which is "
-			+ std::to_string(n) + ") >= this->size() (which is "
-			+ std::to_string(this->size()) + ")");
+			+ ft::to_string(n) + ") >= this->size() (which is "
+			+ ft::to_string(this->size()) + ")");
 		return (this->_tab[n]);
 	}
 
