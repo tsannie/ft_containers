@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:00:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/25 23:10:42 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/27 15:57:11 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "../../vector.hpp"
 
 /* TEST CONST */
-
-
 
 template <typename T>
 void printVec(T &vec)
@@ -36,11 +34,19 @@ void printVec(T &vec)
 
 int		main(void)
 {
-	ft::vector<int> vct(4, 42);
-	ft::vector<int> vct2(vct.begin(), vct.end());
+	ft::vector<int> vct(6, 21);
+	ft::vector<int> vct2(7, 5);
 
-	printVec(vct);
+	for (size_t i = 0 ; i < 16 ; i++)
+		vct.push_back(i * 36);
+
+	//vct2.reserve(500);
+	//printVec(vct);
 	printVec(vct2);
+	vct2.assign(vct.begin(), vct.end());
+	//vct2.insert(vct2.begin() + 5 ,vct.begin(), vct.end());
+	printVec(vct2);
+	//printVec(vct);
 
 
 	return (0);
