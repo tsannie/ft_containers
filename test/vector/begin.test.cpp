@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:00:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/27 15:57:11 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/27 18:02:53 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,30 @@ void printVec(T &vec)
 
 int		main(void)
 {
-	ft::vector<int> vct(6, 21);
-	ft::vector<int> vct2(7, 5);
+	const int size = 5;
+	ft::vector<int> vct(size);
+	ft::vector<int>::iterator it_ = vct.begin();
+	ft::vector<int>::reverse_iterator it(it_);
 
-	for (size_t i = 0 ; i < 16 ; i++)
-		vct.push_back(i * 36);
+	for (int i = 0; i < size; ++i)
+		vct[i] = (i + 1) * 5;
+	printVec(vct);
 
-	//vct2.reserve(500);
-	//printVec(vct);
-	printVec(vct2);
-	vct2.assign(vct.begin(), vct.end());
-	//vct2.insert(vct2.begin() + 5 ,vct.begin(), vct.end());
-	printVec(vct2);
-	//printVec(vct);
+	std::cout << (it_ == it.base()) << std::endl;
+	std::cout << (it_ == (it + 3).base()) << std::endl;
 
+	std::cout << *(it.base() + 1) << std::endl;
+	std::cout << *(it - 3) << std::endl;
+	std::cout << *(it - 3).base() << std::endl;
+	it -= 3;
+	std::cout << *it.base() << std::endl;
+
+	std::cout << "TEST OFFSET" << std::endl;
+	std::cout << *(it) << std::endl;
+	std::cout << *(it).base() << std::endl;
+	std::cout << *(it - 0) << std::endl;
+	std::cout << *(it - 0).base() << std::endl;
+	std::cout << *(it - 1).base() << std::endl;
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/27 15:56:30 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/27 18:00:26 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ public:
 	> class vecIterator
 	{
 
-
 	public:
 		typedef	ptrdiff_t	difference_type;
 		typedef	vecT		value_type;
@@ -60,7 +59,7 @@ public:
 		typedef	vecT&		reference;
 
 	private:
-		value_type*		_val;
+		pointer		_val;
 
 	public:
 		vecIterator( void ): _val( NULL ) {}
@@ -87,9 +86,9 @@ public:
 
 		vecIterator	operator++( int )
 		{
-			vecIterator	cpy = *this;
+			vecIterator	ret = *this;
 			this->_val++;
-			return (cpy);
+			return (ret);
 		}
 
 		bool		operator==( vecIterator<vecT, false> const &b ) const
@@ -160,9 +159,9 @@ public:
 
 		vecIterator		operator--( int )
 		{
-			vecIterator	cpy = *this;
+			vecIterator	ret = *this;
 			this->_val--;
-			return (cpy);
+			return (ret);
 		}
 
 		reference	operator[]( difference_type b ) const
@@ -196,13 +195,13 @@ public:
 
 		vecIterator&	operator+=( difference_type n )
 		{
-			_val += n;
+			this->_val += n;
 			return (*this);
 		}
 
 		vecIterator&	operator-=( difference_type n )
 		{
-			_val -= n;
+			this->_val -= n;
 			return (*this);
 		}
 
@@ -221,10 +220,10 @@ public:
 	}
 
 
-	typedef	vecIterator<T, false>							iterator;
-	typedef	vecIterator<const T, true>						const_iterator;
-	//typedef	std::reverse_iterator<iterator>				reverse_iterator;
-	//typedef	std::reverse_iterator<const_iterator>	const_reverse_iterator;
+	typedef	vecIterator<T, false>					iterator;
+	typedef	vecIterator<const T, true>				const_iterator;
+	typedef	ft::reverse_iterator<iterator>			reverse_iterator;
+	typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 private:
 	allocator_type	_alloc;
@@ -316,10 +315,17 @@ public:
 		return (iterator(this->_tab + this->_size));
 	}
 
-	//reverse_iterator rbegin();
+	reverse_iterator	rbegin( void )
+	{
+		return (reverse_iterator(this->end()));
+	}
+
 	//const_reverse_iterator rbegin() const;
 
-	//reverse_iterator rend();
+	reverse_iterator rend( void )
+	{
+		return (reverse_iterator(this->begin()));
+	}
 
 	//const_reverse_iterator rend() const;
 
