@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/27 18:00:26 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/28 12:41:01 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ public:
 
 	};
 
+	//test with const
 	template<
 	typename vecT,
 	bool isConst
@@ -320,15 +321,20 @@ public:
 		return (reverse_iterator(this->end()));
 	}
 
-	//const_reverse_iterator rbegin() const;
+	const_reverse_iterator rbegin() const
+	{
+		return (const_reverse_iterator(this->end()));
+	}
 
 	reverse_iterator rend( void )
 	{
 		return (reverse_iterator(this->begin()));
 	}
 
-	//const_reverse_iterator rend() const;
-
+	const_reverse_iterator rend() const
+	{
+		return (const_reverse_iterator(this->begin()));
+	}
 
 	/*   CAPACITY   */
 

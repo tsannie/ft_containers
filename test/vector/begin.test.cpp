@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 09:00:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/27 20:26:54 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/28 12:56:16 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,22 @@
 #include <vector>
 #include "../../vector.hpp"
 
-/* TEST CONST */
+class foo {
+	public:
+		foo(void) { };
+		~foo(void) { };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(int src) { this->value = src; return *this; };
+		int getValue(void) const { return this->value; };
+	private:
+		int	value;
+};
+
+std::ostream	&operator<<(std::ostream &o, foo const &bar) {
+	o << bar.getValue();
+	return o;
+}
 
 template <typename T>
 void printVec(T &vec)
@@ -35,28 +50,42 @@ void printVec(T &vec)
 int		main(void)
 {
 	const int size = 5;
-	std::vector<int> vct(size);
-	std::vector<int>::reverse_iterator it = vct.rbegin();
-	std::vector<int>::const_reverse_iterator ite = vct.rbegin();
+	std::vector<foo> vct(size);
+	std::vector<foo>::reverse_iterator it(vct.rbegin());
+	std::vector<foo>::const_reverse_iterator ite(vct.rend());
 
-	for (int i = 0; i < size; ++i)
-		it[i] = (size - i) * 5;
-
-	it = it + 5;
-	it = 1 + it;
-	it = it - 4;
-	std::cout << *(it += 2) << std::endl;
-	std::cout << *(it -= 1) << std::endl;
-
-	*(it -= 2) = 42;
-	*(it += 2) = 21;
-
-	std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
-
-	std::cout << "(it == const_it): " << (ite == it) << std::endl;
-	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
-	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
-
+	for (int i = 1; it != ite; ++i)
+		*it++ = (i * 7);
 	printVec(vct);
+
+	it = vct.rbegin();
+	ite = vct.rbegin();
+
+	std::cout << *(++ite) << std::endl;
+	std::cout << *(ite++) << std::endl;
+	std::cout << *ite++ << std::endl;
+	std::cout << *++ite << std::endl;
+
+	it->m();
+	ite->m();
+
+	std::cout << *(++it) << std::endl;
+	std::cout << *(it++) << std::endl;
+	std::cout << *it++ << std::endl;
+	std::cout << *++it << std::endl;
+
+	std::cout << *(--ite) << std::endl;
+	std::cout << *(ite--) << std::endl;
+	std::cout << *--ite << std::endl;
+	std::cout << *ite-- << std::endl;
+
+	(*it).m();
+	(*ite).m();
+
+	std::cout << *(--it) << std::endl;
+	std::cout << *(it--) << std::endl;
+	std::cout << *it-- << std::endl;
+	std::cout << *--it << std::endl;
+
 	return (0);
 }
