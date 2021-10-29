@@ -209,7 +209,6 @@ public:
 
 	};
 
-	//test with const
 	template<
 	typename vecT,
 	bool isConst

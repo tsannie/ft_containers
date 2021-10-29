@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 15:10:07 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/28 16:25:53 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/10/29 15:28:57 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ struct pair
 	pair( void ): first(), second() {}
 
 	template<class U, class V>
-	pair ( pair<U,V> const & pr ): first(pr.first), second(pr.second) {}
+	pair( pair<U,V> const & pr ): first(pr.first), second(pr.second) {}
 
-	pair ( first_type const & a, second_type const & b ): first(a), second(b)
+	pair( first_type const & a, second_type const & b ): first(a), second(b) {}
 
-	pair& operator= ( pair const & pr )
+	pair& operator=( pair const & pr )
 	{
 		if (this != &pr)
 		{
