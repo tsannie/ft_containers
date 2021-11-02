@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/01 13:18:16 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/02 21:33:53 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,6 @@ public:
 	{
 		return (vecIterator<vecT, isConst>(rhs + b));
 	}
-
 
 	typedef	vecIterator<T, false>					iterator;
 	typedef	vecIterator<const T, true>				const_iterator;
