@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:07:59 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/02 22:32:38 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/03 18:40:39 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,13 @@ public:
 		delete this->_null_node;
 	}
 
-	void	deleteNode() {}
+	void	deleteNode(Key srh)
+	{
+		node *toDel = this->searchNode(srh);
+
+		/* TODO del that shit */
+
+	}
 
 	void	printTree( void ) const
 	{
@@ -101,6 +107,26 @@ public:
 		else
 			y->right = ins;
 		this->insertFix(ins);
+	}
+
+	node	*searchNode( Key search )
+	{
+		node *nav = this->_root;
+
+		while (nav != this->_null_node)
+		{
+			if (search > nav->key)
+				nav = nav->right;
+			else if (search < nav->key)
+				nav = nav->left;
+			else if (search == nav->key)
+			{
+				std::cout << "find" << std::endl;
+				return (nav);
+			}
+		}
+		std::cout << "not found" << std::endl;
+		return (this->_null_node);
 	}
 
 
