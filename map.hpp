@@ -6,21 +6,14 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/29 16:20:11 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/03 20:10:55 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
 
-#include <memory>
-#include <cstddef>
-#include <iostream>
-#include "includes/iterator.hpp"
-#include "includes/algorithm.hpp"
-#include "includes/string.hpp"
-#include "includes/type_traits.hpp"
-#include "includes/utility.hpp"
+#include "includes/stl.hpp"
 
 
 namespace ft
@@ -35,7 +28,7 @@ template <class Key,
 public:
 	typedef				Key										key_type;
 	typedef				T										mapped_type;
-	typedef				ft::pair<const key_type,mapped_type>	value_type;
+	typedef				ft::pair<const key_type, mapped_type>	value_type;
 	typedef				Compare									key_compare;
 
 	class value_compare
@@ -154,8 +147,10 @@ public:
 	typedef	size_t									size_type;
 
 private:
-	key_compare		_comp;
-	allocator_type	_alloc;
+	key_compare								_comp;
+	allocator_type							_alloc;
+	ft::RbTrees<key_type, mapped_type>		_tree;
+
 
 public:
 
@@ -163,7 +158,6 @@ public:
 				const allocator_type& alloc = allocator_type())
 	{
 		this->_alloc = alloc;
-		this->_alloc.allocate(0);
 		this->_comp = comp;
 	}
 
@@ -180,14 +174,14 @@ public:
 
 	~map() {}
 
-	map&	operator=(const map& x)
+	/*map&	operator=(const map& x)
 	{
 		if (this != &x)
 		{
 			this->_alloc = x._alloc;
 			this->_comp = x._comp;
 		}
-	}
+	}*/
 };
 
 }

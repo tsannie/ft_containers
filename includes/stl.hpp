@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:17:10 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/01 14:08:16 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/03 19:45:09 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@
 #include <iostream>
 #include "iterator.hpp"
 #include "algorithm.hpp"
+#include "utility.hpp"
 #include "string.hpp"
 #include "type_traits.hpp"
 #include "../vector.hpp"
+#include "RBTrees.hpp"
 
 #define NOIR 0
 #define ROUGE 1

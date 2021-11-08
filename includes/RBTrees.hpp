@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:07:59 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/03 18:40:39 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/08 04:18:03 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,48 @@ public:
 
 	void	deleteNode(Key srh)
 	{
+		node *y = this->_null_node;
+		node *x = this->_null_node;
 		node *toDel = this->searchNode(srh);
 
+		if (toDel == this->_null_node)
+			return ;
+
+		if (toDel->left == this->_null_node || toDel->right == this->_null_node)
+			y = toDel;
+		else
+		{
+			if (toDel->left != this->_null_node)
+			{
+				y = toDel->left;
+				while (y->right != this->_null_node)
+					y = y->right;
+			}
+			else
+			{
+				y = toDel->right;
+				while (y->left != this->_null_node)
+					y = y->left;
+			}
+		}
+		if (y->left != this->_null_node)
+			x = y->left;
+		else
+			x = y->right;
+
+		if (y->parent == this->_null_node)
+			this->_root = x;
+		else if(y == y->parent->left)
+			y->parent->left = x;
+		else
+			y->parent->right = x;
+
+		if(y != toDel)
+			toDel->key = y->key;
+		x->parent = y->parent;
+
+		if(y->color == BLACK)
+			deleteFix(x);
 		/* TODO del that shit */
 
 	}
