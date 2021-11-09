@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/03 20:10:55 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:47:41 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,94 +53,8 @@ public:
 	typedef typename	allocator_type::pointer					pointer;
 	typedef typename	allocator_type::const_pointer			const_pointer;
 
-	template<
-	typename vecT,
-	bool isConst = false
-	> class mapIterator
-	{
-
-	public:
-		typedef	ptrdiff_t	difference_type;
-		typedef	vecT		value_type;
-		typedef	vecT*		pointer;
-		typedef	vecT&		reference;
-
-	private:
-		pointer		_val;
-
-	public:
-		mapIterator( void ): _val( NULL ) {}
-		explicit mapIterator( pointer val ): _val( val ) {}
-		mapIterator( mapIterator const &cpy ) { *this = cpy; }
-
-		operator mapIterator<const vecT, true>() const
-		{
-			return mapIterator<const vecT, true> (this->_val);
-		}
-
-		mapIterator&	operator=( mapIterator const &rhs )
-		{
-			if ( this != &rhs )
-				this->_val = rhs.getVal();
-			return (*this);
-		}
-
-		mapIterator&	operator++( void )
-		{
-			this->_val++;
-			return (*this);
-		}
-
-		mapIterator	operator++( int )
-		{
-			mapIterator	ret = *this;
-			this->_val++;
-			return (ret);
-		}
-
-		bool		operator==( mapIterator<vecT, false> const &b ) const
-		{
-			return (this->_val == b.getVal());
-		}
-
-		bool		operator!=( mapIterator<vecT, false> const &b ) const
-		{
-			return (this->_val != b.getVal());
-		}
-
-		bool		operator==( mapIterator<const vecT, true> const &b ) const
-		{
-			return (this->_val == b.getVal());
-		}
-
-		bool		operator!=( mapIterator<const vecT, true> const &b ) const
-		{
-			return (this->_val != b.getVal());
-		}
-
-		mapIterator&	operator--( void )
-		{
-			this->_val--;
-			return (*this);
-		}
-
-		mapIterator		operator--( int )
-		{
-			mapIterator	ret = *this;
-			this->_val--;
-			return (ret);
-		}
-
-		value_type&	operator*( void ) const { return (*this->_val); }
-
-		pointer		operator->( void ) const { return (this->_val); }
-
-		value_type*	getVal( void ) const { return (this->_val); }
-
-	};
-
-	typedef	mapIterator<T, false>					iterator;
-	typedef	mapIterator<const T, true>				const_iterator;
+	//typedef	mapIterator<T, false>					iterator;
+	//typedef	mapIterator<const T, true>				const_iterator;
 	typedef	ft::reverse_iterator<iterator>			reverse_iterator;
 	typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 	typedef	ptrdiff_t								difference_type;
@@ -149,7 +63,7 @@ public:
 private:
 	key_compare								_comp;
 	allocator_type							_alloc;
-	ft::RbTrees<key_type, mapped_type>		_tree;
+	ft::RBTree<key_type, mapped_type>		_tree;
 
 
 public:

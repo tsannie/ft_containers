@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:06:31 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/03 20:19:31 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:44:43 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 #include <vector>
 #include <list>
 #include <map>
-#include "../../map.hpp"
+//#include "../../map.hpp"
 
 
 int		main(void)
 {
 	std::map<char,int> first;
 
-	first.insert( std::pair<char,int>('a',100) );
-	first.insert( std::pair<char,int>('b',200) );
-	first.insert( std::pair<char,int>('c',300) );
+	first.insert( std::pair<char,int>('z',10) );
+	/*first.insert( std::pair<char,int>('a',10) );
+	first.insert( std::pair<char,int>('b',20) );
+	first.insert( std::pair<char,int>('c',30) );*/
 
 	for (std::map<char,int>::iterator it = first.begin(); it != first.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
