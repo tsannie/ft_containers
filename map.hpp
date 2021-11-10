@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/10 12:47:44 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/10 13:47:47 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,10 @@ public:
 		return (const_iterator(this->_tree.minNode()));
 	}
 
-	pair<iterator,bool>	insert(const value_type& val)
+	void	insert(const value_type& val)
 	{
-
+		this->_tree.insertNode( val );
+		//return (NULL);
 	}
 };
 
