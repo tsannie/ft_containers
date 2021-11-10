@@ -41,8 +41,8 @@ private:
 
 public:
 
-	/*template<
-	typename vecT,
+	template<
+	typename T,
 	bool isConst = false
 	> class rbIterator
 	{
@@ -61,9 +61,9 @@ public:
 		explicit rbIterator( pointer it ): _it( it ) {}
 		rbIterator( rbIterator const &cpy ) { *this = cpy; }
 
-		operator rbIterator<const vecT, true>() const
+		operator rbIterator<const T, true>() const
 		{
-			return rbIterator<const vecT, true> (this->_it);
+			return rbIterator<const T, true> (this->_it);
 		}
 
 		rbIterator&	operator=( rbIterator const &rhs )
@@ -87,22 +87,22 @@ public:
 			return (ret);
 		}
 
-		bool		operator==( rbIterator<vecT, false> const &b ) const
+		bool		operator==( rbIterator<T, false> const &b ) const
 		{
 			return (this->_it == b._it);
 		}
 
-		bool		operator!=( rbIterator<vecT, false> const &b ) const
+		bool		operator!=( rbIterator<T, false> const &b ) const
 		{
 			return (this->_it != b._it);
 		}
 
-		bool		operator==( rbIterator<const vecT, true> const &b ) const
+		bool		operator==( rbIterator<const T, true> const &b ) const
 		{
 			return (this->_it == b._it);
 		}
 
-		bool		operator!=( rbIterator<const vecT, true> const &b ) const
+		bool		operator!=( rbIterator<const T, true> const &b ) const
 		{
 			return (this->_it != b._it);
 		}
@@ -125,7 +125,12 @@ public:
 		//pointer		operator->( void ) const { return (this->_val); }
 
 		//value_type*	getVal( void ) const { return (this->_val); }
-	};*/
+	};
+
+	typedef	rbIterator<Value, false>					iterator;
+	typedef	rbIterator<const Value, true>				const_iterator;
+	//typedef	ft::reverse_iterator<iterator>			reverse_iterator;
+	//typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 	RBTree( void )
 	{
@@ -435,8 +440,8 @@ private:
 		std::cout	<< name << " = ";
 		if (nodeKey == this->_nil_node)
 			std::cout << "NULL";
-		//else
-			//std::cout << nodeKey->stock;
+		else
+			std::cout << nodeKey->stock.first;
 		std::cout << std::endl;
 	}
 
@@ -450,11 +455,11 @@ private:
 				? "(root) "
 				: "") << ":" << std::endl;
 
-		//std::cout << "key    = " << nodePrint->stock << std::endl;
+		std::cout << "key    = " << nodePrint->stock.first << std::endl;
 		this->printKey(nodePrint->parent, "parent");
 		this->printKey(nodePrint->left, "left  ");
 		this->printKey(nodePrint->right, "right ");
-		//std::cout << "value  = " << nodePrint->stock << std::endl;
+		std::cout << "value  = " << nodePrint->stock.second << std::endl;
 		std::cout << "--------------------------" << std::endl;
 		std::cout << std::endl;
 

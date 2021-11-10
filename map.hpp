@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/09 17:47:41 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/10 12:47:44 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,27 @@ public:
 	typedef typename	allocator_type::pointer					pointer;
 	typedef typename	allocator_type::const_pointer			const_pointer;
 
-	//typedef	mapIterator<T, false>					iterator;
-	//typedef	mapIterator<const T, true>				const_iterator;
-	typedef	ft::reverse_iterator<iterator>			reverse_iterator;
-	typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+
 	typedef	ptrdiff_t								difference_type;
 	typedef	size_t									size_type;
+	typedef	ft::RBTree<value_type>					tree;
+
+	typedef typename	tree::iterator				iterator;
+	typedef typename	tree::const_iterator		const_iterator;
+	//typedef	mapIterator<const T, true>				const_iterator;
+	//typedef	ft::reverse_iterator<iterator>			reverse_iterator;
+	//typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 private:
 	key_compare								_comp;
 	allocator_type							_alloc;
-	ft::RBTree<key_type, mapped_type>		_tree;
+	tree									_tree;
 
 
 public:
 
-	explicit map (const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type())
+	explicit map ( const key_compare& comp = key_compare(),
+				const allocator_type& alloc = allocator_type() )
 	{
 		this->_alloc = alloc;
 		this->_comp = comp;
@@ -83,7 +87,7 @@ public:
 
 	}*/
 
-	map(const map& x)
+	map( const map& x )
 	{}
 
 	~map() {}
@@ -96,6 +100,21 @@ public:
 			this->_comp = x._comp;
 		}
 	}*/
+
+	iterator	begin( void )
+	{
+		return (iterator(this->_tree.minNode()));
+	}
+
+	const_iterator	begin( void ) const
+	{
+		return (const_iterator(this->_tree.minNode()));
+	}
+
+	pair<iterator,bool>	insert(const value_type& val)
+	{
+
+	}
 };
 
 }
