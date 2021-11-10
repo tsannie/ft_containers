@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/10 13:47:47 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/10 16:45:43 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ template <class Key,
 public:
 	typedef				Key										key_type;
 	typedef				T										mapped_type;
-	typedef				ft::pair<const key_type, mapped_type>	value_type;
+	typedef				ft::pair<key_type, mapped_type>			value_type; //key is const ?
 	typedef				Compare									key_compare;
 
 	class value_compare
@@ -111,9 +111,10 @@ public:
 		return (const_iterator(this->_tree.minNode()));
 	}
 
-	void	insert(const value_type& val)
+	void	insert( value_type const & val )
 	{
-		this->_tree.insertNode( val );
+		this->_tree.insertNode(val);
+		this->_tree.printTree();
 		//return (NULL);
 	}
 };

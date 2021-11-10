@@ -122,7 +122,7 @@ public:
 
 		//value_type&	operator*( void ) const { return (*this->_val); }
 
-		//pointer		operator->( void ) const { return (this->_val); }
+		pointer		operator->( void ) const { return &_it->stock; }
 
 		//value_type*	getVal( void ) const { return (this->_val); }
 	};
