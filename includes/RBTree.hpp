@@ -49,16 +49,16 @@ public:
 
 	public:
 		typedef	ptrdiff_t	difference_type;
-		typedef	node		value_type;
-		typedef	node*		pointer;
-		typedef	node&		reference;
+		typedef	T			value_type;
+		typedef	T*			pointer;
+		typedef	T&			reference;
 
 	private:
-		pointer	_it;
+		node	*_it;
 
 	public:
 		rbIterator( void ): _it( NULL ) {}
-		explicit rbIterator( pointer it ): _it( it ) {}
+		explicit rbIterator( node *it ): _it( it ) {}
 		rbIterator( rbIterator const &cpy ) { *this = cpy; }
 
 		operator rbIterator<const T, true>() const
@@ -122,7 +122,7 @@ public:
 
 		//value_type&	operator*( void ) const { return (*this->_val); }
 
-		pointer		operator->( void ) const { return &_it->stock; }
+		pointer		operator->( void ) const { return	(&this->_it->stock); }
 
 		//value_type*	getVal( void ) const { return (this->_val); }
 	};
@@ -227,7 +227,7 @@ public:
 	{
 		node *x = this->_root;
 
-		while (x != this->_nil_node)
+		while (x->left != this->_nil_node)
 			x = x->left;
 		return (x);
 	}

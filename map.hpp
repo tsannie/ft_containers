@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/10 16:45:43 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/11 10:50:48 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ public:
 	void	insert( value_type const & val )
 	{
 		this->_tree.insertNode(val);
-		this->_tree.printTree();
+		//this->_tree.printTree();
 		//return (NULL);
 	}
 };
