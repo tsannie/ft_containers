@@ -70,20 +70,20 @@ public:
 		{
 			if ( this != &rhs )
 				this->_it = rhs._it;
-				//this->_val = rhs.getVal();
 			return (*this);
 		}
 
 		rbIterator&	operator++( void )
 		{
-			//this->_val++;
+			std::cout << "incr" << std::endl;
+			this->_it = this->successorNode(this->_it);
 			return (*this);
 		}
 
 		rbIterator	operator++( int )
 		{
 			rbIterator	ret = *this;
-			//this->_val++;
+			this->operator++();
 			return (ret);
 		}
 
@@ -125,6 +125,31 @@ public:
 		pointer		operator->( void ) const { return	(&this->_it->stock); }
 
 		//value_type*	getVal( void ) const { return (this->_val); }
+
+		node	*successorNode(node *nd)
+		{
+			node *x = nd;
+
+			//std::cout << "hey" << std::endl;
+			if (x->right->parent == NULL)
+			{
+				x = x->parent;
+				while (x->parent->parent != NULL && x->stock < nd->stock)
+				{
+					//std::cout << "hey" << std::endl;
+					x = x->parent;
+				}
+				if (x->stock < nd->stock)	// if x dont have successor
+					x = x->parent;
+			}
+			else
+			{
+				x = x->right;
+				while (x->left->parent != NULL)
+					x = x->left;
+			}
+			return (x);
+		}
 	};
 
 	typedef	rbIterator<Value, false>					iterator;
@@ -223,6 +248,30 @@ public:
 		this->insertFix(ins);
 	}
 
+	/*	FUNCTION MAP */
+
+	iterator	begin( void )
+	{
+		return (iterator(this->minNode()));
+	}
+
+	const_iterator	begin( void ) const
+	{
+		return (const_iterator(this->minNode()));
+	}
+
+	iterator end()
+	{
+		return (iterator(this->_nil_node));
+	}
+
+	const_iterator end() const
+	{
+		return (const_iterator(this->_nil_node));
+	}
+
+private:
+
 	node	*minNode( void )
 	{
 		node *x = this->_root;
@@ -232,7 +281,14 @@ public:
 		return (x);
 	}
 
-private:
+	node	*maxNode( void )
+	{
+		node *x = this->_root;
+
+		while (x->right != this->_nil_node)
+			x = x->right;
+		return (x);
+	}
 
 	node	*searchNode( Value search )
 	{
@@ -479,6 +535,7 @@ private:
 		this->printAllNode(nodePrint->left, i);
 		this->printAllNode(nodePrint->right, i);
 	}
+
 };
 
 }

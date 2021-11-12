@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/11 10:50:48 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/12 10:23:16 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,22 @@ public:
 
 	iterator	begin( void )
 	{
-		return (iterator(this->_tree.minNode()));
+		return (this->_tree.begin());
 	}
 
 	const_iterator	begin( void ) const
 	{
-		return (const_iterator(this->_tree.minNode()));
+		return (this->_tree.begin());
+	}
+
+	iterator end()
+	{
+		return (this->_tree.end());
+	}
+
+	const_iterator end() const
+	{
+		return (this->_tree.end());
 	}
 
 	void	insert( value_type const & val )
