@@ -21,7 +21,8 @@
 namespace ft
 {
 
-template<class Value>
+template <class Value,
+		class Alloc>
 class RBTree
 {
 
@@ -38,13 +39,14 @@ private:
 
 	node	*_root;
 	node	*_nil_node;
+	Alloc	_alloc;
 
 public:
 
 	template<
 	typename T,
 	bool isConst = false
-	> class rbIterator
+	> struct rbIterator
 	{
 
 	public:
@@ -109,12 +111,14 @@ public:
 
 		rbIterator&	operator--( void )
 		{
-			//this->_val--;
+			std::cout << "hello" << std::endl;
+			_it = predecessor(_it);
 			return (*this);
 		}
 
 		rbIterator		operator--( int )
 		{
+			//std::cout << "hello" << std::endl;
 			rbIterator	ret = *this;
 			//this->_val--;
 			return (ret);
@@ -150,6 +154,15 @@ public:
 			}
 			return (x);
 		}
+
+		node	*predecessor(node *nd)
+		{
+			std::cout << "hello" << std::endl;
+			node *x = nd;
+
+			//if (!x->parent)
+				//return (RBTree::minNode());
+		}
 	};
 
 	typedef	rbIterator<Value, false>					iterator;
@@ -159,7 +172,7 @@ public:
 
 	RBTree( void )
 	{
-		this->_nil_node = new node;
+		this->_nil_node = _alloc.allocate(1);
 		this->_nil_node->parent = NULL;
 		this->_nil_node->left = NULL;
 		this->_nil_node->right = NULL;
@@ -171,8 +184,8 @@ public:
 
 	~RBTree( void )
 	{
-		this->delTree(this->_root);
-		delete this->_nil_node;
+		//this->delTree(this->_root);
+		this->_alloc.destroy(this->_nil_node);
 	}
 
 	void	deleteNode( Value srh )
@@ -270,7 +283,6 @@ public:
 		return (const_iterator(this->_nil_node));
 	}
 
-private:
 
 	node	*minNode( void )
 	{
@@ -280,6 +292,8 @@ private:
 			x = x->left;
 		return (x);
 	}
+
+private:
 
 	node	*maxNode( void )
 	{
