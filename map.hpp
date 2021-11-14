@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/12 19:52:27 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/14 23:20:40 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ namespace ft
 template <class Key,
 		class T,
 		class Compare = std::less<Key>,
-		class Alloc = std::allocator<ft::pair<Key, T> >
+		class Alloc = std::allocator<ft::pair<const Key,T> >
 > class map
 {
 
@@ -54,9 +54,8 @@ public:
 	typedef typename	allocator_type::const_pointer			const_pointer;
 
 
-	typedef	ptrdiff_t											difference_type;
-	typedef	size_t												size_type;
-
+	typedef	ptrdiff_t								difference_type;
+	typedef	size_t									size_type;
 	typedef	ft::RBTree<value_type, allocator_type>					tree;
 
 	typedef typename	tree::iterator				iterator;
@@ -104,22 +103,12 @@ public:
 
 	iterator	begin( void )
 	{
-		return (this->_tree.begin());
+		return (iterator(this->_tree.minNode()));
 	}
 
 	const_iterator	begin( void ) const
 	{
-		return (this->_tree.begin());
-	}
-
-	iterator end()
-	{
-		return (this->_tree.end());
-	}
-
-	const_iterator end() const
-	{
-		return (this->_tree.end());
+		return (const_iterator(this->_tree.minNode()));
 	}
 
 	void	insert( value_type const & val )

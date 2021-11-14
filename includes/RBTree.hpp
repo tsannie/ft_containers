@@ -37,10 +37,6 @@ private:
 		Value					stock;
 	}				node;
 
-	node	*_root;
-	node	*_nil_node;
-	Alloc	_alloc;
-
 public:
 
 	template<
@@ -165,10 +161,19 @@ public:
 		}
 	};
 
-	typedef	rbIterator<Value, false>					iterator;
-	typedef	rbIterator<const Value, true>				const_iterator;
+	typedef typename	Alloc::template rebind<node>::other		alloc_node;
+	typedef rbIterator<Value, false>							iterator;
+	typedef rbIterator<const Value, true>						const_iterator;
 	//typedef	ft::reverse_iterator<iterator>			reverse_iterator;
 	//typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+
+private:
+
+	node		*_root;
+	node		*_nil_node;
+	alloc_node	_alloc;
+
+public:
 
 	RBTree( void )
 	{
@@ -177,6 +182,8 @@ public:
 		this->_nil_node->left = NULL;
 		this->_nil_node->right = NULL;
 		this->_nil_node->color = BLACK;
+		_alloc.construct(this->_nil_node);
+		std::cout << "CONSTRUCTOR" << std::endl;
 		//this->_nil_node->stock = NULL;
 
 		this->_root = this->_nil_node;
@@ -184,8 +191,10 @@ public:
 
 	~RBTree( void )
 	{
-		//this->delTree(this->_root);
+		this->delTree(this->_root);
 		this->_alloc.destroy(this->_nil_node);
+		this->_alloc.deallocate(this->_nil_node, 1);
+		std::cout << "DESTRUCTOR" << std::endl;
 	}
 
 	void	deleteNode( Value srh )
@@ -225,7 +234,7 @@ public:
 
 		if (y->color == BLACK)
 			deleteFix(x);
-		delete y;
+		//delete y;
 	}
 
 	void	printTree( void ) const
@@ -322,7 +331,7 @@ private:
 
 	node	*newNode( Value val ) const
 	{
-		node	*ret = new node;
+		node	*ret = new node;//_alloc.allocate(1);;
 
 		ret->parent = this->_nil_node;
 		ret->left = this->_nil_node;
@@ -502,7 +511,7 @@ private:
 
 		this->delTree(nodeDel->left);
 		this->delTree(nodeDel->right);
-		delete nodeDel;
+		//delete nodeDel;
 	}
 
 	void	printKey( node *nodeKey, std::string name ) const

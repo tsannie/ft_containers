@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/12 19:50:05 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/15 00:11:25 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 int	main(void)
 {
 	pl::map<int, char>	test;
+
+	//test.insert( pl::pair<int, char>(10, 'c') );
 
 	//for (i = 0 ; i < 50 ; i++)
 	//	tree.deleteNode(i);
