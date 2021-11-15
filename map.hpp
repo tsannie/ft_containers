@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/14 23:20:40 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/15 20:15:25 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ namespace ft
 template <class Key,
 		class T,
 		class Compare = std::less<Key>,
-		class Alloc = std::allocator<ft::pair<const Key,T> >
+		class Alloc = std::allocator<ft::pair<Key, T> >
 > class map
 {
 
@@ -103,12 +103,22 @@ public:
 
 	iterator	begin( void )
 	{
-		return (iterator(this->_tree.minNode()));
+		return (this->_tree.begin());
 	}
 
 	const_iterator	begin( void ) const
 	{
-		return (const_iterator(this->_tree.minNode()));
+		return (this->_tree.begin());
+	}
+
+	iterator end()
+	{
+		return (this->_tree.end());
+	}
+
+	const_iterator end() const
+	{
+		return (this->_tree.end());
 	}
 
 	void	insert( value_type const & val )
@@ -116,6 +126,11 @@ public:
 		this->_tree.insertNode(val);
 		//this->_tree.printTree();
 		//return (NULL);
+	}
+
+	void	 erase(const key_type& k, const mapped_type& z)
+	{
+		this->_tree.deleteNode( ft::pair<key_type, mapped_type>(k, z) );
 	}
 };
 

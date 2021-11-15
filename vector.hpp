@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/10 12:37:08 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/15 11:53:18 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,7 +419,7 @@ public:
 		this->insert(this->begin(), first, last);
 	}
 
-	void		assign( size_type n, const value_type& val )
+	void		assign( size_type n, value_type const & val )
 	{
 		if (n > this->capacity())
 			this->reserve(n);
@@ -431,7 +431,7 @@ public:
 
 	}
 
-	void		push_back( const value_type& val )
+	void		push_back( value_type const & val )
 	{
 		if (this->capacity() == 0)
 			this->reserve(1);
@@ -447,14 +447,14 @@ public:
 		this->_alloc.destroy(this->_tab + this->size());
 	}
 
-	iterator	insert ( iterator position, const value_type& val )
+	iterator	insert ( iterator position, value_type const & val )
 	{
 		this->insert(position, 1, val);
 		return (iterator(this->begin() + (position - this->begin())));
 	}
 
 
-	void		insert( iterator position, size_type n, const value_type& val )
+	void		insert( iterator position, size_type n, value_type const & val )
 	{
 		size_type	start = position - this->begin();
 

@@ -57,7 +57,7 @@ public:
 	public:
 		rbIterator( void ): _it( NULL ) {}
 		explicit rbIterator( node *it ): _it( it ) {}
-		rbIterator( rbIterator const &cpy ) { *this = cpy; }
+		rbIterator( rbIterator const & cpy ) { *this = cpy; }
 
 		operator rbIterator<const T, true>() const
 		{
@@ -73,7 +73,7 @@ public:
 
 		rbIterator&	operator++( void )
 		{
-			std::cout << "incr" << std::endl;
+			//std::cout << "incr" << std::endl;
 			this->_it = this->successorNode(this->_it);
 			return (*this);
 		}
@@ -131,10 +131,11 @@ public:
 			node *x = nd;
 
 			//std::cout << "hey" << std::endl;
-			if (x->right->parent == NULL)
+			if (x->right->right == NULL)
 			{
+				//std::cout << "choose1" << std::endl;
 				x = x->parent;
-				while (x->parent->parent != NULL && x->stock < nd->stock)
+				while (x->parent->right != NULL && x->stock < nd->stock)
 				{
 					//std::cout << "hey" << std::endl;
 					x = x->parent;
@@ -144,8 +145,9 @@ public:
 			}
 			else
 			{
+				//std::cout << "choose2" << std::endl;
 				x = x->right;
-				while (x->left->parent != NULL)
+				while (x->left->right != NULL)
 					x = x->left;
 			}
 			return (x);
@@ -156,9 +158,30 @@ public:
 			std::cout << "hello" << std::endl;
 			node *x = nd;
 
+			if (x->right == NULL)
+			{
+				x = x->parent;
+				while (x->right != nd) // nd = _nil
+					x = x->right;
+			}
+			else if (x->left->left != NULL)
+				x = x->left;
+			else
+			{
+				x = x->parent;
+				while (x->parent->right != NULL && x->stock > nd->stock)
+				{
+					x = x->parent;
+				}
+				if (x->stock > nd->stock)	// if x dont have predecessor
+					x = nd;
+			}
+
+			return (x);
 			//if (!x->parent)
 				//return (RBTree::minNode());
 		}
+
 	};
 
 	typedef typename	Alloc::template rebind<node>::other		alloc_node;
@@ -177,27 +200,31 @@ public:
 
 	RBTree( void )
 	{
-		this->_nil_node = _alloc.allocate(1);
-		this->_nil_node->parent = NULL;
-		this->_nil_node->left = NULL;
-		this->_nil_node->right = NULL;
-		this->_nil_node->color = BLACK;
-		_alloc.construct(this->_nil_node);
-		std::cout << "CONSTRUCTOR" << std::endl;
-		//this->_nil_node->stock = NULL;
+		node	nil;
+
+		this->_nil_node = this->_alloc.allocate(1);
+		nil.parent = NULL;
+		nil.left = NULL;
+		nil.right = NULL;
+		nil.color = BLACK;
+		this->_alloc.construct(this->_nil_node, nil);
+		//std::cout << "CONSTRUCTOR" << std::endl;
 
 		this->_root = this->_nil_node;
 	}
 
 	~RBTree( void )
 	{
+		//std::cout << "DESTRUCTOR" << std::endl;
+		//this->printTree();
 		this->delTree(this->_root);
+
+		//this->printTree();
 		this->_alloc.destroy(this->_nil_node);
 		this->_alloc.deallocate(this->_nil_node, 1);
-		std::cout << "DESTRUCTOR" << std::endl;
 	}
 
-	void	deleteNode( Value srh )
+	void	deleteNode( Value const & srh )
 	{
 		node *y = this->_nil_node;
 		node *x = this->_nil_node;
@@ -230,11 +257,13 @@ public:
 			y->parent->right = x;
 
 		if (y != z)
-			z->key = y->key;
+			z->stock.first = y->stock.first;
 
 		if (y->color == BLACK)
 			deleteFix(x);
-		//delete y;
+		this->_alloc.destroy(y);
+		this->_alloc.deallocate(y, 1);
+		this->_nil_node->parent = this->_root;
 	}
 
 	void	printTree( void ) const
@@ -244,7 +273,7 @@ public:
 		this->printAllNode( this->_root , i );
 	}
 
-	void	insertNode( Value key )
+	void	insertNode( Value const & key )
 	{
 		node *ins = newNode(key);
 		node *y = this->_nil_node;
@@ -268,6 +297,7 @@ public:
 			y->right = ins;
 
 		this->insertFix(ins);
+		this->_nil_node->parent = this->_root;
 	}
 
 	/*	FUNCTION MAP */
@@ -313,7 +343,7 @@ private:
 		return (x);
 	}
 
-	node	*searchNode( Value search )
+	node	*searchNode( Value const & search )
 	{
 		node *x = this->_root;
 
@@ -329,15 +359,17 @@ private:
 		return (this->_nil_node);
 	}
 
-	node	*newNode( Value val ) const
+	node	*newNode( Value const & val )
 	{
-		node	*ret = new node;//_alloc.allocate(1);;
+		node	*ret = this->_alloc.allocate(1);
+		node	tmp;
 
-		ret->parent = this->_nil_node;
-		ret->left = this->_nil_node;
-		ret->right = this->_nil_node;
-		ret->color = RED;
-		ret->stock = val;
+		tmp.parent = this->_nil_node;
+		tmp.left = this->_nil_node;
+		tmp.right = this->_nil_node;
+		tmp.color = RED;
+		tmp.stock = val;
+		this->_alloc.construct(ret, tmp);
 		return (ret);
 	}
 
@@ -377,7 +409,7 @@ private:
 		x->parent = y_left;
 	}
 
-	void	insertFix( node* z )
+	void	insertFix( node *z )
 	{
 		node *y;
 
@@ -431,7 +463,7 @@ private:
 		this->_root->color = BLACK;
 	}
 
-	void	deleteFix( node* x )
+	void	deleteFix( node *x )
 	{
 		node *w;
 
@@ -511,10 +543,16 @@ private:
 
 		this->delTree(nodeDel->left);
 		this->delTree(nodeDel->right);
-		//delete nodeDel;
+		int i = 0;
+		//this->printNode(nodeDel, i);
+		this->_alloc.destroy(nodeDel);
+		this->_alloc.deallocate(nodeDel, 1);
+		//nodeDel = this->_nil_node;
+		//this->printNode(nodeDel, i);
+		//std::cout << "delete" << std::endl;
 	}
 
-	void	printKey( node *nodeKey, std::string name ) const
+	void	printKey( node *nodeKey, std::string const & name ) const
 	{
 		std::cout	<< name << " = ";
 		if (nodeKey == this->_nil_node)
@@ -524,7 +562,7 @@ private:
 		std::cout << std::endl;
 	}
 
-	void	printNode( node *nodePrint, int i ) const
+	void	printNode( node *nodePrint, int const & i ) const
 	{
 		std::cout << "node " << i
 			<< (nodePrint->color == RED

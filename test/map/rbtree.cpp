@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/15 00:11:25 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/16 00:31:40 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,33 @@
 #include "../../map.hpp"
 #include <map>
 
-#define	pl	ft
+#define	pl	std
 
 int	main(void)
 {
 	pl::map<int, char>	test;
 
-	//test.insert( pl::pair<int, char>(10, 'c') );
-
-	//for (i = 0 ; i < 50 ; i++)
-	//	tree.deleteNode(i);
-}
-/*{
-	pl::map<int, char>	test;
-
 
 	test.insert( pl::pair<int, char>(10, 'c') );
-	//test.insert( pl::pair<int, char>(20, 'c') );
-	//test.insert( pl::pair<int, char>(30, 'b') );
-	//test.insert( pl::pair<int, char>(40, 'd') );
 
-	pl::map<int, char>::iterator	it = test.end();
-
-	std::cout << it->first << " => " << it->second << '\n';
+	pl::map<int, char>::iterator	it = test.begin();
+	--it;
+	--it;
+	--it;
+	--it;
+	//std::cout << it->first << " => " << it->second << '\n';
 
 	test.insert( pl::pair<int, char>(100, 'd') );
-	it--;
+	test.insert( pl::pair<int, char>(20, 'c') );
+	test.insert( pl::pair<int, char>(30, 'b') );
+	test.insert( pl::pair<int, char>(40, 'd') );
+	//std::cout << it->first << " => " << it->second << '\n';
+
+
 	std::cout << it->first << " => " << it->second << '\n';
-
-
-	//for (pl::map<int, char>::iterator it = test.begin(); it != test.end(); ++it)
-		//std::cout << it->first << " => " << it->second << '\n';
+	for (it = test.begin(); it != test.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
 	//test.deleteNode(2);
 
 	//test.printTree();
-}*/
+}
