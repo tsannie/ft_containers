@@ -14,6 +14,8 @@
 # define RBTREE_HPP
 
 #include <iostream>
+#include "iterator.hpp"
+#include "utility.hpp"
 
 #define	BLACK	false
 #define	RED		true
@@ -107,7 +109,7 @@ public:
 
 		rbIterator&	operator--( void )
 		{
-			std::cout << "hello" << std::endl;
+			//std::cout << "hello" << std::endl;
 			_it = predecessor(_it);
 			return (*this);
 		}
@@ -126,7 +128,7 @@ public:
 
 		//value_type*	getVal( void ) const { return (this->_val); }
 
-		node	*successorNode(node *nd)
+		node	*successorNode(node *nd)	//edit this shit and replace with _it for void successorNode(void)
 		{
 			node *x = nd;
 
@@ -155,19 +157,19 @@ public:
 
 		node	*predecessor(node *nd)
 		{
-			std::cout << "hello" << std::endl;
+			//std::cout << "hello" << std::endl;
 			node *x = nd;
 
 			if (x->right == NULL)
 			{
+				//std::cout << "choose0" << std::endl;
 				x = x->parent;
 				while (x->right != nd) // nd = _nil
 					x = x->right;
 			}
-			else if (x->left->left != NULL)
-				x = x->left;
-			else
+			else if (x->left->left == NULL)
 			{
+				//std::cout << "choose1" << std::endl;
 				x = x->parent;
 				while (x->parent->right != NULL && x->stock > nd->stock)
 				{
@@ -175,6 +177,13 @@ public:
 				}
 				if (x->stock > nd->stock)	// if x dont have predecessor
 					x = nd;
+			}
+			else
+			{
+				//std::cout << "choose2" << std::endl;
+				x = x->left;
+				while (x->right->left != NULL)
+					x = x->right;
 			}
 
 			return (x);
@@ -187,14 +196,17 @@ public:
 	typedef typename	Alloc::template rebind<node>::other		alloc_node;
 	typedef rbIterator<Value, false>							iterator;
 	typedef rbIterator<const Value, true>						const_iterator;
-	//typedef	ft::reverse_iterator<iterator>			reverse_iterator;
-	//typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+	typedef	ft::reverse_iterator<iterator>						reverse_iterator;
+	typedef	ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+	typedef	ptrdiff_t											difference_type;
+	typedef	size_t												size_type;
 
 private:
 
 	node		*_root;
 	node		*_nil_node;
 	alloc_node	_alloc;
+	size_type	_size;
 
 public:
 
@@ -208,6 +220,7 @@ public:
 		nil.right = NULL;
 		nil.color = BLACK;
 		this->_alloc.construct(this->_nil_node, nil);
+		this->_size = 0;
 		//std::cout << "CONSTRUCTOR" << std::endl;
 
 		this->_root = this->_nil_node;
@@ -264,6 +277,7 @@ public:
 		this->_alloc.destroy(y);
 		this->_alloc.deallocate(y, 1);
 		this->_nil_node->parent = this->_root;
+		this->_size--;
 	}
 
 	void	printTree( void ) const
@@ -273,16 +287,15 @@ public:
 		this->printAllNode( this->_root , i );
 	}
 
-	void	insertNode( Value const & key )
+	void	insertNode( node *ins )
 	{
-		node *ins = newNode(key);
 		node *y = this->_nil_node;
 		node *x = this->_root;
 
 		while (x != this->_nil_node)
 		{
 			y = x;
-			if (key < x->stock)
+			if (ins->stock.first < x->stock.first)
 				x = x->left;
 			else
 				x = x->right;
@@ -291,18 +304,20 @@ public:
 		ins->parent = y;
 		if (y == this->_nil_node)
 			this->_root = ins;
-		else if (key < y->stock)
+		else if (ins->stock.first < y->stock.first)
 			y->left = ins;
 		else
 			y->right = ins;
 
 		this->insertFix(ins);
 		this->_nil_node->parent = this->_root;
+		this->_size++;
 	}
 
 	/*	FUNCTION MAP */
+	// Iterators:
 
-	iterator	begin( void )
+	iterator		begin( void )
 	{
 		return (iterator(this->minNode()));
 	}
@@ -312,16 +327,62 @@ public:
 		return (const_iterator(this->minNode()));
 	}
 
-	iterator end()
+	iterator		end( void )
 	{
 		return (iterator(this->_nil_node));
 	}
 
-	const_iterator end() const
+	const_iterator	end( void ) const
 	{
 		return (const_iterator(this->_nil_node));
 	}
 
+
+	// Capacity:
+
+	bool		empty( void ) const
+	{
+		return (this->_root == this->_nil_node);
+	}
+
+	size_type	size( void ) const
+	{
+		return (this->_size);
+	}
+
+	size_type	max_size( void ) const
+	{
+		return (this->_alloc.max_size());
+	}
+
+
+	// Element access:
+
+	//	mapped_type& operator[](const key_type& k);
+
+
+	// Modifiers:
+	ft::pair<iterator, bool>	insert( Value const & val )
+	{
+		//iterator it;
+
+		node *ins = newNode(val);
+		if (this->keyExist(val))
+		{
+			std::cout << "ALREADY EXIST" << std::endl;
+		}
+		else
+		{
+			this->insertNode(ins);
+		}
+
+	}
+
+
+
+
+
+private:
 
 	node	*minNode( void )
 	{
@@ -331,8 +392,6 @@ public:
 			x = x->left;
 		return (x);
 	}
-
-private:
 
 	node	*maxNode( void )
 	{
@@ -357,6 +416,33 @@ private:
 				return (x);
 		}
 		return (this->_nil_node);
+	}
+
+	bool	keyExist( Value const & search )
+	{
+		node *x = this->_root;
+
+		this->printTree();
+
+		while (x != this->_nil_node)
+		{
+			if (search.first > x->stock.first)
+			{
+				x = x->right;
+				std::cout << "go right" << std::endl;
+			}
+			else if (search.first < x->stock.first)
+			{
+				x = x->left;
+				std::cout << "go left" << std::endl;
+			}
+			else if (search.first == x->stock.first)
+			{
+				std::cout << "start" << std::endl;
+				return (true);
+			}
+		}
+		return (false);
 	}
 
 	node	*newNode( Value const & val )
@@ -543,7 +629,6 @@ private:
 
 		this->delTree(nodeDel->left);
 		this->delTree(nodeDel->right);
-		int i = 0;
 		//this->printNode(nodeDel, i);
 		this->_alloc.destroy(nodeDel);
 		this->_alloc.deallocate(nodeDel, 1);

@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/15 20:15:25 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/16 18:44:24 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,14 @@ public:
 	typedef typename	allocator_type::const_pointer			const_pointer;
 
 
-	typedef	ptrdiff_t								difference_type;
-	typedef	size_t									size_type;
+	typedef	ptrdiff_t												difference_type;
+	typedef	size_t													size_type;
 	typedef	ft::RBTree<value_type, allocator_type>					tree;
 
-	typedef typename	tree::iterator				iterator;
-	typedef typename	tree::const_iterator		const_iterator;
-	//typedef	mapIterator<const T, true>				const_iterator;
-	//typedef	ft::reverse_iterator<iterator>			reverse_iterator;
-	//typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+	typedef typename	tree::iterator					iterator;
+	typedef typename	tree::const_iterator			const_iterator;
+	typedef	typename	tree::reverse_iterator			reverse_iterator;
+	typedef	typename	tree::const_reverse_iterator	const_reverse_iterator;
 
 private:
 	key_compare								_comp;
@@ -101,6 +100,8 @@ public:
 		}
 	}*/
 
+	// Iterators:
+
 	iterator	begin( void )
 	{
 		return (this->_tree.begin());
@@ -121,12 +122,55 @@ public:
 		return (this->_tree.end());
 	}
 
-	void	insert( value_type const & val )
+	reverse_iterator rbegin()
 	{
-		this->_tree.insertNode(val);
-		//this->_tree.printTree();
-		//return (NULL);
+		return (this->_tree.rbegin());
 	}
+
+	const_reverse_iterator rbegin() const
+	{
+		return (this->_tree.rbegin());
+	}
+
+	reverse_iterator rend()
+	{
+		return (this->_tree.rend());
+	}
+
+	const_reverse_iterator rend() const
+	{
+		return (this->_tree.rend());
+	}
+
+
+	// Capacity:
+
+	bool empty( void ) const
+	{
+		return (this->_tree.empty());
+	}
+
+	size_type	size( void ) const
+	{
+		return (this->_tree.size());
+	}
+
+	size_type	max_size( void ) const
+	{
+		return (this->_tree.max_size());
+	}
+
+	// Element access:
+
+	//mapped_type& operator[](const key_type& k);
+
+	// Modifiers:
+
+	ft::pair<iterator, bool>	insert( value_type const & val )
+	{
+		return (this->_tree.insert(val));
+	}
+
 
 	void	 erase(const key_type& k, const mapped_type& z)
 	{
