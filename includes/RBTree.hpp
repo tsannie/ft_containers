@@ -364,16 +364,19 @@ public:
 	// Modifiers:
 	ft::pair<iterator, bool>	insert( Value const & val )
 	{
-		//iterator it;
+		iterator	it;
 
-		node *ins = newNode(val);
 		if (this->keyExist(val))
 		{
-			std::cout << "ALREADY EXIST" << std::endl;
+			it = iterator(searchNode(val));
+			return (ft::make_pair(it, false));
 		}
 		else
 		{
-			this->insertNode(ins);
+			this->insertNode(newNode(val));
+			it = iterator(searchNode(val));
+
+			return (ft::make_pair(it, true));
 		}
 
 	}
@@ -422,25 +425,14 @@ private:
 	{
 		node *x = this->_root;
 
-		this->printTree();
-
 		while (x != this->_nil_node)
 		{
 			if (search.first > x->stock.first)
-			{
 				x = x->right;
-				std::cout << "go right" << std::endl;
-			}
 			else if (search.first < x->stock.first)
-			{
 				x = x->left;
-				std::cout << "go left" << std::endl;
-			}
 			else if (search.first == x->stock.first)
-			{
-				std::cout << "start" << std::endl;
 				return (true);
-			}
 		}
 		return (false);
 	}

@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/16 18:52:43 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/16 22:32:01 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../map.hpp"
 #include <map>
 
-#define	pl	ft
+#define	pl	std
 
 int	main(void)
 {

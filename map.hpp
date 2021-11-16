@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/16 18:44:24 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/16 22:27:44 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ public:
 
 	ft::pair<iterator, bool>	insert( value_type const & val )
 	{
+		//std::cout << "insert" << std::endl;
 		return (this->_tree.insert(val));
 	}
 
