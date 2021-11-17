@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/17 13:03:24 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/17 17:37:59 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,29 @@
 
 int	main(void)
 {
-	pl::map<char,int> mymap;
-	pl::map<char,int>::iterator it;
+	pl::map<char,int> foo,bar;
 
-	// insert some values:
-	mymap.insert( pl::pair<char,int>('a',10) );
-	mymap.insert( pl::pair<char,int>('b',20) );
-	mymap.insert( pl::pair<char,int>('c',30) );
-	mymap.insert( pl::pair<char,int>('d',40) );
-	mymap.insert( pl::pair<char,int>('e',50) );
-	mymap.insert( pl::pair<char,int>('f',60) );
+	foo.insert( pl::pair<char, int>('x', 100) );
+	foo.insert( pl::pair<char, int>('y', 200) );
 
 
-	it = mymap.find('b');
-	std::cout << "find it " << it->first << " => " << it->second << '\n';
-	mymap.erase (it);                   // erasing by iterator
+	bar.insert( pl::pair<char, int>('a', 11) );
+	bar.insert( pl::pair<char, int>('b', 22) );
+	bar.insert( pl::pair<char, int>('c', 33) );
 
-	//std::cout << mymap.erase ('a') << std::endl;
+	foo.swap(bar);
 
-	//it = mymap.find ('e');
-	//mymap.erase ( it, mymap.end() );    // erasing by range
-
-	// show content:
-	for (it = mymap.begin(); it != mymap.end(); ++it)
+	/*std::cout << "foo contains:\n";
+	for (pl::map<char,int>::iterator it = foo.begin() ; it != foo.end() ; ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
-	return 0;
+	std::cout << std::endl;
+
+	std::cout << "bar contains:\n";
+	for (pl::map<char,int>::iterator it = bar.begin() ; it != bar.end() ; ++it)
+		std::cout << it->first << " => " << it->second << '\n';*/
+
+  return 0;
 }
 
 

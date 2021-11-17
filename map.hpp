@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/17 12:58:43 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/17 18:55:09 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ public:
 
 	}*/
 
-	map( const map& x )
-	{}
+	//map( const map& x )
+	//{}
 
 	~map() {}
 
@@ -193,6 +193,17 @@ public:
 		mapped_type	x;
 
 		return (this->_tree.erase(ft::make_pair(k, x)));
+	}
+
+
+	void	erase( iterator first, iterator last )
+	{
+		this->_tree.erase(first, last);
+	}
+
+	void	swap(map& x)
+	{
+		//this->_tree = x._tree;
 	}
 
 	// Observers:

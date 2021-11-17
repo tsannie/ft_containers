@@ -150,6 +150,8 @@ public:
 				}
 				if (x->stock < nd->stock)	// if x dont have successor
 					x = x->parent;
+				if (x == nd)	// for if root dont have successor
+					x = x->parent;
 			}
 			else
 			{
@@ -244,81 +246,13 @@ public:
 		this->_alloc.deallocate(this->_nil_node, 1);
 	}
 
-	void	deleteNode( value_type const & srh )
+	RBTree( RBTree const & rhs )
 	{
-		node *y = this->_nil_node;
-		node *x = this->_nil_node;
-		node *z = this->searchNode(srh);
-
-		if (z == this->_nil_node)
-			return ;
-
-		if (z->left == this->_nil_node || z->right == this->_nil_node)
-			y = z;
-		else
+		if (this != &rhs)
 		{
-			y = z->right;
-			while (y->left != this->_nil_node)	// successor
-				y = y->left;
+			std::cout << "hello" << std::endl;
+			rhs._alloc = this->_alloc;
 		}
-
-		if (y->left != this->_nil_node)
-			x = y->left;
-		else
-			x = y->right;
-
-		x->parent = y->parent;
-
-		if (y->parent == this->_nil_node)
-			this->_root = x;
-		else if (y == y->parent->left)
-			y->parent->left = x;
-		else
-			y->parent->right = x;
-
-		if (y != z)
-			z->stock.first = y->stock.first;
-
-		if (y->color == BLACK)
-			deleteFix(x);
-		this->_alloc.destroy(y);
-		this->_alloc.deallocate(y, 1);
-		this->_nil_node->parent = this->_root;
-		this->_size--;
-	}
-
-	void	printTree( void ) const
-	{
-		int	i = 0;
-		std::cout << std::endl;
-		this->printAllNode( this->_root , i );
-	}
-
-	void	insertNode( node *ins )
-	{
-		node *y = this->_nil_node;
-		node *x = this->_root;
-
-		while (x != this->_nil_node)
-		{
-			y = x;
-			if (ins->stock.first < x->stock.first)
-				x = x->left;
-			else
-				x = x->right;
-		}
-
-		ins->parent = y;
-		if (y == this->_nil_node)
-			this->_root = ins;
-		else if (ins->stock.first < y->stock.first)
-			y->left = ins;
-		else
-			y->right = ins;
-
-		this->insertFix(ins);
-		this->_nil_node->parent = this->_root;
-		this->_size++;
 	}
 
 	/*	FUNCTION MAP */
@@ -401,20 +335,25 @@ public:
 			this->insert(*first);
 	}
 
-	void erase (iterator position)
+	void	erase(iterator position)
 	{
 		this->erase(*position);
 	}
 
-	size_type erase ( value_type const & k )
+	size_type	erase( value_type const & k )
 	{
 		size_type ret = this->_size;
+		//std::cout << "k.first\t=\t" << k.first << std::endl;
 
 		this->deleteNode(k);
 		return (ret - this->_size);
 	}
 
-	//void erase (iterator first, iterator last);
+	void	erase( iterator first, iterator last )
+	{
+		for (; first != last; ++first)
+			this->erase(first);
+	}
 
 	// Observers:
 
@@ -422,6 +361,7 @@ public:
 
 	iterator	find( value_type const & k )
 	{
+		//this->printTree();
 		return (iterator(this->searchNode(k)));
 	}
 
@@ -432,6 +372,84 @@ public:
 
 
 private:
+
+	void	deleteNode( value_type const & srh )
+	{
+		node *y = this->_nil_node;
+		node *x = this->_nil_node;
+		node *z = this->searchNode(srh);
+		int i = 0;
+
+		if (z == this->_nil_node)
+			return ;
+
+		if (z->left == this->_nil_node || z->right == this->_nil_node)
+			y = z;
+		else
+		{
+			y = z->right;
+			while (y->left != this->_nil_node)	// successor
+				y = y->left;
+		}
+
+		if (y->left != this->_nil_node)
+			x = y->left;
+		else
+			x = y->right;
+
+		x->parent = y->parent;
+
+		if (y->parent == this->_nil_node)
+			this->_root = x;
+		else if (y == y->parent->left)
+			y->parent->left = x;
+		else
+			y->parent->right = x;
+
+		if (y != z)
+			z->stock = y->stock;
+
+		if (y->color == BLACK)
+			deleteFix(x);
+		this->_alloc.destroy(y);
+		this->_alloc.deallocate(y, 1);
+		this->_nil_node->parent = this->_root;
+		this->_size--;
+	}
+
+	void	printTree( void ) const
+	{
+		int	i = 0;
+		std::cout << std::endl;
+		this->printAllNode( this->_root , i );
+	}
+
+	void	insertNode( node *ins )
+	{
+		node *y = this->_nil_node;
+		node *x = this->_root;
+
+		while (x != this->_nil_node)
+		{
+			y = x;
+			if (ins->stock.first < x->stock.first)
+				x = x->left;
+			else
+				x = x->right;
+		}
+
+		ins->parent = y;
+		if (y == this->_nil_node)
+			this->_root = ins;
+		else if (ins->stock.first < y->stock.first)
+			y->left = ins;
+		else
+			y->right = ins;
+
+		this->insertFix(ins);
+		this->_nil_node->parent = this->_root;
+		this->_size++;
+	}
 
 	node	*minNode( void )
 	{
@@ -671,6 +689,13 @@ private:
 
 	void	printNode( node *nodePrint, int const & i ) const
 	{
+		if (nodePrint == this->_nil_node)
+		{
+			std::cout << "is _nil" << std::endl;
+			std::cout  << std::endl;
+			return ;
+		}
+
 		std::cout << "node " << i
 			<< (nodePrint->color == RED
 				? " [RED] "
