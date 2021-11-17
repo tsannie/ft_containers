@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/16 22:27:44 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/17 12:58:43 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,32 +112,32 @@ public:
 		return (this->_tree.begin());
 	}
 
-	iterator end()
+	iterator	end( void )
 	{
 		return (this->_tree.end());
 	}
 
-	const_iterator end() const
+	const_iterator	end( void ) const
 	{
 		return (this->_tree.end());
 	}
 
-	reverse_iterator rbegin()
+	reverse_iterator	rbegin( void )
 	{
 		return (this->_tree.rbegin());
 	}
 
-	const_reverse_iterator rbegin() const
+	const_reverse_iterator	rbegin( void ) const
 	{
 		return (this->_tree.rbegin());
 	}
 
-	reverse_iterator rend()
+	reverse_iterator	rend( void )
 	{
 		return (this->_tree.rend());
 	}
 
-	const_reverse_iterator rend() const
+	const_reverse_iterator	rend( void ) const
 	{
 		return (this->_tree.rend());
 	}
@@ -145,7 +145,7 @@ public:
 
 	// Capacity:
 
-	bool empty( void ) const
+	bool	empty( void ) const
 	{
 		return (this->_tree.empty());
 	}
@@ -172,11 +172,48 @@ public:
 		return (this->_tree.insert(val));
 	}
 
-
-	void	 erase(const key_type& k, const mapped_type& z)
+	iterator	insert( iterator position, value_type const & val )
 	{
-		this->_tree.deleteNode( ft::pair<key_type, mapped_type>(k, z) );
+		return (this->_tree.insert(position, val));
 	}
+
+	template <class InputIterator>
+	void	insert( InputIterator first, InputIterator last )
+	{
+		this->_tree.insert(first, last);
+	}
+
+	void	erase(iterator position)
+	{
+		return (this->_tree.erase(position));
+	}
+
+	size_type	erase( key_type const & k )
+	{
+		mapped_type	x;
+
+		return (this->_tree.erase(ft::make_pair(k, x)));
+	}
+
+	// Observers:
+
+	// Operations:
+
+	iterator	find( key_type const & k )
+	{
+		mapped_type	x;
+
+		return (this->_tree.find(ft::make_pair(k, x)));
+	}
+
+
+	const_iterator	find( key_type const & k ) const
+	{
+		mapped_type	x;
+
+		return (this->_tree.find(ft::make_pair(k, x)));
+	}
+
 };
 
 }

@@ -122,9 +122,15 @@ public:
 			return (ret);
 		}
 
-		//value_type&	operator*( void ) const { return (*this->_val); }
+		reference	operator*( void ) const
+		{
+			return (this->_it->stock);
+		}
 
-		pointer		operator->( void ) const { return	(&this->_it->stock); }
+		pointer		operator->( void ) const
+		{
+			return	(&this->_it->stock);
+		}
 
 		//value_type*	getVal( void ) const { return (this->_val); }
 
@@ -200,6 +206,7 @@ public:
 	typedef	ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 	typedef	ptrdiff_t											difference_type;
 	typedef	size_t												size_type;
+	typedef	Value												value_type;
 
 private:
 
@@ -237,7 +244,7 @@ public:
 		this->_alloc.deallocate(this->_nil_node, 1);
 	}
 
-	void	deleteNode( Value const & srh )
+	void	deleteNode( value_type const & srh )
 	{
 		node *y = this->_nil_node;
 		node *x = this->_nil_node;
@@ -362,27 +369,66 @@ public:
 
 
 	// Modifiers:
-	ft::pair<iterator, bool>	insert( Value const & val )
+
+	ft::pair<iterator, bool>	insert( value_type const & val )
 	{
 		iterator	it;
 
-		if (this->keyExist(val))
+		if (this->searchNode(val) != this->_nil_node)
 		{
-			it = iterator(searchNode(val));
+			it = iterator(this->searchNode(val));
 			return (ft::make_pair(it, false));
 		}
 		else
 		{
-			this->insertNode(newNode(val));
-			it = iterator(searchNode(val));
+			this->insertNode(this->newNode(val));
+			it = iterator(this->searchNode(val));
 
 			return (ft::make_pair(it, true));
 		}
-
 	}
 
+	iterator	insert( iterator position, value_type const & val )
+	{
+		static_cast<void>(position);
+		return (this->insert(val).first);
+	}
 
+	template <class InputIterator>
+	void	insert( InputIterator first, InputIterator last )
+	{
+		for (; first != last; ++first)
+			this->insert(*first);
+	}
 
+	void erase (iterator position)
+	{
+		this->erase(*position);
+	}
+
+	size_type erase ( value_type const & k )
+	{
+		size_type ret = this->_size;
+
+		this->deleteNode(k);
+		return (ret - this->_size);
+	}
+
+	//void erase (iterator first, iterator last);
+
+	// Observers:
+
+	// Operations:
+
+	iterator	find( value_type const & k )
+	{
+		return (iterator(this->searchNode(k)));
+	}
+
+	const_iterator	find( value_type const & k ) const
+	{
+		return (const_iterator(this->searchNode(k)));
+	}
 
 
 private:
@@ -405,23 +451,7 @@ private:
 		return (x);
 	}
 
-	node	*searchNode( Value const & search )
-	{
-		node *x = this->_root;
-
-		while (x != this->_nil_node)
-		{
-			if (search > x->stock)
-				x = x->right;
-			else if (search < x->stock)
-				x = x->left;
-			else if (search == x->stock)
-				return (x);
-		}
-		return (this->_nil_node);
-	}
-
-	bool	keyExist( Value const & search )
+	node	*searchNode( value_type const & search )
 	{
 		node *x = this->_root;
 
@@ -432,12 +462,12 @@ private:
 			else if (search.first < x->stock.first)
 				x = x->left;
 			else if (search.first == x->stock.first)
-				return (true);
+				return (x);
 		}
-		return (false);
+		return (this->_nil_node);
 	}
 
-	node	*newNode( Value const & val )
+	node	*newNode( value_type const & val )
 	{
 		node	*ret = this->_alloc.allocate(1);
 		node	tmp;
