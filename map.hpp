@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/17 18:55:09 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/17 21:08:02 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,27 +78,32 @@ public:
 		this->_comp = comp;
 	}
 
-	/*template <class InputIterator>
+	template <class InputIterator>
 	map(InputIterator first, InputIterator last,
 		const key_compare& comp = key_compare(),
 		const allocator_type& alloc = allocator_type())
 	{
+		this->insert(first, last);
+	}
 
-	}*/
-
-	//map( const map& x )
-	//{}
+	map( const map& rhs )
+	{
+		*this = rhs;
+	}
 
 	~map() {}
 
-	/*map&	operator=(const map& x)
+
+	map&	operator=( const map& rhs )
 	{
-		if (this != &x)
+		if (this != &rhs)
 		{
-			this->_alloc = x._alloc;
-			this->_comp = x._comp;
+			this->_tree.clear();
+			this->_comp = rhs._comp;
+			this->insert(rhs.begin(), rhs.end());
 		}
-	}*/
+		return (*this);
+	}
 
 	// Iterators:
 
@@ -162,7 +167,10 @@ public:
 
 	// Element access:
 
-	//mapped_type& operator[](const key_type& k);
+	mapped_type& operator[](const key_type& k)
+	{
+		return ((this->_tree[k]).second);
+	}
 
 	// Modifiers:
 
@@ -195,7 +203,6 @@ public:
 		return (this->_tree.erase(ft::make_pair(k, x)));
 	}
 
-
 	void	erase( iterator first, iterator last )
 	{
 		this->_tree.erase(first, last);
@@ -204,6 +211,11 @@ public:
 	void	swap(map& x)
 	{
 		//this->_tree = x._tree;
+	}
+
+	void	clear( void )
+	{
+		this->_tree.clear();
 	}
 
 	// Observers:

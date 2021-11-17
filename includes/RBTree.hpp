@@ -251,7 +251,7 @@ public:
 		if (this != &rhs)
 		{
 			std::cout << "hello" << std::endl;
-			rhs._alloc = this->_alloc;
+			//rhs._alloc = this->_alloc;
 		}
 	}
 
@@ -260,12 +260,12 @@ public:
 
 	iterator		begin( void )
 	{
-		return (iterator(this->minNode()));
+		return (iterator(!this->_size ? this->_nil_node : this->minNode()));
 	}
 
 	const_iterator	begin( void ) const
 	{
-		return (const_iterator(this->minNode()));
+		return (const_iterator(!this->_size ? this->_nil_node : this->minNode()));
 	}
 
 	iterator		end( void )
@@ -343,7 +343,6 @@ public:
 	size_type	erase( value_type const & k )
 	{
 		size_type ret = this->_size;
-		//std::cout << "k.first\t=\t" << k.first << std::endl;
 
 		this->deleteNode(k);
 		return (ret - this->_size);
@@ -353,6 +352,14 @@ public:
 	{
 		for (; first != last; ++first)
 			this->erase(first);
+	}
+
+	void	clear( void )
+	{
+		this->delTree(this->_root);
+		this->_size = 0;
+		this->_root = this->_nil_node;
+		this->_nil_node->parent = NULL;
 	}
 
 	// Observers:
@@ -451,7 +458,7 @@ private:
 		this->_size++;
 	}
 
-	node	*minNode( void )
+	node	*minNode( void ) const
 	{
 		node *x = this->_root;
 

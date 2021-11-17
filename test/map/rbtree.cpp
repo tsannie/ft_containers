@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/17 17:37:59 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/17 21:04:01 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,63 @@
 #include "../../map.hpp"
 #include <map>
 
-#define	pl	ft
+#define	pl	std
 
-int	main(void)
+template <typename T>
+void printVec(T &vec, std::string const & name)
 {
-	pl::map<char,int> foo,bar;
+	typename	T::iterator	it;
+	typename	T::iterator	end;
 
+	std::cout << name << " contains:" << std::endl;
+
+	end = vec.end();
+	for (it = vec.begin() ; it != end ; it++)
+		std::cout << it->first << " => " << it->second << '\n';
+	std::cout << "size = " << vec.size() << std::endl;
+	std::cout << "------------------------\n" << std::endl;
+}
+
+
+int main ()
+{
+	pl::map<char,std::string> mymap;
+
+	mymap['a'] = "an element";
+	mymap['b'] = "another element";
+	mymap['c'] = mymap['b'];
+
+	std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+	std::cout << "mymap['b'] is " << mymap['b'] << '\n';
+	std::cout << "mymap['c'] is " << mymap['c'] << '\n';
+	std::cout << "mymap['d'] is " << mymap['d'] << '\n' << std::endl;
+
+	printVec(mymap, "mymap");
+
+	return 0;
+
+	pl::map<char,int> foo, bar;
+
+	foo.insert( pl::pair<char, int>('a', 100) );
+	foo.insert( pl::pair<char, int>('b', 200) );
+	foo.insert( pl::pair<char, int>('c', 300) );
+
+	/*foo.insert( pl::pair<char, int>('b', 200) );
+	foo.insert( pl::pair<char, int>('c', 200) );
 	foo.insert( pl::pair<char, int>('x', 100) );
 	foo.insert( pl::pair<char, int>('y', 200) );
+	foo.insert( pl::pair<char, int>('z', 200) );*/
+
+	bar = foo;
 
 
-	bar.insert( pl::pair<char, int>('a', 11) );
-	bar.insert( pl::pair<char, int>('b', 22) );
-	bar.insert( pl::pair<char, int>('c', 33) );
+	//bar.insert( pl::pair<char, int>('a', 11) );
+	//bar.insert( pl::pair<char, int>('b', 22) );
+	//bar.insert( pl::pair<char, int>('c', 33) );
 
-	foo.swap(bar);
+	//foo.swap(bar);
 
-	/*std::cout << "foo contains:\n";
+	std::cout << "foo contains:\n";
 	for (pl::map<char,int>::iterator it = foo.begin() ; it != foo.end() ; ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
@@ -39,7 +79,7 @@ int	main(void)
 
 	std::cout << "bar contains:\n";
 	for (pl::map<char,int>::iterator it = bar.begin() ; it != bar.end() ; ++it)
-		std::cout << it->first << " => " << it->second << '\n';*/
+		std::cout << it->first << " => " << it->second << '\n';
 
   return 0;
 }
