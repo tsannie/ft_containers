@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/18 15:51:42 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/18 18:46:04 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,12 +228,12 @@ public:
 
 	// Observers:
 
-	key_compare key_comp() const
+	key_compare	key_comp( void ) const
 	{
 		return (this->_comp);
 	}
 
-	value_compare value_comp() const
+	value_compare	value_comp( void ) const
 	{
 		return (value_compare(this->_comp));
 	}
@@ -253,6 +253,49 @@ public:
 		mapped_type	x;
 
 		return (this->_tree.find(ft::make_pair(k, x)));
+	}
+
+	size_type	count(const key_type& k) const
+	{
+		mapped_type	x;
+
+		return (this->_tree.count(ft::make_pair(k, x)));
+	}
+
+	iterator	lower_bound( key_type const & k )
+	{
+		iterator	it;
+
+		for (it = this->begin() ; it != this->end()
+			&& this->_comp(it->first, k) ; ++it) {}
+		return (it);
+	}
+
+	const_iterator lower_bound( key_type const & k ) const
+	{
+		const_iterator	it;
+
+		for (it = this->begin() ; it != this->end()
+			&& this->_comp(it->first, k) ; ++it) {}
+		return (it);
+	}
+
+	iterator upper_bound (const key_type& k)
+	{
+		iterator	it;
+
+		for (it = this->begin() ; it != this->end()
+			&& this->_comp(k, it->first) == false; ++it) {}
+		return (it);
+	}
+
+	const_iterator upper_bound (const key_type& k) const
+	{
+		const_iterator	it;
+
+		for (it = this->begin() ; it != this->end()
+			&& this->_comp(k, it->first) == false; ++it) {}
+		return (it);
 	}
 
 };

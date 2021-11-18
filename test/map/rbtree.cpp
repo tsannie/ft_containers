@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/18 16:59:34 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/18 18:46:17 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,24 @@ void printVec(T &vec, std::string const & name)
 int main ()
 {
 	pl::map<char,int> mymap;
+	pl::map<char,int>::iterator itlow, itup;
 
-	pl::map<char,int>::key_compare mycomp = mymap.key_comp();
+	mymap['a']=20;
+	mymap['b']=40;
+	mymap['c']=60;
+	mymap['d']=80;
+	mymap['e']=100;
 
-	mymap['a']=100;
-	mymap['b']=200;
-	mymap['c']=300;
+	itlow = mymap.lower_bound('b');  // itlow points to b
+	std::cout << itlow->first << " => " << itlow->second << '\n';
 
+	itup = mymap.upper_bound('d');   // itup points to e (not d!)
+	std::cout << itup->first << " => " << itup->second << '\n';
+
+	mymap.erase(itlow,itup);        // erases [itlow,itup)
+
+	// print content:
 	printVec(mymap, "mymap");
-	char highest = mymap.rbegin()->first;     // key value of last element
-
-	pl::map<char,int>::iterator it = mymap.begin();
-	do {
-		std::cout << it->first << " => " << it->second << '\n';
-	} while ( mycomp((*it++).first, highest) );
-
-	std::cout << '\n';
 
 	return 0;
 }

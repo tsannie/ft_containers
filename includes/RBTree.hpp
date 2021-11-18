@@ -388,13 +388,17 @@ public:
 
 	iterator	find( value_type const & k )
 	{
-		//this->printTree();
 		return (iterator(this->searchNode(k)));
 	}
 
 	const_iterator	find( value_type const & k ) const
 	{
 		return (const_iterator(this->searchNode(k)));
+	}
+
+	size_type	count( value_type const & k ) const
+	{
+		return (this->find(k) == this->end() ? 0 : 1);
 	}
 
 
@@ -495,7 +499,7 @@ private:
 		return (x);
 	}
 
-	node	*searchNode( value_type const & search )
+	node	*searchNode( value_type const & search ) const
 	{
 		node *x = this->_root;
 
