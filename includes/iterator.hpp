@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:39:26 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/28 12:56:00 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/18 16:57:35 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ public:
 
 	reverse_iterator(): _it( Iterator() ) {}
 
-	explicit reverse_iterator( iterator_type it )
+	explicit reverse_iterator( iterator_type it ): _it(it)
 	{
-		this->_it = (it - 1);
+		--this->_it;
 	}
 
 	template<class Iter>

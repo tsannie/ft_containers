@@ -109,16 +109,14 @@ public:
 
 		rbIterator&	operator--( void )
 		{
-			//std::cout << "hello" << std::endl;
 			_it = predecessor(_it);
 			return (*this);
 		}
 
 		rbIterator		operator--( int )
 		{
-			//std::cout << "hello" << std::endl;
 			rbIterator	ret = *this;
-			//this->_val--;
+			this->operator--();
 			return (ret);
 		}
 
@@ -165,7 +163,6 @@ public:
 
 		node	*predecessor(node *nd)
 		{
-			//std::cout << "hello" << std::endl;
 			node *x = nd;
 
 			if (x->right == NULL)
@@ -250,7 +247,7 @@ public:
 	{
 		if (this != &rhs)
 		{
-			std::cout << "hello" << std::endl;
+			std::cout << "TODO CONSTRUCTOR COPY" << std::endl;
 			//rhs._alloc = this->_alloc;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/18 14:49:40 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/18 16:59:34 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../map.hpp"
 #include <map>
 
-#define	pl	ft
+#define	pl	std
 
 template <typename T>
 void printVec(T &vec, std::string const & name)
@@ -43,16 +43,15 @@ int main ()
 	mymap['b']=200;
 	mymap['c']=300;
 
-	std::cout << "mymap contains:\n";
-
+	printVec(mymap, "mymap");
 	char highest = mymap.rbegin()->first;     // key value of last element
 
-	/*pl::map<char,int>::iterator it = mymap.begin();
+	pl::map<char,int>::iterator it = mymap.begin();
 	do {
 		std::cout << it->first << " => " << it->second << '\n';
 	} while ( mycomp((*it++).first, highest) );
 
 	std::cout << '\n';
 
-	return 0;*/
+	return 0;
 }
