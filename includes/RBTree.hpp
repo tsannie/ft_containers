@@ -278,6 +278,25 @@ public:
 		return (const_iterator(this->_nil_node));
 	}
 
+	reverse_iterator	rbegin( void )
+	{
+		return (reverse_iterator(this->end()));
+	}
+
+	const_reverse_iterator	rbegin( void ) const
+	{
+		return (const_reverse_iterator(this->end()));
+	}
+
+	reverse_iterator	rend( void )
+	{
+		return (reverse_iterator(this->begin()));
+	}
+
+	const_reverse_iterator	rend( void ) const
+	{
+		return (const_reverse_iterator(this->begin()));
+	}
 
 	// Capacity:
 
@@ -299,7 +318,11 @@ public:
 
 	// Element access:
 
-	//	mapped_type& operator[](const key_type& k);
+	/*template <typename key_type>
+	value_type& operator[](const key_type& k)
+	{
+
+	}*/
 
 
 	// Modifiers:
@@ -385,7 +408,6 @@ private:
 		node *y = this->_nil_node;
 		node *x = this->_nil_node;
 		node *z = this->searchNode(srh);
-		int i = 0;
 
 		if (z == this->_nil_node)
 			return ;

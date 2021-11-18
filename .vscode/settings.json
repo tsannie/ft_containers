@@ -74,6 +74,7 @@
 		"random": "cpp",
 		"fstream": "cpp",
 		"ranges": "cpp",
-		"__memory": "cpp"
+		"__memory": "cpp",
+		"__functional_03": "cpp"
 	}
 }

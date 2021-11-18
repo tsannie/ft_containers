@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 16:28:43 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/17 17:51:22 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:28:12 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 
 namespace ft
 {
+
+template <class T>
+void swap ( T& a, T& b )
+{
+	T	tmp(a);
+
+	a = b;
+	b = tmp;
+}
 
 template<class InputIterator1, class InputIterator2>
 bool	equal( InputIterator1 first1, InputIterator1 last1, InputIterator2 first2 )

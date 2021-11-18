@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/17 21:08:02 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:49:29 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ public:
 		const key_compare& comp = key_compare(),
 		const allocator_type& alloc = allocator_type())
 	{
+		this->_alloc = alloc;
+		this->_comp = comp;
 		this->insert(first, last);
 	}
 
@@ -99,6 +101,7 @@ public:
 		if (this != &rhs)
 		{
 			this->_tree.clear();
+			this->_alloc = rhs._alloc;
 			this->_comp = rhs._comp;
 			this->insert(rhs.begin(), rhs.end());
 		}
@@ -169,7 +172,12 @@ public:
 
 	mapped_type& operator[](const key_type& k)
 	{
-		return ((this->_tree[k]).second);
+		iterator	it;
+		mapped_type	x;
+
+
+		it = (this->insert( ft::make_pair(k, x) )).first;
+		return (it->second);
 	}
 
 	// Modifiers:
@@ -210,7 +218,7 @@ public:
 
 	void	swap(map& x)
 	{
-		//this->_tree = x._tree;
+		ft::swap(*this, x);
 	}
 
 	void	clear( void )
@@ -219,6 +227,16 @@ public:
 	}
 
 	// Observers:
+
+	key_compare key_comp() const
+	{
+		return (this->_comp);
+	}
+
+	value_compare value_comp() const
+	{
+		return (value_compare(this->_comp));
+	}
 
 	// Operations:
 
