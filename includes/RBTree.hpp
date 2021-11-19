@@ -763,11 +763,12 @@ private:
 				? "(root) "
 				: "") << ":" << std::endl;
 
-		std::cout << "key    = " << nodePrint->stock.first << std::endl;
-		this->printKey(nodePrint->parent, "parent");
-		this->printKey(nodePrint->left, "left  ");
-		this->printKey(nodePrint->right, "right ");
-		std::cout << "value  = " << nodePrint->stock.second << std::endl;
+		std::cout << "address = " << nodePrint << std::endl;
+		std::cout << "key     = " << nodePrint->stock.first << std::endl;
+		this->printKey(nodePrint->parent, "parent ");
+		this->printKey(nodePrint->left, "left   ");
+		this->printKey(nodePrint->right, "right  ");
+		std::cout << "value   = " << nodePrint->stock.second << std::endl;
 		std::cout << "--------------------------" << std::endl;
 		std::cout << std::endl;
 
