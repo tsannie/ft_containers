@@ -130,20 +130,20 @@ public:
 			return	(&this->_it->stock);
 		}
 
-		//value_type*	getVal( void ) const { return (this->_val); }
+		node*	getNode( void ) const { return (this->_it); } // delete
 
 		node	*successorNode(node *nd)	//edit this shit and replace with _it for void successorNode(void)
 		{
 			node *x = nd;
 
 			//std::cout << "hey" << std::endl;
-			if (x->right->right == NULL)
+			if (x->right->right == NULL && x->parent)
 			{
-				//std::cout << "choose1" << std::endl;
+				std::cout << "choos1" << nd->color << std::endl;
+				std::cout << "hey" << std::endl;
 				x = x->parent;
 				while (x->parent->right != NULL && x->stock < nd->stock)
 				{
-					//std::cout << "hey" << std::endl;
 					x = x->parent;
 				}
 				if (x->stock < nd->stock)	// if x dont have successor
@@ -153,10 +153,15 @@ public:
 			}
 			else
 			{
-				//std::cout << "choose2" << std::endl;
+				std::cout << "x->right->stock.second\t=\t" << x->right->stock.second << std::endl;
+				std::cout << "x->stock.first\t=\t" << x->stock.first << std::endl;
 				x = x->right;
+				std::cout << "x->stock.first\t=\t" << x->stock.first << std::endl;
+				std::cout << "choose2" << std::endl;
 				while (x->left->right != NULL)
+				{
 					x = x->left;
+				}
 			}
 			return (x);
 		}
@@ -362,6 +367,7 @@ public:
 
 	size_type	erase( value_type const & k )
 	{
+		std::cout << "start delete " << k.first << std::endl;
 		size_type ret = this->_size;
 
 		this->deleteNode(k);
@@ -370,8 +376,31 @@ public:
 
 	void	erase( iterator first, iterator last )
 	{
-		for (; first != last; ++first)
-			this->erase(first);
+		iterator toDel;
+
+		while (first != last)
+		{
+			toDel = first;
+			//std::cout << first->first << " => " << first->second << '\n';
+
+			int i=0;
+			this->printTree();
+			this->printNode(first.getNode(), i);
+			first++;
+			std::cout << "before crash" << std::endl;
+			std::cout << toDel->first << " => " << toDel->second << '\n';
+			this->erase(toDel);
+			std::cout << first->first << " => " << first->second << '\n' << '\n';
+		}
+		/*++first;
+		std::cout << first->first << " => " << first->second << '\n';
+		std::cout << last->first << " => " << last->second << '\n';*/
+		/*for (; first != last; ++first)
+		{
+			std::cout << first->first << " => " << first->second << '\n';
+			this->erase(*first);
+		}*/
+		//this->erase(first);
 	}
 
 	void	clear( void )

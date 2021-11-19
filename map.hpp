@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/18 18:46:04 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/19 04:04:49 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,8 @@ public:
 
 	void	erase( iterator first, iterator last )
 	{
+		//std::cout << first->first << " => " << first->second << '\n';
+		//std::cout << last->first << " => " << last->second << '\n';
 		this->_tree.erase(first, last);
 	}
 
