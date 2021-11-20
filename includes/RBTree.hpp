@@ -136,14 +136,23 @@ public:
 		{
 			node *x = nd;
 
-			//std::cout << "hey" << std::endl;
-			if (x->right->right == NULL && x->parent)
+			//std::cout << "ADRESS TO INCR: " << this->_it << std::endl;
+			if (x->right->right != NULL)
 			{
-				std::cout << "choos1" << nd->color << std::endl;
-				std::cout << "hey" << std::endl;
+				//std::cout << "choose2" << std::endl;
+				x = x->right;
+				while (x->left->right != NULL)
+				{
+					x = x->left;
+				}
+			}
+			else
+			{
+
 				x = x->parent;
 				while (x->parent->right != NULL && x->stock < nd->stock)
 				{
+					//std::cout << "choose1" << std::endl;
 					x = x->parent;
 				}
 				if (x->stock < nd->stock)	// if x dont have successor
@@ -151,18 +160,7 @@ public:
 				if (x == nd)	// for if root dont have successor
 					x = x->parent;
 			}
-			else
-			{
-				std::cout << "x->right->stock.second\t=\t" << x->right->stock.second << std::endl;
-				std::cout << "x->stock.first\t=\t" << x->stock.first << std::endl;
-				x = x->right;
-				std::cout << "x->stock.first\t=\t" << x->stock.first << std::endl;
-				std::cout << "choose2" << std::endl;
-				while (x->left->right != NULL)
-				{
-					x = x->left;
-				}
-			}
+			//std::cout << x->stock.first << " (succ)=> " << nd->stock.first << std::endl;
 			return (x);
 		}
 
@@ -362,40 +360,68 @@ public:
 
 	void	erase(iterator position)
 	{
+		int i=0;
+		//this->printTree();
+		//std::cout << "ADRESS IT:" << std::endl;
+		//this->printNode(position.getNode(), i);
 		this->erase(*position);
+		//this->printTree();
 	}
 
 	size_type	erase( value_type const & k )
 	{
-		std::cout << "start delete " << k.first << std::endl;
+		//std::cout << "start delete " << k.first << std::endl;
 		size_type ret = this->_size;
 
 		this->deleteNode(k);
+		//std::cout << "end delete " << k.first << std::endl;
 		return (ret - this->_size);
 	}
 
 	void	erase( iterator first, iterator last )
 	{
-		iterator toDel;
+		iterator	nav;
+		value_type	next;
+		value_type	last_val;
 
+		last_val = *last;
 		while (first != last)
 		{
+			nav = first;
+			nav++;
+			next = *nav;
+			this->erase(*first);
+			first = this->find(next);
+			last = this->find(last_val);
+			//this->printTree();
+			//std::cout << "////////////////////////////////////////\n" << std::endl;
+		}
+
+
+		//	std::cout << "toDel: " << toDel->first << " => " << toDel->second << " | " << toDel.getNode() << '\n';
+		/*while (first != last)
+		{
 			toDel = first;
-			//std::cout << first->first << " => " << first->second << '\n';
+			std::cout << "toDel: " << toDel->first << " => " << toDel->second << " | " << toDel.getNode() << '\n';
+			++first;
+			std::cout << "first: " << first->first << " => " << first->second << " | " << first.getNode() << '\n';
+			this->erase(*toDel);
+			this->printTree();
+
 
 			int i=0;
-			this->printTree();
+			std::cout << "NOW FIRST:" << std::endl;
 			this->printNode(first.getNode(), i);
 			first++;
 			std::cout << "before crash" << std::endl;
 			std::cout << toDel->first << " => " << toDel->second << '\n';
 			this->erase(toDel);
 			std::cout << first->first << " => " << first->second << '\n' << '\n';
-		}
+		}*/
 		/*++first;
 		std::cout << first->first << " => " << first->second << '\n';
-		std::cout << last->first << " => " << last->second << '\n';*/
-		/*for (; first != last; ++first)
+		std::cout << last->first << " => " << last->second << '\n';
+		for (; first != last; ++first)
 		{
 			std::cout << first->first << " => " << first->second << '\n';
 			this->erase(*first);
@@ -472,6 +498,7 @@ private:
 			deleteFix(x);
 		this->_alloc.destroy(y);
 		this->_alloc.deallocate(y, 1);
+		y = this->_nil_node;
 		this->_nil_node->parent = this->_root;
 		this->_size--;
 	}

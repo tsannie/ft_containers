@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/19 04:02:54 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/20 02:24:38 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../map.hpp"
 #include <map>
 
-#define	pl	ft
+#define	pl	std
 
 template <typename T>
 void printVec(T &vec, std::string const & name)
@@ -36,15 +36,33 @@ void printVec(T &vec, std::string const & name)
 int main ()
 {
 	pl::map<char,int> mymap;
+
+	mymap['a']=10;
+	mymap['b']=20;
+	mymap['c']=30;
+
+	pl::pair<pl::map<char,int>::iterator, pl::map<char,int>::iterator> ret;
+	ret = mymap.equal_range('b');
+
+	std::cout << "lower bound points to: ";
+	std::cout << ret.first->first << " => " << ret.first->second << '\n';
+
+	std::cout << "upper bound points to: ";
+	std::cout << ret.second->first << " => " << ret.second->second << '\n';
+
+	return 0;
+}
+/*{
+	pl::map<char,int> mymap;
 	pl::map<char,int>::iterator it, end;
 
-	mymap['a']=20;
-	mymap['b']=40;
-	mymap['c']=50;
-	mymap['d']=60;
-	mymap['e']=70;
-	mymap['f']=80;
-	mymap['g']=100;
+	mymap['a'] = 20;
+	mymap['b'] = 40;
+	mymap['c'] = 50;
+	mymap['d'] = 60;
+	mymap['e'] = 70;
+	mymap['f'] = 80;
+	mymap['g'] = 100;
 
 	//itlow = mymap.lower_bound('b');  // itlow points to b
 	//std::cout << itlow->first << " => " << itlow->second << '\n';
@@ -52,16 +70,14 @@ int main ()
 	//itup = mymap.upper_bound('d');   // itup points to e (not d!)
 	//std::cout << itup->first << " => " << itup->second << '\n';
 
-	end = mymap.find('f');
-	for (it = mymap.find('b') ; it != end ; it++)
-		std::cout << it->first << " => " << it->second << '\n';
+	mymap.erase(mymap.find('b'), mymap.end());
+	std::cout << it->first << " => " << it->second << '\n';
 	std::cout << "size = " << mymap.size() << std::endl;
 
-	mymap.erase(mymap.find('b'), mymap.find('f'));        // erases [itlow,itup)
 
 
 	// print content:
-	//printVec(mymap, "mymap");
+	printVec(mymap, "mymap");
 
 	return 0;
-}
+}*/
