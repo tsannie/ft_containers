@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/15 11:53:18 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/20 18:18:53 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -474,7 +474,7 @@ public:
 
 	template <class InputIterator>
 	void		insert(iterator position, InputIterator first, InputIterator last,
-	typename std::enable_if<!std::is_integral<InputIterator>::value>::type* = 0)
+	typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
 	{
 		size_type	start = position - this->begin();
 		size_type	n = 0;

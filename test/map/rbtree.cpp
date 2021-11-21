@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/20 02:24:38 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/21 02:28:43 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../includes/utility.hpp"
 #include "../../map.hpp"
 #include <map>
+#include <list>
 
 #define	pl	std
 
@@ -32,52 +33,35 @@ void printVec(T &vec, std::string const & name)
 	std::cout << "------------------------\n" << std::endl;
 }
 
+struct ft_more {
+	bool	operator()(const int &first, const int &second) const {
+		return (first > second);
+	}
+};
 
-int main ()
+//typedef pl::map<int, std::string, ft_more>::iterator ft_mp_it;
+
+int		main(void)
 {
-	pl::map<char,int> mymap;
+	pl::map<int, std::string, ft_more> mp;
 
-	mymap['a']=10;
-	mymap['b']=20;
-	mymap['c']=30;
+	mp[12] = "no";
+	mp[25] = "funny";
+	mp[27] = "bee";
+	mp[42] = "fgzgxfn";
+	mp[80] = "hey";
+	mp[90] = "8";
+	printVec(mp, "mp");
 
-	pl::pair<pl::map<char,int>::iterator, pl::map<char,int>::iterator> ret;
-	ret = mymap.equal_range('b');
+	pl::map<int, std::string>::iterator	it;
+	pl::map<int, std::string>::iterator	end;
 
-	std::cout << "lower bound points to: ";
-	std::cout << ret.first->first << " => " << ret.first->second << '\n';
+	end = mp.end();
+	for (it = mp.begin() ; it != end ; it++)
+		std::cout << it->first << " => " << it->second << '\n';
+	std::cout << "size = " << mp.size() << std::endl;
+	std::cout << "------------------------\n" << std::endl;
 
-	std::cout << "upper bound points to: ";
-	std::cout << ret.second->first << " => " << ret.second->second << '\n';
+	return (0);
 
-	return 0;
 }
-/*{
-	pl::map<char,int> mymap;
-	pl::map<char,int>::iterator it, end;
-
-	mymap['a'] = 20;
-	mymap['b'] = 40;
-	mymap['c'] = 50;
-	mymap['d'] = 60;
-	mymap['e'] = 70;
-	mymap['f'] = 80;
-	mymap['g'] = 100;
-
-	//itlow = mymap.lower_bound('b');  // itlow points to b
-	//std::cout << itlow->first << " => " << itlow->second << '\n';
-
-	//itup = mymap.upper_bound('d');   // itup points to e (not d!)
-	//std::cout << itup->first << " => " << itup->second << '\n';
-
-	mymap.erase(mymap.find('b'), mymap.end());
-	std::cout << it->first << " => " << it->second << '\n';
-	std::cout << "size = " << mymap.size() << std::endl;
-
-
-
-	// print content:
-	printVec(mymap, "mymap");
-
-	return 0;
-}*/

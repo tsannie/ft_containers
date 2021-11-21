@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 08:20:23 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/27 11:24:21 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/20 18:19:10 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ struct is_integral<bool> : public true_type {};
 template<>
 struct is_integral<char> : public true_type {};
 
-template<>
+/*template<>
 struct is_integral<char16_t> : public true_type {};
 
 template<>
-struct is_integral<char32_t> : public true_type {};
+struct is_integral<char32_t> : public true_type {};*/
 
 template<>
 struct is_integral<wchar_t> : public true_type {};

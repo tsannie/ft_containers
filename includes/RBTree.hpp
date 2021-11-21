@@ -360,7 +360,7 @@ public:
 
 	void	erase(iterator position)
 	{
-		int i=0;
+		//int i=0;
 		//this->printTree();
 		//std::cout << "ADRESS IT:" << std::endl;
 		//this->printNode(position.getNode(), i);

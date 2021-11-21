@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/19 15:15:16 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/20 18:49:09 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ public:
 
 	class value_compare
 	{
-	protected:
+	public:
 		Compare comp;
 		value_compare( Compare c ) : comp(c) {}
 
@@ -299,6 +299,17 @@ public:
 			&& this->_comp(k, it->first) == false; ++it) {}
 		return (it);
 	}
+
+	pair<iterator ,iterator>	equal_range( key_type const & k )
+	{
+		return (ft::make_pair(this->lower_bound(k), this->upper_bound(k)));
+	}
+
+	pair<const_iterator ,const_iterator>	equal_range( key_type const & k ) const
+	{
+		return (ft::make_pair(this->lower_bound(k), this->upper_bound(k)));
+	}
+
 
 };
 
