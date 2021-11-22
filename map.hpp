@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/22 10:06:42 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/22 13:40:51 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ public:
 
 	~map() {}
 
-
 	map&	operator=( const map& rhs )
 	{
 		if (this != &rhs)
@@ -173,10 +172,8 @@ public:
 	mapped_type& operator[](const key_type& k)
 	{
 		iterator	it;
-		mapped_type	x;
 
-
-		it = (this->insert( ft::make_pair(k, x) )).first;
+		it = (this->insert( ft::make_pair(k, mapped_type()) )).first;
 		return (it->second);
 	}
 
@@ -206,9 +203,7 @@ public:
 
 	size_type	erase( key_type const & k )
 	{
-		mapped_type	x;
-
-		return (this->_tree.erase(ft::make_pair(k, x)));
+		return (this->_tree.erase(ft::make_pair(k, mapped_type())));
 	}
 
 	void	erase( iterator first, iterator last )
@@ -244,24 +239,18 @@ public:
 
 	iterator	find( key_type const & k )
 	{
-		mapped_type	x;
-
-		return (this->_tree.find(ft::make_pair(k, x)));
+		return (this->_tree.find(ft::make_pair(k, mapped_type())));
 	}
 
 
 	const_iterator	find( key_type const & k ) const
 	{
-		mapped_type	x;
-
-		return (this->_tree.find(ft::make_pair(k, x)));
+		return (this->_tree.find(ft::make_pair(k, mapped_type())));
 	}
 
 	size_type	count(const key_type& k) const
 	{
-		mapped_type	x;
-
-		return (this->_tree.count(ft::make_pair(k, x)));
+		return (this->_tree.count(ft::make_pair(k, mapped_type())));
 	}
 
 	iterator	lower_bound( key_type const & k )
@@ -309,9 +298,59 @@ public:
 	{
 		return (ft::make_pair(this->lower_bound(k), this->upper_bound(k)));
 	}
-
-
 };
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator==( ft::map<Key,T,Compare,Alloc> const & lhs,
+				ft::map<Key,T,Compare,Alloc> const & rhs )
+{
+	if (lhs.size() != rhs.size())
+		return (false);
+	return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+}
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator!=( ft::map<Key,T,Compare,Alloc> const & lhs,
+				ft::map<Key,T,Compare,Alloc> const & rhs )
+{
+	return (!(lhs == rhs));
+}
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator<( ft::map<Key,T,Compare,Alloc> const & lhs,
+				ft::map<Key,T,Compare,Alloc> const & rhs )
+{
+	return (ft::lexicographical_compare(lhs.begin(), lhs.end(),
+										rhs.begin(), rhs.end()));
+}
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator<=( ft::map<Key,T,Compare,Alloc> const & lhs,
+				ft::map<Key,T,Compare,Alloc> const & rhs )
+{
+	return ((lhs < rhs) || (lhs == rhs));
+}
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator>( ft::map<Key,T,Compare,Alloc> const & lhs,
+				ft::map<Key,T,Compare,Alloc> const & rhs )
+{
+	return (rhs < lhs);
+}
+
+template< class Key, class T, class Compare, class Alloc >
+bool operator>=( ft::map<Key,T,Compare,Alloc> const & lhs,
+				ft::map<Key,T,Compare,Alloc> const & rhs )
+{
+	return ((lhs > rhs) || (lhs == rhs));
+}
+
+template< class Key, class T, class Compare, class Alloc >
+void swap( ft::map<Key,T,Compare,Alloc>& lhs,
+			ft::map<Key,T,Compare,Alloc>& rhs )
+{
+	lhs.swap(rhs);
+}
 
 }
 #endif
