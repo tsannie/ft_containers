@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/21 02:28:43 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/22 11:20:22 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <map>
 #include <list>
 
-#define	pl	std
+#define	pl	ft
 
 template <typename T>
 void printVec(T &vec, std::string const & name)
@@ -53,8 +53,8 @@ int		main(void)
 	mp[90] = "8";
 	printVec(mp, "mp");
 
-	pl::map<int, std::string>::iterator	it;
-	pl::map<int, std::string>::iterator	end;
+	pl::map<int, std::string, ft_more>::iterator	it;
+	pl::map<int, std::string, ft_more>::iterator	end;
 
 	end = mp.end();
 	for (it = mp.begin() ; it != end ; it++)

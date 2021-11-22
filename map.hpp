@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/20 18:49:09 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/22 10:06:42 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ public:
 
 	typedef	ptrdiff_t												difference_type;
 	typedef	size_t													size_type;
-	typedef	ft::RBTree<value_type, allocator_type>					tree;
+	typedef	ft::RBTree<value_type, key_compare, allocator_type>		tree;
 
 	typedef typename	tree::iterator					iterator;
 	typedef typename	tree::const_iterator			const_iterator;

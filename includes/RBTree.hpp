@@ -24,6 +24,7 @@ namespace ft
 {
 
 template <class Value,
+		class Compare,
 		class Alloc>
 class RBTree
 {
@@ -43,27 +44,30 @@ public:
 
 	template<
 	typename T,
+	class Comp,
 	bool isConst = false
 	> struct rbIterator
 	{
 
 	public:
+		typedef	Comp		key_compare;
 		typedef	ptrdiff_t	difference_type;
 		typedef	T			value_type;
 		typedef	T*			pointer;
 		typedef	T&			reference;
 
 	private:
-		node	*_it;
+		node		*_it;
+		key_compare	_comp;
 
 	public:
 		rbIterator( void ): _it( NULL ) {}
 		explicit rbIterator( node *it ): _it( it ) {}
 		rbIterator( rbIterator const & cpy ) { *this = cpy; }
 
-		operator rbIterator<const T, true>() const
+		operator rbIterator<const T, key_compare, true>() const
 		{
-			return rbIterator<const T, true> (this->_it);
+			return rbIterator<const T, key_compare, true> (this->_it);
 		}
 
 		rbIterator&	operator=( rbIterator const &rhs )
@@ -87,22 +91,22 @@ public:
 			return (ret);
 		}
 
-		bool		operator==( rbIterator<T, false> const &b ) const
+		bool		operator==( rbIterator<T, key_compare, false> const &b ) const
 		{
 			return (this->_it == b._it);
 		}
 
-		bool		operator!=( rbIterator<T, false> const &b ) const
+		bool		operator!=( rbIterator<T, key_compare, false> const &b ) const
 		{
 			return (this->_it != b._it);
 		}
 
-		bool		operator==( rbIterator<const T, true> const &b ) const
+		bool		operator==( rbIterator<const T, key_compare, true> const &b ) const
 		{
 			return (this->_it == b._it);
 		}
 
-		bool		operator!=( rbIterator<const T, true> const &b ) const
+		bool		operator!=( rbIterator<const T, key_compare, true> const &b ) const
 		{
 			return (this->_it != b._it);
 		}
@@ -150,12 +154,12 @@ public:
 			{
 
 				x = x->parent;
-				while (x->parent->right != NULL && x->stock < nd->stock)
+				while (x->parent->right != NULL && this->_comp(x->stock.first, nd->stock.first))
 				{
 					//std::cout << "choose1" << std::endl;
 					x = x->parent;
 				}
-				if (x->stock < nd->stock)	// if x dont have successor
+				if (this->_comp(x->stock.first, nd->stock.first))	// if x dont have successor
 					x = x->parent;
 				if (x == nd)	// for if root dont have successor
 					x = x->parent;
@@ -201,14 +205,15 @@ public:
 
 	};
 
-	typedef typename	Alloc::template rebind<node>::other		alloc_node;
-	typedef rbIterator<Value, false>							iterator;
-	typedef rbIterator<const Value, true>						const_iterator;
-	typedef	ft::reverse_iterator<iterator>						reverse_iterator;
-	typedef	ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 	typedef	ptrdiff_t											difference_type;
 	typedef	size_t												size_type;
 	typedef	Value												value_type;
+	typedef	Compare												key_compare;
+	typedef typename	Alloc::template rebind<node>::other		alloc_node;
+	typedef rbIterator<Value, key_compare, false>							iterator;
+	typedef rbIterator<const Value, key_compare, true>						const_iterator;
+	typedef	ft::reverse_iterator<iterator>						reverse_iterator;
+	typedef	ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 
 private:
 
@@ -216,6 +221,7 @@ private:
 	node		*_nil_node;
 	alloc_node	_alloc;
 	size_type	_size;
+	key_compare	_comp;
 
 public:
 
@@ -396,37 +402,6 @@ public:
 			//this->printTree();
 			//std::cout << "////////////////////////////////////////\n" << std::endl;
 		}
-
-
-		//	std::cout << "toDel: " << toDel->first << " => " << toDel->second << " | " << toDel.getNode() << '\n';
-		/*while (first != last)
-		{
-			toDel = first;
-			std::cout << "toDel: " << toDel->first << " => " << toDel->second << " | " << toDel.getNode() << '\n';
-			++first;
-			std::cout << "first: " << first->first << " => " << first->second << " | " << first.getNode() << '\n';
-			this->erase(*toDel);
-			this->printTree();
-
-
-			int i=0;
-			std::cout << "NOW FIRST:" << std::endl;
-			this->printNode(first.getNode(), i);
-			first++;
-			std::cout << "before crash" << std::endl;
-			std::cout << toDel->first << " => " << toDel->second << '\n';
-			this->erase(toDel);
-			std::cout << first->first << " => " << first->second << '\n' << '\n';
-		}*/
-		/*++first;
-		std::cout << first->first << " => " << first->second << '\n';
-		std::cout << last->first << " => " << last->second << '\n';
-		for (; first != last; ++first)
-		{
-			std::cout << first->first << " => " << first->second << '\n';
-			this->erase(*first);
-		}*/
-		//this->erase(first);
 	}
 
 	void	clear( void )
@@ -518,16 +493,17 @@ private:
 		while (x != this->_nil_node)
 		{
 			y = x;
-			if (ins->stock.first < x->stock.first)
+			if (this->_comp(ins->stock.first, x->stock.first))
 				x = x->left;
 			else
 				x = x->right;
 		}
 
 		ins->parent = y;
+
 		if (y == this->_nil_node)
 			this->_root = ins;
-		else if (ins->stock.first < y->stock.first)
+		else if (this->_comp(ins->stock.first, y->stock.first))
 			y->left = ins;
 		else
 			y->right = ins;
@@ -535,6 +511,7 @@ private:
 		this->insertFix(ins);
 		this->_nil_node->parent = this->_root;
 		this->_size++;
+		//this->printTree();
 	}
 
 	node	*minNode( void ) const
@@ -557,13 +534,14 @@ private:
 
 	node	*searchNode( value_type const & search ) const
 	{
+		//std::cout << "ENTER" << std::endl;
 		node *x = this->_root;
 
 		while (x != this->_nil_node)
 		{
-			if (search.first > x->stock.first)
+			if (this->_comp(x->stock.first, search.first))
 				x = x->right;
-			else if (search.first < x->stock.first)
+			else if (this->_comp(search.first, x->stock.first))
 				x = x->left;
 			else if (search.first == x->stock.first)
 				return (x);
