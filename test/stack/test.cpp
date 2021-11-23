@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:06:31 by tsannie           #+#    #+#             */
-/*   Updated: 2021/10/28 14:32:39 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/23 18:23:21 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <list>
 #include "../../stack.hpp"
 
+#define pl ft
+
 template <class T_STACK>
 void	cmp(const T_STACK &lhs, const T_STACK &rhs)
 {
@@ -24,8 +26,8 @@ void	cmp(const T_STACK &lhs, const T_STACK &rhs)
 
 	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
 	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
-	//std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
-	//std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
+	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
+	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
 }
 
 int		main(void)
@@ -39,11 +41,11 @@ int		main(void)
 	ctnr.push_back(0);
 	ctnr.push_back(183792);
 
-	ft::stack<int, std::list<int> >	stck(ctnr);
-	ft::stack<int, std::list<int> >	stck2(ctnr);
+	pl::stack<int, std::list<int> >	stck(ctnr);
+	pl::stack<int, std::list<int> >	stck2(ctnr);
 
 	cmp(stck, stck);  // 0
-	/*cmp(stck, stck2); // 1
+	cmp(stck, stck2); // 1
 
 	stck2.push(60);
 	stck2.push(61);
@@ -60,6 +62,6 @@ int		main(void)
 	stck.push(100);
 
 	cmp(stck, stck2); // 6
-	cmp(stck2, stck); // 7*/
+	cmp(stck2, stck); // 7
 	return (0);
 }

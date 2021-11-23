@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:39:26 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/23 04:27:37 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/23 17:20:50 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ public:
 
 	reference operator[] (difference_type n) const
 	{
-		return (*(this->_it + n));
+		Iterator tmp = this->_it;
+
+		--tmp;
+		return (*(tmp - n));
 	}
 
 };

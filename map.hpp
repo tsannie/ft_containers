@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/22 13:40:51 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/23 17:43:19 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ namespace ft
 template <class Key,
 		class T,
 		class Compare = std::less<Key>,
-		class Alloc = std::allocator<ft::pair<Key, T> >
+		class Alloc = std::allocator<ft::pair< Key, T> >
 > class map
 {
 
 public:
 	typedef				Key										key_type;
 	typedef				T										mapped_type;
-	typedef				ft::pair<key_type, mapped_type>			value_type; //key is const ?
+	typedef				ft::pair<key_type, mapped_type>	value_type; //key is const ?
 	typedef				Compare									key_compare;
 
 	class value_compare
@@ -71,8 +71,8 @@ private:
 
 public:
 
-	explicit map ( const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type() )
+	explicit map ( key_compare const & comp = key_compare(),
+				allocator_type const & alloc = allocator_type() )
 	{
 		this->_alloc = alloc;
 		this->_comp = comp;
@@ -80,8 +80,8 @@ public:
 
 	template <class InputIterator>
 	map(InputIterator first, InputIterator last,
-		const key_compare& comp = key_compare(),
-		const allocator_type& alloc = allocator_type())
+		key_compare const & comp = key_compare(),
+		allocator_type const & alloc = allocator_type())
 	{
 		this->_alloc = alloc;
 		this->_comp = comp;
@@ -95,7 +95,7 @@ public:
 
 	~map() {}
 
-	map&	operator=( const map& rhs )
+	map&	operator=( map const & rhs )
 	{
 		if (this != &rhs)
 		{
@@ -262,7 +262,7 @@ public:
 		return (it);
 	}
 
-	const_iterator lower_bound( key_type const & k ) const
+	const_iterator	lower_bound( key_type const & k ) const
 	{
 		const_iterator	it;
 
@@ -271,7 +271,7 @@ public:
 		return (it);
 	}
 
-	iterator upper_bound (const key_type& k)
+	iterator	upper_bound( key_type const & k )
 	{
 		iterator	it;
 
@@ -280,7 +280,7 @@ public:
 		return (it);
 	}
 
-	const_iterator upper_bound (const key_type& k) const
+	const_iterator	upper_bound ( key_type const & k ) const
 	{
 		const_iterator	it;
 

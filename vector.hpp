@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/20 18:18:53 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/23 17:00:39 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -537,6 +537,11 @@ public:
 
 };
 
+template <class T, class Alloc>
+	void swap (vector<T, Alloc>& x, vector<T, Alloc>& y)
+{
+	x.swap(y);
+}
 
 /*   RELATIONAL OPERATORS   */
 
