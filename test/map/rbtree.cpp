@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/22 13:35:34 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/23 04:39:27 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <map>
 #include <list>
 
-#define	pl	std
+#define	pl	ft
 
 template <typename T>
 void printVec(T &vec, std::string const & name)
@@ -41,46 +41,93 @@ void printVec(T &vec, std::string const & name)
 
 //typedef pl::map<int, std::string, ft_more>::iterator ft_mp_it;
 
-#define T1 char
-#define T2 int
-typedef ft::pair<const T1, T2> T3;
+#include <list>
 
-template <class MAP>
-void	cmp(const MAP &lhs, const MAP &rhs)
+
+template <typename T>
+std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
 {
-	static int i = 0;
-
-	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
-	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
-	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
-	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
+	o << "key: " << iterator->first << " | value: " << iterator->second;
+	if (nl)
+		o << std::endl;
+	return ("");
 }
 
-int		main(void)
+template <typename T>
+class foo {
+	public:
+		typedef T	value_type;
+
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src) {
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+		operator value_type(void) const {
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+
+template <typename T>
+std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
+	o << bar.getValue();
+	return o;
+}
+
+#define T1 char
+#define T2 int
+typedef pl::pair<const T1, T2> T3;
+
+int main (void)
 {
-	pl::map<T1, T2> mp1;
-	pl::map<T1, T2> mp2;
+	std::list<T3> lst;
 
-	mp1['a'] = 2; mp1['b'] = 3; mp1['c'] = 4; mp1['d'] = 5;
-	mp2['a'] = 2; mp2['b'] = 3; mp2['c'] = 4; mp2['d'] = 5;
+	unsigned int lst_size = 7;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3('a' + i, lst_size - i));
+	pl::map<T1, T2> foo(lst.begin(), lst.end());
 
-	cmp(mp1, mp1); // 0
-	cmp(mp1, mp2); // 1
+	lst.clear(); lst_size = 4;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3('z' - i, i * 5));
+	pl::map<T1, T2> bar(lst.begin(), lst.end());
 
-	mp2['e'] = 6; mp2['f'] = 7; mp2['h'] = 8; mp2['h'] = 9;
+	pl::map<T1, T2>::const_iterator it_foo = foo.begin();
+	pl::map<T1, T2>::const_iterator it_bar = bar.begin();
 
-	cmp(mp1, mp2); // 2
-	cmp(mp2, mp1); // 3
+	std::cout << "BEFORE SWAP" << std::endl;
 
-	(++(++mp1.begin()))->second = 42;
+	std::cout << "foo contains:" << std::endl;
+	printVec(foo, "foo");
+	std::cout << "bar contains:" << std::endl;
+	printVec(bar, "bar");
 
-	cmp(mp1, mp2); // 4
-	cmp(mp2, mp1); // 5
+	foo.swap(bar);
 
-	/*swap(mp1, mp2);
+	std::cout << "AFTER SWAP" << std::endl;
 
-	cmp(mp1, mp2); // 6
-	cmp(mp2, mp1); // 7*/
+	std::cout << "foo contains:" << std::endl;
+	printVec(foo, "foo");
+	std::cout << "bar contains:" << std::endl;
+	printVec(bar, "bar");
+
+	std::cout << "Iterator validity:" << std::endl;
+	std::cout << (it_foo == bar.begin()) << std::endl;
+	std::cout << (it_bar == foo.begin()) << std::endl;
 
 	return (0);
 }

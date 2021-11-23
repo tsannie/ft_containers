@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:39:26 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/18 16:57:35 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/23 04:27:37 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,41 +40,40 @@ public:
 
 	reverse_iterator(): _it( Iterator() ) {}
 
-	explicit reverse_iterator( iterator_type it ): _it(it)
-	{
-		--this->_it;
-	}
+	explicit reverse_iterator( iterator_type it ): _it(it) {}
 
 	template<class Iter>
 	reverse_iterator( reverse_iterator<Iter> const & rev_it ):
-		_it(rev_it.getIt()) {}
+		_it(rev_it.base()) {}
 
 	iterator_type		getIt( void ) const { return (this->_it); }
 
 	iterator_type		base( void ) const {
-			return (this->_it + 1);
+			return (this->_it);
 		}
 
 	reference			operator*( void ) const
 	{
-		return (*this->_it);
+		Iterator tmp = this->_it;
+
+		return (*(--tmp));
 	}
 
 	reverse_iterator	operator+( difference_type n ) const
 	{
-		return (reverse_iterator(this->_it - n + 1));
+		return (reverse_iterator(this->_it - n));
 	}
 
 	reverse_iterator&	operator++( void )
 	{
-		this->_it--;
+		--this->_it;
 		return (*this);
 	}
 
 	reverse_iterator	operator++( int )
 	{
 		reverse_iterator	ret(*this);
-		this->_it--;
+		--this->_it;
 		return (ret);
 	}
 
@@ -86,19 +85,19 @@ public:
 
 	reverse_iterator	operator-( difference_type n ) const
 	{
-		return (reverse_iterator(this->_it + n + 1));
+		return (reverse_iterator(this->_it + n));
 	}
 
 	reverse_iterator&	operator--( void )
 	{
-		this->_it++;
+		++this->_it;
 		return (*this);
 	}
 
 	reverse_iterator	operator--( int )
 	{
 		reverse_iterator	ret(*this);
-		this->_it++;
+		++this->_it;
 		return (ret);
 	}
 
@@ -108,11 +107,11 @@ public:
 		return (*this);
 	}
 
-	pointer operator->( void ) const { return (&(*this->_it)); }
+	pointer operator->( void ) const { return (&(this->operator*())); }
 
 	reference operator[] (difference_type n) const
 	{
-		return (this->_it[ - n ]);
+		return (*(this->_it + n));
 	}
 
 };

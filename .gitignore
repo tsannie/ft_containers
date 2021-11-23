@@ -33,6 +33,7 @@
 
 # Tester
 containers_test
+42_Containator
 
 # Shit files
-.vscode
+*vscode/
