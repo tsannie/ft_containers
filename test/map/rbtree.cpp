@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:14:37 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/23 04:39:27 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/24 07:11:05 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,18 +111,17 @@ int main (void)
 
 	std::cout << "BEFORE SWAP" << std::endl;
 
-	std::cout << "foo contains:" << std::endl;
 	printVec(foo, "foo");
-	std::cout << "bar contains:" << std::endl;
+
 	printVec(bar, "bar");
 
 	foo.swap(bar);
 
 	std::cout << "AFTER SWAP" << std::endl;
 
-	std::cout << "foo contains:" << std::endl;
+
 	printVec(foo, "foo");
-	std::cout << "bar contains:" << std::endl;
+
 	printVec(bar, "bar");
 
 	std::cout << "Iterator validity:" << std::endl;

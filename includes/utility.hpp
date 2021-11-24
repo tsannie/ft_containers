@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 15:10:07 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/18 14:18:50 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/24 08:37:29 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ struct pair
 
 	first_type	first;
 	second_type	second;
-
 
 	pair( void ): first(), second() {}
 

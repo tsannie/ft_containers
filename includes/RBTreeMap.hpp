@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RBTree.hpp                                        :+:      :+:    :+:   */
+/*   RBTreeMap.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,12 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RBTREE_HPP
-# define RBTREE_HPP
+#ifndef RBTREEMAP_HPP
+# define RBTREEMAP_HPP
 
 #include <iostream>
 #include "iterator.hpp"
 #include "utility.hpp"
+#include "algorithm.hpp"
 
 #define	BLACK	false
 #define	RED		true
@@ -26,13 +27,15 @@ namespace ft
 template <class Value,
 		class Compare,
 		class Alloc>
-class RBTree
+class RBTreeMap
 {
 
 private:
 
 	typedef struct	s_node
 	{
+		s_node(Value stock) : stock(stock) {}
+
 		struct s_node*			parent;
 		struct s_node*			left;
 		struct s_node*			right;
@@ -79,8 +82,7 @@ public:
 
 		rbIterator&	operator++( void )
 		{
-			//std::cout << "incr" << std::endl;
-			this->_it = this->successorNode(this->_it);
+			this->successorNode();
 			return (*this);
 		}
 
@@ -88,6 +90,19 @@ public:
 		{
 			rbIterator	ret = *this;
 			this->operator++();
+			return (ret);
+		}
+
+		rbIterator&	operator--( void )
+		{
+			this->predecessor();
+			return (*this);
+		}
+
+		rbIterator		operator--( int )
+		{
+			rbIterator	ret = *this;
+			this->operator--();
 			return (ret);
 		}
 
@@ -111,19 +126,6 @@ public:
 			return (this->_it != b._it);
 		}
 
-		rbIterator&	operator--( void )
-		{
-			_it = predecessor(_it);
-			return (*this);
-		}
-
-		rbIterator		operator--( int )
-		{
-			rbIterator	ret = *this;
-			this->operator--();
-			return (ret);
-		}
-
 		reference	operator*( void ) const
 		{
 			return (this->_it->stock);
@@ -134,73 +136,54 @@ public:
 			return	(&this->_it->stock);
 		}
 
-		node*	getNode( void ) const { return (this->_it); } // delete
-
-		node	*successorNode(node *nd)	//edit this shit and replace with _it for void successorNode(void)
+		void	successorNode( void )
 		{
-			node *x = nd;
+			node *x = this->_it;
 
-			//std::cout << "ADRESS TO INCR: " << this->_it << std::endl;
 			if (x->right->right != NULL)
 			{
-				//std::cout << "choose2" << std::endl;
 				x = x->right;
 				while (x->left->right != NULL)
-				{
 					x = x->left;
-				}
 			}
 			else
 			{
-
 				x = x->parent;
-				while (x->parent->right != NULL && this->_comp(x->stock.first, nd->stock.first))
-				{
-					//std::cout << "choose1" << std::endl;
+				while (x->parent->right != NULL && this->_comp(x->stock.first, this->_it->stock.first))
 					x = x->parent;
-				}
-				if (this->_comp(x->stock.first, nd->stock.first))	// if x dont have successor
+				if (this->_comp(x->stock.first, this->_it->stock.first))	// if x dont have successor
 					x = x->parent;
-				if (x == nd)	// for if root dont have successor
+				if (x == this->_it)	// for if root dont have successor
 					x = x->parent;
 			}
-			//std::cout << x->stock.first << " (succ)=> " << nd->stock.first << std::endl;
-			return (x);
+			this->_it = x;
 		}
 
-		node	*predecessor(node *nd)
+		void	predecessor(void)
 		{
-			node *x = nd;
+			node *x = this->_it;
 
 			if (x->right == NULL)
 			{
-				//std::cout << "choose0" << std::endl;
 				x = x->parent;
-				while (x->right != nd) // nd = _nil
+				while (x->right != this->_it) // nd = _nil
 					x = x->right;
 			}
 			else if (x->left->left == NULL)
 			{
-				//std::cout << "choose1" << std::endl;
 				x = x->parent;
-				while (x->parent->right != NULL && x->stock > nd->stock)
-				{
+				while (x->parent->right != NULL && x->stock > this->_it->stock)
 					x = x->parent;
-				}
-				if (x->stock > nd->stock)	// if x dont have predecessor
-					x = nd;
+				if (x->stock > this->_it->stock)	// if x dont have predecessor
+					x = this->_it;
 			}
 			else
 			{
-				//std::cout << "choose2" << std::endl;
 				x = x->left;
 				while (x->right->left != NULL)
 					x = x->right;
 			}
-
-			return (x);
-			//if (!x->parent)
-				//return (RBTree::minNode());
+			this->_it = x;
 		}
 
 	};
@@ -225,9 +208,9 @@ private:
 
 public:
 
-	RBTree( void )
+	RBTreeMap( void )
 	{
-		node	nil;
+		node	nil((Value()));
 
 		this->_nil_node = this->_alloc.allocate(1);
 		nil.parent = NULL;
@@ -236,29 +219,32 @@ public:
 		nil.color = BLACK;
 		this->_alloc.construct(this->_nil_node, nil);
 		this->_size = 0;
-		//std::cout << "CONSTRUCTOR" << std::endl;
-
 		this->_root = this->_nil_node;
 	}
 
-	~RBTree( void )
+	~RBTreeMap( void )
 	{
-		//std::cout << "DESTRUCTOR" << std::endl;
-		//this->printTree();
 		this->delTree(this->_root);
-
-		//this->printTree();
 		this->_alloc.destroy(this->_nil_node);
 		this->_alloc.deallocate(this->_nil_node, 1);
 	}
 
-	RBTree( RBTree const & rhs )
+	RBTreeMap( RBTreeMap const & rhs )
 	{
-		if (this != &rhs)
+		*this = rhs;
+	}
+
+	RBTreeMap&	operator=( RBTreeMap const & rhs )		// warn no new alloc
+	{
+		if ( this != &rhs )
 		{
-			std::cout << "TODO CONSTRUCTOR COPY" << std::endl;
-			//rhs._alloc = this->_alloc;
+			this->_alloc = rhs._alloc;
+			this->_comp = rhs._comp;
+			this->_nil_node = rhs._nil_node;
+			this->_root = rhs._root;
+			this->_size = rhs._size;
 		}
+		return (*this);
 	}
 
 	/*	FUNCTION MAP */
@@ -366,21 +352,14 @@ public:
 
 	void	erase(iterator position)
 	{
-		//int i=0;
-		//this->printTree();
-		//std::cout << "ADRESS IT:" << std::endl;
-		//this->printNode(position.getNode(), i);
 		this->erase(*position);
-		//this->printTree();
 	}
 
 	size_type	erase( value_type const & k )
 	{
-		//std::cout << "start delete " << k.first << std::endl;
 		size_type ret = this->_size;
 
 		this->deleteNode(k);
-		//std::cout << "end delete " << k.first << std::endl;
 		return (ret - this->_size);
 	}
 
@@ -399,9 +378,16 @@ public:
 			this->erase(*first);
 			first = this->find(next);
 			last = this->find(last_val);
-			//this->printTree();
-			//std::cout << "////////////////////////////////////////\n" << std::endl;
 		}
+	}
+
+	void	swap(RBTreeMap& x)
+	{
+		ft::swap(this->_root, x._root);
+		ft::swap(this->_nil_node, x._nil_node);
+		ft::swap(this->_size, x._size);
+		ft::swap(this->_alloc, x._alloc);
+		ft::swap(this->_comp, x._comp);
 	}
 
 	void	clear( void )
@@ -433,6 +419,26 @@ public:
 
 
 private:
+
+	node	*replaceNode( node *toRep , value_type const & newVal )
+	{
+		node *neww = this->newNode(newVal);
+
+		if (toRep->parent->right == toRep)
+			toRep->parent->right = neww;
+		else if (toRep->parent->left == toRep)
+			toRep->parent->left = neww;
+
+		if (toRep->right != this->_nil_node)
+			toRep->right->parent = neww;
+		if (toRep->left != this->_nil_node)
+			toRep->left->parent = neww;
+		neww->color = toRep->color;
+		this->_alloc.destroy(toRep);
+		this->_alloc.deallocate(toRep, 1);
+
+		return (neww);
+	}
 
 	void	deleteNode( value_type const & srh )
 	{
@@ -467,7 +473,11 @@ private:
 			y->parent->right = x;
 
 		if (y != z)
+		{
+			//z = this->replaceNode(z, y->stock);
 			z->stock = y->stock;
+
+		}
 
 		if (y->color == BLACK)
 			deleteFix(x);
@@ -511,7 +521,6 @@ private:
 		this->insertFix(ins);
 		this->_nil_node->parent = this->_root;
 		this->_size++;
-		//this->printTree();
 	}
 
 	node	*minNode( void ) const
@@ -534,7 +543,6 @@ private:
 
 	node	*searchNode( value_type const & search ) const
 	{
-		//std::cout << "ENTER" << std::endl;
 		node *x = this->_root;
 
 		while (x != this->_nil_node)
@@ -552,13 +560,12 @@ private:
 	node	*newNode( value_type const & val )
 	{
 		node	*ret = this->_alloc.allocate(1);
-		node	tmp;
+		node	tmp(val);
 
 		tmp.parent = this->_nil_node;
 		tmp.left = this->_nil_node;
 		tmp.right = this->_nil_node;
 		tmp.color = RED;
-		tmp.stock = val;
 		this->_alloc.construct(ret, tmp);
 		return (ret);
 	}
@@ -733,12 +740,8 @@ private:
 
 		this->delTree(nodeDel->left);
 		this->delTree(nodeDel->right);
-		//this->printNode(nodeDel, i);
 		this->_alloc.destroy(nodeDel);
 		this->_alloc.deallocate(nodeDel, 1);
-		//nodeDel = this->_nil_node;
-		//this->printNode(nodeDel, i);
-		//std::cout << "delete" << std::endl;
 	}
 
 	void	printKey( node *nodeKey, std::string const & name ) const

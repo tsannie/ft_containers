@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:39:26 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/23 17:20:50 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/24 08:36:03 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,25 @@ namespace ft
 {
 
 template <class Iterator>
+class iterator_traits
+{
+	typedef typename	Iterator::difference_type	difference_type;
+	typedef typename	Iterator::value_type		value_type;
+	typedef typename	Iterator::pointer			pointer;
+	typedef typename	Iterator::reference			reference;
+	typedef typename	Iterator::iterator_category	iterator_category;
+};
+
+template <class Iterator>
 class reverse_iterator
 {
 
 public:
-	typedef				Iterator						iterator_type;
-	typedef typename	Iterator::difference_type		difference_type;
-	typedef typename	Iterator::value_type			value_type;
-	typedef typename	Iterator::pointer				pointer;
-	typedef typename	Iterator::reference				reference;
+	typedef				Iterator					iterator_type;
+	typedef typename	Iterator::difference_type	difference_type;
+	typedef typename	Iterator::value_type		value_type;
+	typedef typename	Iterator::pointer			pointer;
+	typedef typename	Iterator::reference			reference;
 
 protected:
 	iterator_type	_it;

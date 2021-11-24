@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 13:17:10 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/20 18:18:37 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/24 10:44:20 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "string.hpp"
 #include "type_traits.hpp"
 #include "../vector.hpp"
-#include "RBTree.hpp"
+#include "RBTreeMap.hpp"
+#include "RBTreeSet.hpp"
 
 #endif
