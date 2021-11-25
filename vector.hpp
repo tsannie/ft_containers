@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/24 15:12:22 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 07:45:40 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,6 +387,8 @@ public:
 
 	reference		at( size_type n )
 	{
+		std::cout << std::endl;
+		std::cout << "n\t=\t" << n << std::endl;
 		if (n >= this->size())
 			throw std::out_of_range("vector::_M_range_check: __n (which is "
 			+ ft::to_string(n) + ") >= this->size() (which is "

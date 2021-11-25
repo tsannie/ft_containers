@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:52:33 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/24 15:19:41 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 07:17:14 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int main ()
 {
-	pl::vector<int> first;                                // empty vector of ints
-	pl::vector<int> second(4,100);                       // four ints with value 100
-	pl::vector<int> third(second.begin(),second.end());  // iterating through second
-	pl::vector<int> fourth(third);                       // a copy of third
-	pl::vector<int> five = third;
+	pl::vector<int> first;                                // default
+	pl::vector<int> second(4,100);                        // four ints with value 100
+	pl::vector<int> third(second.begin(),second.end());   // iterating
+	pl::vector<int> fourth(third);                        // copy
+	pl::vector<int> five = third;                         // operator=
 
 	std::cout << "------------------------------------" << std::endl;
 	std::cout << "first :" << std::endl;
