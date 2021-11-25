@@ -6,14 +6,39 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 07:09:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 07:54:23 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 09:26:47 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.test.hpp"
 
+void	at( void )
+{
+	std::cout << "test at :" << std::endl;
+	std::cout << std::endl;
+	pl::vector<int>	myvector(10, 42);
+
+	for (int i = 0; i < myvector.size(); ++i)
+		myvector.at(i) = i * 6;
+	printVec(myvector);
+
+	try
+	{
+		myvector.at(15);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+
+	std::cout << "------------------------------------------" << std::endl;
+	std::cout << std::endl;
+}
+
 void	op_access( void )
 {
+	std::cout << "test op_access :" << std::endl;
+	std::cout << std::endl;
 	pl::vector<int>	myvector(10, 42);
 
 	printVec(myvector);
@@ -26,51 +51,46 @@ void	op_access( void )
 		std::cout << myvector[i] << " | ";
 	std::cout << std::endl;
 
-	for (int i = 0 ; i < 100 ; i++)
-		myvector[i] = i * 3;
 
 	printVec(myvector);
+	std::cout << "------------------------------------------" << std::endl;
+	std::cout << std::endl;
 }
 
-void	at( void )
+void	front( void )
 {
-	pl::vector<int>	myvector;
+	std::cout << "test front :" << std::endl;
+	pl::vector<int> myvector;
 
-	myvector.reserve(100);
-	std::cout << "SAKHBFDAHKBFADKKHDFAHKBFDAHAFHKD" << std::endl;
-
-
-	/*printVec(myvector);
-	for (int i = 0 ; i < myvector.capacity() ; i++)
-		myvector.at(i) = i * 6;
+	for (int i = 1 ; i < 20 ; i++)
+		myvector.push_back(i * 42);
 
 	printVec(myvector);
-
-	for (int i = 0 ; i < myvector.size() ; i++)
-		std::cout << myvector.at(i) << " | ";
-	std::cout << std::endl;*/
-
-	//
-	/*std::cout << "NOW DHJBSFDHBKDFSHBKSFDDFKS" << std::endl;
-	printVec(myvector);
-	for (int i =  myvector.size() ; i < (myvector.size() + 5) ; i++)
-	{
-		try
-		{
-			myvector.at(i);
-		}
-		catch (const std::exception& e)
-		{
-			std::cerr << e.what() << '\n';
-		}
-	}*/
-
-	printVec(myvector);
+	std::cout << "myvector.front() = " << myvector.front() << std::endl;
+	std::cout << "------------------------------------------" << std::endl;
+	std::cout << std::endl;
 }
+
+void	back( void )
+{
+	std::cout << "test back :" << std::endl;
+	pl::vector<int> myvector;
+
+	for (int i = 1 ; i < 20 ; i++)
+		myvector.push_back(i * 42);
+
+	printVec(myvector);
+	std::cout << "myvector.back() = " << myvector.back() << std::endl;
+	std::cout << "------------------------------------------" << std::endl;
+	std::cout << std::endl;
+}
+
 int	main( void )
 {
-	op_access(); // []
+	op_access();
 	at();
+	front();
+	back();
 
 	return 0;
 }
