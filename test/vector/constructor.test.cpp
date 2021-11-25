@@ -6,13 +6,13 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:52:33 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 07:17:14 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:34:38 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.test.hpp"
 
-int main ()
+void	constructor( void )
 {
 	pl::vector<int> first;                                // default
 	pl::vector<int> second(4,100);                        // four ints with value 100
@@ -35,7 +35,4 @@ int main ()
 	std::cout << "------------------------------------" << std::endl;
 	std::cout << "five :" << std::endl;
 	printVec(five);
-
-
-	return 0;
 }

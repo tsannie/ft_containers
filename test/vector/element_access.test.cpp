@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 07:09:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 09:26:47 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:35:36 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,10 @@ void	back( void )
 	std::cout << std::endl;
 }
 
-int	main( void )
+void	element_access( void )
 {
 	op_access();
 	at();
 	front();
 	back();
-
-	return 0;
 }

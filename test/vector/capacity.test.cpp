@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:52:33 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 10:37:24 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:34:34 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	reserve( void )
 	std::cout << "------------------------------------------" << std::endl;
 	std::cout << std::endl;
 }
-int main ()
+void	capacity_test( void )
 {
 	size();
 	max_size();
@@ -207,7 +207,5 @@ int main ()
 	capacity();
 	empty();
 	reserve();
-
-	return 0;
 }
 

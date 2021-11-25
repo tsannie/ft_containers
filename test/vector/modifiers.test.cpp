@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 09:21:49 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 10:41:57 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:36:09 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void	clear( void )
 	printVec(first);
 }
 
-int	main( void )
+void	modifiers( void )
 {
 	assign();
 	push_back();
@@ -161,6 +161,4 @@ int	main( void )
 	erase();
 	swap();
 	clear();
-
-	return 0;
 }

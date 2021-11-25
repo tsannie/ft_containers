@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:53:36 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/24 15:16:26 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:50:44 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,37 @@ void printVec(T &vec)
 	std::cout << "capacity = " << vec.capacity() << std::endl;
 	std::cout << "size = " << vec.size() << std::endl << std::endl;
 }
+
+template <class T>
+void	relation(T const & foo, T const & bar, int & i)
+{
+	std::cout << "------check " << ++i << "------" << std::endl;
+	std::cout << "foo == bar = " << (foo == bar ? "true" : "false") << std::endl;
+	std::cout << "foo != bar = " << (foo != bar ? "true" : "false") << std::endl;
+	std::cout << "foo < bar  = " << (foo <  bar ? "true" : "false") << std::endl;
+	std::cout << "foo > bar  = " << (foo >  bar ? "true" : "false") << std::endl;
+	std::cout << "foo <= bar = " << (foo <= bar ? "true" : "false") << std::endl;
+	std::cout << "foo >= bar = " << (foo >= bar ? "true" : "false") << std::endl;
+	std::cout << "-------------------" << std::endl;
+	std::cout << std::endl;
+}
+
+template <typename T>
+bool isConst(T& x)
+{
+	return false;
+}
+
+template <typename T>
+bool isConst(T const & x)
+{
+	return true;
+}
+
+void	constructor( void );
+void	capacity_test( void );
+void	modifiers( void );
+void	element_access( void );
+void	relation_op( void );
 
 #endif
