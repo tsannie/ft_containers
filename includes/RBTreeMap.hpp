@@ -193,8 +193,8 @@ public:
 	typedef	Value												value_type;
 	typedef	Compare												key_compare;
 	typedef typename	Alloc::template rebind<node>::other		alloc_node;
-	typedef rbIterator<Value, key_compare, false>							iterator;
-	typedef rbIterator<const Value, key_compare, true>						const_iterator;
+	typedef rbIterator<Value, key_compare, false>				iterator;
+	typedef rbIterator<const Value, key_compare, true>			const_iterator;
 	typedef	ft::reverse_iterator<iterator>						reverse_iterator;
 	typedef	ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 

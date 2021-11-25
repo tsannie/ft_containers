@@ -5,19 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 11:29:11 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 11:20:22 by tsannie          ###   ########.fr       */
+/*   Created: 2021/11/25 18:32:43 by tsannie           #+#    #+#             */
+/*   Updated: 2021/11/25 12:42:53 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.test.hpp"
+#include "map.test.hpp"
 
 int	main( void )
 {
 	constructor();
 	all_it();
 	capacity_test();
-	modifiers();
 	element_access();
-	relation_op();
+	/*modifiers();
+	relation_op();*/
 }

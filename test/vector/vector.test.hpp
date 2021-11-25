@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:53:36 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 14:12:18 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:27:55 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@
 #include <set>
 #include "../../vector.hpp"
 
+#ifndef pl
+# define pl ft
+#endif
+
 template <typename T>
-void printVec(T &vec)
+void printVec(T & vec)
 {
 	typename T::iterator it;
 	typename T::iterator end;
@@ -63,10 +67,10 @@ bool isConst(T const & x)
 }
 
 void	constructor( void );
+void	all_it( void );
 void	capacity_test( void );
 void	modifiers( void );
 void	element_access( void );
 void	relation_op( void );
-void	all_it( void );
 
 #endif

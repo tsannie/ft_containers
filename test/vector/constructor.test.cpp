@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:52:33 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 11:34:38 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 18:43:25 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	constructor( void )
 {
+	std::cout << "test constructor :" << std::endl;
 	pl::vector<int> first;                                // default
 	pl::vector<int> second(4,100);                        // four ints with value 100
 	pl::vector<int> third(second.begin(),second.end());   // iterating
@@ -35,4 +36,6 @@ void	constructor( void )
 	std::cout << "------------------------------------" << std::endl;
 	std::cout << "five :" << std::endl;
 	printVec(five);
+	std::cout << "------------------------------------------" << std::endl;
+	std::cout << std::endl;
 }

@@ -1,29 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.test.hpp                                     :+:      :+:    :+:   */
+/*   map.test.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:53:36 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 18:32:02 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 12:41:45 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_TEST_HPP
-# define STACK_TEST_HPP
+#ifndef MAP_TEST_HPP
+# define MAP_TEST_HPP
 
 #include <iostream>
 #include <ostream>
 #include <stack>
 #include <vector>
-#include <set>
+#include <map>
 #include "../../stack.hpp"
 #include "../../vector.hpp"
+#include "../../map.hpp"
 
 #ifndef pl
 # define pl ft
 #endif
+
+struct comp
+{
+	bool	operator()(const char& lhs, const char& rhs) const
+	{
+		return (lhs > rhs);
+	}
+};
+
+template <typename T>
+void printMap(T & map, std::string const & name)
+{
+	typename	T::iterator	it;
+	typename	T::iterator	end;
+
+	std::cout << "----------------" << std::endl;
+	std::cout << name << " contains:" << std::endl;
+
+	end = map.end();
+	for (it = map.begin() ; it != end ; it++)
+		std::cout << it->first << " => " << it->second << '\n';
+	std::cout << "size = " << map.size() << std::endl;
+	std::cout << "----------------\n" << std::endl;
+}
 
 template <class T>
 void	relation(T const & foo, T const & bar, int & i)
@@ -35,6 +60,16 @@ void	relation(T const & foo, T const & bar, int & i)
 	std::cout << "foo > bar  = " << (foo >  bar ? "true" : "false") << std::endl;
 	std::cout << "foo <= bar = " << (foo <= bar ? "true" : "false") << std::endl;
 	std::cout << "foo >= bar = " << (foo >= bar ? "true" : "false") << std::endl;
+	std::cout << "-------------------" << std::endl;
+	std::cout << std::endl;
+}
+
+template <class T>
+void	equals(T const & foo, T const & bar, int & i)
+{
+	std::cout << "------check " << ++i << "------" << std::endl;
+	std::cout << "foo == bar = " << (foo == bar ? "true" : "false") << std::endl;
+	std::cout << "foo != bar = " << (foo != bar ? "true" : "false") << std::endl;
 	std::cout << "-------------------" << std::endl;
 	std::cout << std::endl;
 }
@@ -54,7 +89,10 @@ bool isConst(T const & x)
 }
 
 void	constructor( void );
-void	methods( void );
+void	all_it( void );
+void	capacity_test( void );
+void	modifiers( void );
+void	element_access( void );
 void	relation_op( void );
 
 #endif
