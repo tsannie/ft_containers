@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:15:04 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/24 11:01:34 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 15:15:44 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,12 @@ public:
 	pair<const_iterator ,const_iterator>	equal_range( key_type const & k ) const
 	{
 		return (ft::make_pair(this->lower_bound(k), this->upper_bound(k)));
+	}
+
+	/*   ALLOCATOR   */
+	allocator_type	get_allocator( void ) const
+	{
+		return (this->_alloc);
 	}
 };
 

@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 10:16:41 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 15:15:58 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ class Allocator = std::allocator<T>
 > class vector
 {
 
-/****************/
 /* Member types */
-/****************/
-
 public:
 	typedef	T									value_type;
 	typedef	Allocator							allocator_type;
@@ -39,6 +36,7 @@ public:
 	typedef	typename Allocator::const_pointer	const_pointer;
 
 
+	/* Vector iterator */
 	template<
 	typename vecT,
 	bool isConst = false
@@ -181,7 +179,8 @@ public:
 			return (this->_val - x.getVal());
 		}
 
-		difference_type	operator-( vecIterator<vecT const, true> const & x) const
+		difference_type	operator-( vecIterator<const vecT,
+									true> const & x ) const
 		{
 			return (this->_val - x.getVal());
 		}
@@ -225,6 +224,7 @@ private:
 
 
 public:
+	/* Constructors */
 	explicit vector (const allocator_type& alloc = allocator_type())
 	{
 		this->_alloc = alloc;
@@ -265,6 +265,7 @@ public:
 		this->_size = x._size;
 	}
 
+	/* Destructor */
 	~vector()
 	{
 		this->clear();
@@ -287,7 +288,6 @@ public:
 
 
 	/*   ITERATORS   */
-
 	const_iterator	begin( void ) const
 	{
 		return (const_iterator(this->_tab));
@@ -329,7 +329,6 @@ public:
 	}
 
 	/*   CAPACITY   */
-
 	size_type	size( void ) const { return (this->_size); }
 
 	size_type	max_size( void ) const { return (this->_alloc.max_size()); }
@@ -382,9 +381,7 @@ public:
 		}
 	}
 
-
 	/*   ELEMENT ACCESS   */
-
 	reference		operator[]( size_type n ) { return (this->_tab[n]); }
 
 	const_reference	operator[]( size_type n ) const { return (this->_tab[n]); }
@@ -403,15 +400,27 @@ public:
 		return (this->_tab[n]);
 	}
 
-	reference		front( void ) { return (this->_tab[0]); }
-	const_reference	front( void ) const { return (this->_tab[0]); }
+	reference		front( void )
+	{
+		return (this->_tab[0]);
+	}
 
-	reference		back( void ) { return (this->_tab[this->size() - 1]); }
-	const_reference	back( void ) const { return (this->_tab[this->size() - 1]); }
+	const_reference	front( void ) const
+	{
+		return (this->_tab[0]);
+	}
 
+	reference		back( void )
+	{
+		return (this->_tab[this->size() - 1]);
+	}
+
+	const_reference	back( void ) const
+	{
+		return (this->_tab[this->size() - 1]);
+	}
 
 	/*   MODIFIERS   */
-
 	template <class InputIterator>
 	void		assign( InputIterator first, InputIterator last )
 	{
@@ -454,7 +463,6 @@ public:
 		this->insert(position, 1, val);
 		return (iterator(this->begin() + start));
 	}
-
 
 	void		insert( iterator position, size_type n, value_type const & val )
 	{
@@ -537,8 +545,14 @@ public:
 		this->_size = 0;
 	}
 
+	/*   ALLOCATOR   */
+	allocator_type	get_allocator( void ) const
+	{
+		return (this->_alloc);
+	}
 };
 
+/*   NON-MEMBER FUNCTION   */
 template <class T, class Alloc>
 	void swap (vector<T, Alloc>& x, vector<T, Alloc>& y)
 {
@@ -546,7 +560,6 @@ template <class T, class Alloc>
 }
 
 /*   RELATIONAL OPERATORS   */
-
 template <class T, class Alloc>
 bool	operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
 {
@@ -585,7 +598,6 @@ bool	operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
 {
 	return (!(lhs < rhs));
 }
-
 
 }
 

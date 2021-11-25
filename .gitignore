@@ -37,3 +37,4 @@ containers_test
 
 # Shit files
 *vscode/
+*.res

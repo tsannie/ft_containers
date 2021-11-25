@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 07:09:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 11:35:36 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 13:45:03 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	at( void )
 	std::cout << std::endl;
 	pl::vector<int>	myvector(10, 42);
 
-	for (int i = 0; i < myvector.size(); ++i)
+	for (size_t i = 0; i < myvector.size(); ++i)
 		myvector.at(i) = i * 6;
 	printVec(myvector);
 
@@ -42,12 +42,12 @@ void	op_access( void )
 	pl::vector<int>	myvector(10, 42);
 
 	printVec(myvector);
-	for (int i = 0 ; i < myvector.capacity() ; i++)
+	for (size_t i = 0 ; i < myvector.capacity() ; i++)
 		myvector[i] = i * 6;
 
 	printVec(myvector);
 
-	for (int i = 0 ; i < myvector.capacity() ; i++)
+	for (size_t i = 0 ; i < myvector.capacity() ; i++)
 		std::cout << myvector[i] << " | ";
 	std::cout << std::endl;
 

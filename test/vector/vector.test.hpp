@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:53:36 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 11:50:44 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 14:12:18 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 #include <vector>
 #include <set>
 #include "../../vector.hpp"
-
-#ifndef pl
-# define pl ft
-#endif
 
 template <typename T>
 void printVec(T &vec)
@@ -55,12 +51,14 @@ void	relation(T const & foo, T const & bar, int & i)
 template <typename T>
 bool isConst(T& x)
 {
+	static_cast<void>(x);
 	return false;
 }
 
 template <typename T>
 bool isConst(T const & x)
 {
+	static_cast<void>(x);
 	return true;
 }
 
@@ -69,5 +67,6 @@ void	capacity_test( void );
 void	modifiers( void );
 void	element_access( void );
 void	relation_op( void );
+void	all_it( void );
 
 #endif

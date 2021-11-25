@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:29:11 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 11:47:54 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 13:33:26 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ int	main( void )
 	modifiers();
 	element_access();
 	relation_op();
+	all_it();
 }
