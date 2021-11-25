@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 10:07:56 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/23 18:23:03 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/25 16:53:46 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,48 +37,66 @@ private:
 	Container _ctnr;
 
 public:
-	explicit			stack( container_type const & ctnr = container_type() ): _ctnr(ctnr) {}
+	explicit			stack( container_type const &
+							ctnr = container_type() ): _ctnr(ctnr) {}
 	~stack() {}
 
-	bool				empty( void ) const { return (this->_ctnr.empty()); }
+	bool				empty( void ) const
+	{
+		return (this->_ctnr.empty());
+	}
 
-	size_type			size( void ) const { return (this->_ctnr.size()); }
+	size_type			size( void ) const
+	{
+		return (this->_ctnr.size());
+	}
 
+	value_type&			top( void )
+	{
+		return (this->_ctnr.back());
+	}
 
-	value_type&			top( void ) { return (this->_ctnr.back()); }
+	value_type const &	top( void ) const
+	{
+		return (this->_ctnr.back());
+	}
 
-	value_type const &	top( void ) const { return (this->_ctnr.back()); }
+	void				push ( value_type const & val )
+	{
+		return (this->_ctnr.push_back(val));
+	}
 
-	void				push ( value_type const & val ) { return (this->_ctnr.push_back(val)); }
-
-	void				pop( void ) { return (this->_ctnr.pop_back()); }
+	void				pop( void )
+	{
+		return (this->_ctnr.pop_back());
+	}
 
 	friend bool	operator==( stack<T, Container> const & lhs, stack<T, Container> const & rhs)
 	{
 		return (lhs._ctnr == rhs._ctnr);
 	}
 
-	friend bool	operator!=( stack<T,Container> const & lhs, stack<T,Container> const & rhs)
+	friend bool	operator!=( stack<T, Container> const & lhs, stack<T, Container> const & rhs)
 	{
 		return (!(lhs == rhs));
 	}
 
-	friend bool	operator<( stack<T,Container> const & lhs, stack<T,Container> const & rhs)
+	friend bool	operator<( stack<T, Container> const & lhs, stack<T, Container> const & rhs)
 	{
 		return (lhs._ctnr < rhs._ctnr);
 	}
 
-	friend bool	operator<=( stack<T,Container> const & lhs, stack<T,Container> const & rhs)
+	friend bool	operator<=( stack<T, Container> const & lhs, stack<T, Container> const & rhs)
 	{
 		return ((lhs < rhs) || (lhs == rhs));
 	}
 
-	friend bool	operator>( stack<T,Container> const & lhs, stack<T,Container> const & rhs)
+	friend bool	operator>( stack<T, Container> const & lhs, stack<T, Container> const & rhs)
 	{
 		return (rhs < lhs);
 	}
 
-	friend bool	operator>=( stack<T,Container> const & lhs, stack<T,Container> const & rhs)
+	friend bool	operator>=( stack<T, Container> const & lhs, stack<T, Container> const & rhs)
 	{
 		return ((lhs > rhs) || (lhs == rhs));
 	}
