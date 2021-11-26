@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.test.hpp                                       :+:      :+:    :+:   */
+/*   set.test.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:53:36 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/26 11:44:08 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/26 12:19:13 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_TEST_HPP
-# define MAP_TEST_HPP
+#ifndef SET_TEST_HPP
+# define SET_TEST_HPP
 
 #include <iostream>
 #include <ostream>
 #include <stack>
 #include <vector>
-#include <map>
+#include <set>
 #include "../../stack.hpp"
 #include "../../vector.hpp"
-#include "../../map.hpp"
+#include "../../set.hpp"
 
 #ifndef pl
 # define pl ft
@@ -38,27 +38,24 @@ template <typename T>
 void checkRet(T & ret)
 {
 	if (ret.second)
-		std::cout << ret.first->first << " has been insert.";
+		std::cout << *(ret.first) << " has been insert.";
 	else
-		std::cout << ret.first->first << " already exist with second = "
-				<< ret.first->second;
+		std::cout << *(ret.first) << " already exist.";
 	std::cout << std::endl;
 }
 
 template <typename T>
-void printMap(T & map, std::string const & name)
+void printSet(T & set, std::string const & name)
 {
-	typename	T::iterator	it;
-	typename	T::iterator	end;
+	typename T::iterator it;
+	typename T::iterator end;
 
-	std::cout << "----------------" << std::endl;
-	std::cout << name << " contains:" << std::endl;
-
-	end = map.end();
-	for (it = map.begin() ; it != end ; it++)
-		std::cout << it->first << " => " << it->second << std::endl;
-	std::cout << "size = " << map.size() << std::endl;
-	std::cout << "----------------\n" << std::endl;
+	std::cout << "[ ";
+	end = set.end();
+	for (it = set.begin() ; it != end ; it++)
+		std::cout << *it << " ";
+	std::cout << "]" << std::endl;
+	std::cout << "size = " << set.size() << std::endl << std::endl;
 }
 
 template <class T>
@@ -103,7 +100,6 @@ void	constructor( void );
 void	all_it( void );
 void	capacity_test( void );
 void	modifiers( void );
-void	element_access( void );
 void	observers( void );
 void	operations( void );
 void	relation_op( void );

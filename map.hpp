@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 18:16:52 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/26 10:55:06 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ public:
 
 	class value_compare
 	{
-	public:
+	protected:
 		Compare comp;
-		value_compare( Compare c ) : comp(c) {}
 
 	public:
-		typedef bool result_type;
-		typedef value_type first_argument_type;
-		typedef value_type second_argument_type;
-		bool operator()(const value_type& x, const value_type& y) const
+		value_compare( Compare c ) : comp(c) {}
+		typedef	bool		result_type;
+		typedef	value_type	first_argument_type;
+		typedef	value_type	second_argument_type;
+		bool	operator()(const value_type& x, const value_type& y) const
 		{
 			return comp(x.first, y.first);
 		}

@@ -6,25 +6,25 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:40:10 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/26 09:57:33 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/26 12:03:19 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.test.hpp"
+#include "set.test.hpp"
 
 void	iterator_is_const( void )
 {
 	std::cout << "test is_const :" << std::endl;
 	std::cout << std::endl;
-	pl::map<int, char>	first;
+	pl::set<int>	first;
 
 	for (int i = 0 ; i <= 42 ; ++i)
-		first.insert( pl::pair<int, char>(i, 'z') );
+		first.insert( i );
 
-	pl::map<int, char>::iterator				it   = first.begin();
-	pl::map<int, char>::const_iterator			cit  = first.begin();
-	pl::map<int, char>::reverse_iterator		rit  = first.rbegin();
-	pl::map<int, char>::const_reverse_iterator	crit = first.rbegin();
+	pl::set<int>::iterator					it   = first.begin();
+	pl::set<int>::const_iterator			cit  = first.begin();
+	pl::set<int>::reverse_iterator			rit  = first.rbegin();
+	pl::set<int>::const_reverse_iterator	crit = first.rbegin();
 
 	std::cout << "test on *it : " << std::endl;
 	std::cout << "it   = ";
@@ -46,43 +46,40 @@ void	print_content( void )
 	std::cout << "test print content :" << std::endl;
 	std::cout << std::endl;
 
-	pl::map<int, char>	first;
-	pl::map<int, char>::iterator				it, end;
-	pl::map<int, char>::const_iterator			cit, cend;
-	pl::map<int, char>::reverse_iterator		rit, rend;
-	pl::map<int, char>::const_reverse_iterator	crit, crend;
+	pl::set<int>	first;
+	pl::set<int>::iterator					it, end;
+	pl::set<int>::const_iterator			cit, cend;
+	pl::set<int>::reverse_iterator			rit, rend;
+	pl::set<int>::const_reverse_iterator	crit, crend;
 
-	for (int i = 0, e = 65 ; i <= 42 ; ++i, ++e)
-	{
-		e = (e > 90 ? 65 : e);
-		first.insert( pl::pair<int, char>(i, e) );
-	}
+	for (int i = 0 ; i <= 42 ; ++i)
+		first.insert(i);
 
 	std::cout << "---------------------\niterator:" << std::endl;
 	end = first.end();
 	for (it = first.begin() ; it != end ; ++it)
-		std::cout << it->first << " => " << it->second << std::endl;
+		std::cout << *it << " => " << *it << std::endl;
 	std::cout << "---------------------" << std::endl;
 	std::cout << std::endl;
 
 	std::cout << "---------------------\nconst iterator:" << std::endl;
 	cend = first.end();
 	for (cit = first.begin() ; cit != cend ; ++cit)
-		std::cout << cit->first << " => " << cit->second << std::endl;
+		std::cout << *cit << " => " << *cit << std::endl;
 	std::cout << "---------------------" << std::endl;
 	std::cout << std::endl;
 
 	std::cout << "---------------------\nrevserse iterator:" << std::endl;
 	rend = first.rend();
 	for (rit = first.rbegin() ; rit != rend ; ++rit)
-		std::cout << rit->first << " => " << rit->second << std::endl;
+		std::cout << *rit << " => " << *rit << std::endl;
 	std::cout << "---------------------" << std::endl;
 	std::cout << std::endl;
 
 	std::cout << "---------------------\nconst revserse iterator:" << std::endl;
 	crend = first.rend();
 	for (crit = first.rbegin() ; crit != crend ; ++crit)
-		std::cout << crit->first << " => " << crit->second << std::endl;
+		std::cout << *crit << " => " << *crit << std::endl;
 	std::cout << "---------------------" << std::endl;
 	std::cout << std::endl;
 
@@ -93,37 +90,30 @@ void	print_content( void )
 void	bidirectional_access_op( void )
 {
 	std::cout << "test bidirectional_access_op :" << std::endl;
-	int								e = 0;
-	pl::map<int, char>				first;
-	pl::map<int, char>::iterator	it;
+	int						e = 0;
+	pl::set<int>			first;
+	pl::set<int>::iterator	it;
 
-	for (int i = 0, e = 65 ; i <= 42 ; ++i, ++e)
-	{
-		e = (e > 90 ? 65 : e);
-		first.insert( pl::pair<int, char>(i, e) );
-	}
+	for (int i = 0 ; i <= 42 ; ++i)
+		first.insert(i);
 
 	it = first.begin();
-	pl::map<int, char>::iterator	cpy(it);
+	pl::set<int>::iterator	cpy(it);
 	equals(it, cpy, e);
 
-	std::cout << cpy->first << " == " << it->first << std::endl;
+	std::cout << *cpy << " == " << *it << std::endl;
 	++it;
-	std::cout << it->first << std::endl;
+	std::cout << *it << std::endl;
 	it++;
-	std::cout << it->first << std::endl;
+	std::cout << *it << std::endl;
 	it++;
 
-	std::cout << it->second << std::endl;
-	it->second = 42;
-	std::cout << it->second << std::endl;
-
-	std::cout << it->first << std::endl;
+	std::cout << *it << std::endl;
 	--it;
-	std::cout << it->first << std::endl;
+	std::cout << *it << std::endl;
 	it--;
-	std::cout << it->first << std::endl;
-	std::cout << it->first << std::endl;
+	std::cout << *it << std::endl;
+	std::cout << *it << std::endl;
 
 	equals(it, cpy, e);
 }

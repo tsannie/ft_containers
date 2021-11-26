@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 10:55:11 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 11:39:22 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/26 11:33:06 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	relation_op( void )
 {
+	std::cout << "test relation_op :" << std::endl;
+	std::cout << std::endl;
 	int	i = 0;
-	pl::vector<int> foo;
-	pl::vector<int> bar;
+	pl::vector<int> foo, bar;
 
 	relation(foo, bar, i);
 
@@ -31,4 +32,5 @@ void	relation_op( void )
 
 	bar.push_back(21);
 	relation(foo, bar, i);
+	std::cout << "------------------------------------------" << std::endl;
 }

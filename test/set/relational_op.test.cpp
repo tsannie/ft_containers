@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.test.cpp                                      :+:      :+:    :+:   */
+/*   relational_op.test.cpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 18:32:43 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/26 11:35:58 by tsannie          ###   ########.fr       */
+/*   Created: 2021/11/25 10:55:11 by tsannie           #+#    #+#             */
+/*   Updated: 2021/11/26 12:52:11 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.test.hpp"
+#include "set.test.hpp"
 
-int	main( void )
+void	relation_op( void )
 {
-	constructor();
-	all_it();
-	capacity_test();
-	element_access();
-	modifiers();
-	observers();
-	operations();
-	relation_op();
+	std::cout << "test relation_op :" << std::endl;
+	std::cout << std::endl;
+	int	i = 0;
+	pl::set<int>	foo, bar;
+
+	relation(foo, bar, i);
+
+	foo.insert(42);
+	relation(foo, bar, i);
+
+	foo.insert(42);
+	bar.insert(42);
+	bar.insert(50);
+	relation(foo, bar, i);
+
+	std::cout << "------------------------------------------" << std::endl;
 }

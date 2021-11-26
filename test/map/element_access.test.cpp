@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 07:09:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 12:41:43 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/26 10:21:38 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	op_access( void )
 {
+	std::cout << "test op_access :" << std::endl;
+	std::cout << std::endl;
 	pl::map<char, std::string> mymap;
 
 	mymap['a'] = "an element";
@@ -26,6 +28,8 @@ void	op_access( void )
 	std::cout << "mymap['d'] is " << mymap['d'] << std::endl;
 
 	printMap(mymap, "mymap");
+	std::cout << std::endl;
+	std::cout << "------------------------------------------" << std::endl;
 }
 
 void	element_access( void )

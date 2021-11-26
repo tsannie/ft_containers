@@ -6,12 +6,12 @@
 #    By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 13:34:12 by tsannie           #+#    #+#              #
-#    Updated: 2021/11/26 11:38:14 by tsannie          ###   ########.fr        #
+#    Updated: 2021/11/26 12:08:22 by tsannie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME1		= ft.map.test.out
-NAME2		= std.map.test.out
+NAME1		= ft.set.test.out
+NAME2		= std.set.test.out
 CC			= @clang++
 CFLAGS		= -Wall -Wextra -Werror -std=c++98
 RM			= @rm -rf
@@ -28,8 +28,8 @@ BOLD		:= $(shell tput -Txterm bold)
 END			:= $(shell tput -Txterm sgr0)
 
 SRC			= constructor.test.cpp main.test.cpp capacity.test.cpp \
-			all_it.test.cpp element_access.test.cpp modifiers.test.cpp \
-			observers.test.cpp operations.test.cpp relational_op.test.cpp
+			all_it.test.cpp modifiers.test.cpp observers.test.cpp\
+			operations.test.cpp relational_op.test.cpp
 
 all:		test
 
