@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:53:36 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/26 12:19:13 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/26 12:54:23 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void printSet(T & set, std::string const & name)
 	typename T::iterator it;
 	typename T::iterator end;
 
+	std::cout << name << " contains:" << std::endl;
 	std::cout << "[ ";
 	end = set.end();
 	for (it = set.begin() ; it != end ; it++)
