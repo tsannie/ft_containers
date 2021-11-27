@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 15:15:58 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/27 03:36:45 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,8 @@ public:
 
 	template <class InputIterator>
 	vector(InputIterator first, InputIterator last,
-		const allocator_type& alloc = allocator_type())
+		const allocator_type& alloc = allocator_type(),
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
 	{
 		this->_alloc = alloc;
 		this->_tab = NULL;
@@ -269,8 +270,7 @@ public:
 	~vector()
 	{
 		this->clear();
-		if (this->_capacity)
-			this->_alloc.deallocate(this->_tab, this->_capacity);
+		this->_alloc.deallocate(this->_tab, this->_capacity);
 	}
 
 	vector&	operator=( const vector& x )
@@ -373,8 +373,7 @@ public:
 			}
 			if (this->_tab)
 			{
-				if (this->_capacity)
-					this->_alloc.deallocate(this->_tab, this->_capacity);
+				this->_alloc.deallocate(this->_tab, this->_capacity);
 			}
 			this->_capacity = n;
 			this->_tab = ret;
@@ -422,7 +421,8 @@ public:
 
 	/*   MODIFIERS   */
 	template <class InputIterator>
-	void		assign( InputIterator first, InputIterator last )
+	void	assign( InputIterator first, InputIterator last,
+	typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0 )
 	{
 		this->clear();
 		this->insert(this->begin(), first, last);
@@ -473,12 +473,12 @@ public:
 		else if (n + this->size() > this->capacity())
 			this->reserve(this->capacity() * 2);
 
-		for (size_type i = this->size() + n ; i > this->size() ; i--)
-			this->_alloc.construct(this->_tab + i - 1, this->_tab[i - n - 1]);
-		for (size_type i = this->size() ; i >= start + n; i--)
-			this->_tab[i] = this->_tab[i - n];
-		for (size_type i = 0 ; i < n ; i++)
-			this->_tab[start + i] = val;
+		for (size_type i = 0 ; i < n ; ++i)	//alloc
+			this->_alloc.construct(this->_tab + i + this->size(), val);
+		for (size_type i = this->size() + n ; i > start + n ; --i)	//cpy
+			this->_tab[i - 1] = this->_tab[i - n - 1];
+		for (size_type i = 0 ; i < n ; ++i)	//insert
+			this->_tab[i + start] = val;
 		this->_size += n;
 	}
 
@@ -488,19 +488,22 @@ public:
 	{
 		size_type	start = position - this->begin();
 		size_type	n = 0;
+		InputIterator it;
 
-		for (InputIterator start = first ; start != last ; n++, start++) {}
+
+		for (it = first ; it != last ; n++, it++) {}
 		if (n + this->size() > this->capacity() * 2)
 			this->reserve(n + this->size());
 		else if (n + this->size() > this->capacity())
 			this->reserve(this->capacity() * 2);
 
-		for (size_type i = this->size() + n ; i > this->size() ; i--)
-			this->_alloc.construct(this->_tab + i - 1, this->_tab[i - n - 1]);
-		for (size_type i = this->size() ; i >= start + n; i--)
-			this->_tab[i] = this->_tab[i - n];
-		for (size_type i = 0 ; i < n ; i++, first++)
-			this->_tab[start + i] = *(first);
+		it = first;
+		for (size_type i = 0 ; i < n ; ++i, ++it)	//alloc
+			this->_alloc.construct(this->_tab + i + this->size(), *it);
+		for (size_type i = this->size() + n ; i > start + n ; --i)	//cpy
+			this->_tab[i - 1] = this->_tab[i - n - 1];
+		for (size_type i = 0 ; i < n ; ++i, ++first)	//insert
+			this->_tab[i + start] = *first;
 		this->_size += n;
 
 	}
