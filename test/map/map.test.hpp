@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:53:36 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/26 11:44:08 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/27 14:58:26 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stack>
 #include <vector>
 #include <map>
+#include <list>
 #include "../../stack.hpp"
 #include "../../vector.hpp"
 #include "../../map.hpp"

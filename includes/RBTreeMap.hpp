@@ -366,15 +366,13 @@ public:
 	void	erase( iterator first, iterator last )
 	{
 		iterator	nav;
-		value_type	next;
-		value_type	last_val;
 
-		last_val = *last;
+		value_type last_val = *last;
 		while (first != last)
 		{
 			nav = first;
 			nav++;
-			next = *nav;
+			value_type next = *nav;
 			this->erase(*first);
 			first = this->find(next);
 			last = this->find(last_val);
@@ -474,18 +472,43 @@ private:
 
 		if (y != z)
 		{
-			//z = this->replaceNode(z, y->stock);
-			z->stock = y->stock;
-
+			z->left->parent = y;
+			y->left = z->left;
+			if (y != z->right)
+			{
+				x->parent = y->parent;
+				if (x)
+					x->parent = y->parent;
+				y->parent->left = x;
+				y->right = z->right;
+				z->right->parent = y;
+			}
+			else
+				x->parent = y;
+			if (_root == z)
+				_root = y;
+			else if (z->parent->left == z)
+				z->parent->left = y;
+			else
+				z->parent->right = y;
+			y->parent = z->parent;
+			ft::swap(y->color, z->color);
+			y = z;
 		}
-
+		//std::cout << "exit" << std::endl;
 		if (y->color == BLACK)
+		{
+			//std::cout << "ENTER" << std::endl;
 			deleteFix(x);
+			//std::cout << "exit" << std::endl;
+		}
 		this->_alloc.destroy(y);
 		this->_alloc.deallocate(y, 1);
 		y = this->_nil_node;
 		this->_nil_node->parent = this->_root;
 		this->_size--;
+		//std::cout << "leave:" << std::endl;
+		//this->printTree();
 	}
 
 	void	printTree( void ) const
