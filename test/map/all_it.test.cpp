@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:40:10 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/26 09:57:33 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/28 18:17:09 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,28 @@ void	iterator_is_const( void )
 	std::cout << (isConst(*rit) ? "const" : "not const") << std::endl;
 	std::cout << "crit = ";
 	std::cout << (isConst(*crit) ? "const" : "not const") << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "test on it->first : " << std::endl;
+	std::cout << "it   = ";
+	std::cout << (isConst(it->first) ? "const" : "not const") << std::endl;
+	std::cout << "cit  = ";
+	std::cout << (isConst(cit->first) ? "const" : "not const") << std::endl;
+	std::cout << "rit  = ";
+	std::cout << (isConst(rit->first) ? "const" : "not const") << std::endl;
+	std::cout << "crit = ";
+	std::cout << (isConst(crit->first) ? "const" : "not const") << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "test on it->second : " << std::endl;
+	std::cout << "it   = ";
+	std::cout << (isConst(it->second) ? "const" : "not const") << std::endl;
+	std::cout << "cit  = ";
+	std::cout << (isConst(cit->second) ? "const" : "not const") << std::endl;
+	std::cout << "rit  = ";
+	std::cout << (isConst(rit->second) ? "const" : "not const") << std::endl;
+	std::cout << "crit = ";
+	std::cout << (isConst(crit->second) ? "const" : "not const") << std::endl;
 	std::cout << std::endl;
 
 	std::cout << std::endl;

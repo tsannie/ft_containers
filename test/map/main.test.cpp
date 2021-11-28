@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:32:43 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/28 07:12:48 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/28 18:26:57 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,25 @@ int	main( void )
 	operations();
 	relation_op();*/
 
-	ft::map<int, int> pac;
+	pl::map<int, int, comp> map;
 
-	pac[0] = 10;
-	pac[1] = 30;
-	pac[2] = 50;
-	pac[3] = 70;
-	pac[4] = 70;
-	pac[5] = 70;
+	map[0] = 10;
+	map[1] = 30;
+	map[2] = 50;
+	map[3] = 70;
+	map[4] = 70;
+	map[5] = 70;
 
-	printMap(pac, "pac");
+	pl::map<int, int, comp>::iterator	it, end;
 
-	std::cout << "1" << std::endl;
-	pac.erase(1);
-	printMap(pac, "pac");
-	std::cout << "2" << std::endl;
-	pac.erase(2);
-	printMap(pac, "pac");
-	std::cout << "3" << std::endl;
-	pac.erase(3);
-	printMap(pac, "pac");
-	std::cout << "4" << std::endl;
-	pac.erase(4);
-	printMap(pac, "pac");
-	std::cout << "5" << std::endl;
-	pac.erase(5);
-	printMap(pac, "pac");
+	end = map.begin();
+	it = map.begin();
+	--it;
+	for (; it != end ; it--)
+		std::cout << it->first << " => " << it->second << std::endl;
+	std::cout << "size = " << map.size() << std::endl;
+	std::cout << "----------------\n" << std::endl;
+
 
 	//pac.erase(++pac.begin(), --pac.end());
 
