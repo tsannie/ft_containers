@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:38 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/28 07:21:17 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/29 10:30:29 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ template <class Key,
 {
 
 public:
-	typedef				Key										key_type;
-	typedef				T										mapped_type;
-	typedef				ft::pair<const key_type, mapped_type>			value_type;
-	typedef				Compare									key_compare;
+
+	/*   Member types   */
+	typedef	Key										key_type;
+	typedef	T										mapped_type;
+	typedef	ft::pair<const key_type, mapped_type>	value_type;
+	typedef	Compare									key_compare;
 
 	class value_compare
 	{
@@ -41,22 +43,21 @@ public:
 		typedef	bool		result_type;
 		typedef	value_type	first_argument_type;
 		typedef	value_type	second_argument_type;
-		bool	operator()(const value_type& x, const value_type& y) const
+		bool	operator()( value_type const & x,  value_type const & y) const
 		{
 			return comp(x.first, y.first);
 		}
 	};
 
-	typedef				Alloc									allocator_type;
-	typedef typename	allocator_type::reference				reference;
-	typedef typename	allocator_type::const_reference			const_reference;
-	typedef typename	allocator_type::pointer					pointer;
-	typedef typename	allocator_type::const_pointer			const_pointer;
-
+	typedef				Alloc							allocator_type;
+	typedef typename	allocator_type::reference		reference;
+	typedef typename	allocator_type::const_reference	const_reference;
+	typedef typename	allocator_type::pointer			pointer;
+	typedef typename	allocator_type::const_pointer	const_pointer;
 
 	typedef	ptrdiff_t												difference_type;
 	typedef	size_t													size_type;
-	typedef	ft::RBTreeMap<value_type, key_compare, allocator_type>		tree;
+	typedef	ft::RBTreeMap<value_type, key_compare, allocator_type>	tree;
 
 	typedef typename	tree::iterator					iterator;
 	typedef typename	tree::const_iterator			const_iterator;
@@ -64,13 +65,14 @@ public:
 	typedef	typename	tree::const_reverse_iterator	const_reverse_iterator;
 
 private:
-	key_compare								_comp;
-	allocator_type							_alloc;
-	tree									_tree;
+	key_compare		_comp;
+	allocator_type	_alloc;
+	tree			_tree;
 
 
 public:
 
+	/*   Constructors   */
 	explicit map ( key_compare const & comp = key_compare(),
 				allocator_type const & alloc = allocator_type() )
 	{
@@ -93,6 +95,7 @@ public:
 		*this = rhs;
 	}
 
+	/*   Destructor   */
 	~map() {}
 
 	map&	operator=( map const & rhs )
@@ -107,8 +110,7 @@ public:
 		return (*this);
 	}
 
-	// Iterators:
-
+	/*   Iterators   */
 	iterator	begin( void )
 	{
 		return (this->_tree.begin());
@@ -149,9 +151,7 @@ public:
 		return (this->_tree.rend());
 	}
 
-
-	// Capacity:
-
+	/*   Capacity   */
 	bool	empty( void ) const
 	{
 		return (this->_tree.empty());
@@ -167,9 +167,8 @@ public:
 		return (this->_tree.max_size());
 	}
 
-	// Element access:
-
-	mapped_type& operator[](const key_type& k)
+	/*   Element Access   */
+	mapped_type& operator[]( key_type const & k )
 	{
 		iterator	it;
 
@@ -177,11 +176,9 @@ public:
 		return (it->second);
 	}
 
-	// Modifiers:
-
+	/*   Modifiers   */
 	ft::pair<iterator, bool>	insert( value_type const & val )
 	{
-		//std::cout << "insert" << std::endl;
 		return (this->_tree.insert(val));
 	}
 
@@ -196,7 +193,7 @@ public:
 		this->_tree.insert(first, last);
 	}
 
-	void	erase(iterator position)
+	void	erase( iterator position )
 	{
 		return (this->_tree.erase(position));
 	}
@@ -211,7 +208,7 @@ public:
 		this->_tree.erase(first, last);
 	}
 
-	void	swap(map& x)
+	void	swap( map& x )
 	{
 		this->_tree.swap(x._tree);
 	}
@@ -221,8 +218,7 @@ public:
 		this->_tree.clear();
 	}
 
-	// Observers:
-
+	/*   Observers   */
 	key_compare	key_comp( void ) const
 	{
 		return (this->_comp);
@@ -233,8 +229,7 @@ public:
 		return (value_compare(this->_comp));
 	}
 
-	// Operations:
-
+	/*   Operations   */
 	iterator	find( key_type const & k )
 	{
 		return (this->_tree.find(ft::make_pair(k, mapped_type())));
@@ -246,7 +241,7 @@ public:
 		return (this->_tree.find(ft::make_pair(k, mapped_type())));
 	}
 
-	size_type	count(const key_type& k) const
+	size_type	count( key_type const & k ) const
 	{
 		return (this->_tree.count(ft::make_pair(k, mapped_type())));
 	}
@@ -297,13 +292,22 @@ public:
 		return (ft::make_pair(this->lower_bound(k), this->upper_bound(k)));
 	}
 
-	/*   ALLOCATOR   */
+	/*   Allocator   */
 	allocator_type	get_allocator( void ) const
 	{
 		return (this->_alloc);
 	}
 };
 
+/*   Non-Member Function   */
+template< class Key, class T, class Compare, class Alloc >
+void swap( ft::map<Key,T,Compare,Alloc>& lhs,
+			ft::map<Key,T,Compare,Alloc>& rhs )
+{
+	lhs.swap(rhs);
+}
+
+/*   Relational Operators   */
 template< class Key, class T, class Compare, class Alloc >
 bool operator==( ft::map<Key,T,Compare,Alloc> const & lhs,
 				ft::map<Key,T,Compare,Alloc> const & rhs )
@@ -349,12 +353,6 @@ bool operator>=( ft::map<Key,T,Compare,Alloc> const & lhs,
 	return ((lhs > rhs) || (lhs == rhs));
 }
 
-template< class Key, class T, class Compare, class Alloc >
-void swap( ft::map<Key,T,Compare,Alloc>& lhs,
-			ft::map<Key,T,Compare,Alloc>& rhs )
-{
-	lhs.swap(rhs);
-}
 
 }
 #endif

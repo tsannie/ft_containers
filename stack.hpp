@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 10:07:56 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 16:53:46 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/29 10:40:41 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ template<
 > class stack
 {
 
-
 public:
 
+	/*   Member Types   */
 	typedef				Container					container_type;
 	typedef typename	Container::value_type		value_type;
 	typedef typename	Container::size_type		size_type;
@@ -37,10 +37,14 @@ private:
 	Container _ctnr;
 
 public:
+	/*   Constructors   */
 	explicit			stack( container_type const &
 							ctnr = container_type() ): _ctnr(ctnr) {}
+
+	/*   Destructor   */
 	~stack() {}
 
+	/*   Member functions   */
 	bool				empty( void ) const
 	{
 		return (this->_ctnr.empty());
@@ -71,6 +75,7 @@ public:
 		return (this->_ctnr.pop_back());
 	}
 
+	/*   Relational Operators   */
 	friend bool	operator==( stack<T, Container> const & lhs, stack<T, Container> const & rhs)
 	{
 		return (lhs._ctnr == rhs._ctnr);
@@ -101,9 +106,6 @@ public:
 		return ((lhs > rhs) || (lhs == rhs));
 	}
 };
-
-// error on operator
-
 
 }
 

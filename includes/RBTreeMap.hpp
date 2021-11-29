@@ -45,6 +45,7 @@ private:
 
 public:
 
+	/*   Bidirectional Access Iterator   */
 	template<
 	typename T,
 	class Comp,
@@ -159,7 +160,7 @@ public:
 			this->_it = x;
 		}
 
-		void	predecessor(void)
+		void	predecessor( void )
 		{
 			node *x = this->_it;
 
@@ -185,9 +186,9 @@ public:
 			}
 			this->_it = x;
 		}
-
 	};
 
+	/*   Member types   */
 	typedef	ptrdiff_t											difference_type;
 	typedef	size_t												size_type;
 	typedef	Value												value_type;
@@ -208,6 +209,7 @@ private:
 
 public:
 
+	/*   Constructors   */
 	RBTreeMap( void )
 	{
 		node	nil((Value()));
@@ -222,6 +224,12 @@ public:
 		this->_root = this->_nil_node;
 	}
 
+	RBTreeMap( RBTreeMap const & rhs )
+	{
+		*this = rhs;
+	}
+
+	/*   Destructor   */
 	~RBTreeMap( void )
 	{
 		this->delTree(this->_root);
@@ -229,12 +237,7 @@ public:
 		this->_alloc.deallocate(this->_nil_node, 1);
 	}
 
-	RBTreeMap( RBTreeMap const & rhs )
-	{
-		*this = rhs;
-	}
-
-	RBTreeMap&	operator=( RBTreeMap const & rhs )		// warn no new alloc
+	RBTreeMap&	operator=( RBTreeMap const & rhs )
 	{
 		if ( this != &rhs )
 		{
@@ -247,9 +250,7 @@ public:
 		return (*this);
 	}
 
-	/*	FUNCTION MAP */
-	// Iterators:
-
+	/*   Iterators   */
 	iterator		begin( void )
 	{
 		return (iterator(!this->_size ? this->_nil_node : this->minNode()));
@@ -290,8 +291,7 @@ public:
 		return (const_reverse_iterator(this->begin()));
 	}
 
-	// Capacity:
-
+	/*   Capacity   */
 	bool		empty( void ) const
 	{
 		return (this->_root == this->_nil_node);
@@ -307,18 +307,7 @@ public:
 		return (this->_alloc.max_size());
 	}
 
-
-	// Element access:
-
-	/*template <typename key_type>
-	value_type& operator[](const key_type& k)
-	{
-
-	}*/
-
-
-	// Modifiers:
-
+	/*   Modifiers   */
 	ft::pair<iterator, bool>	insert( value_type const & val )
 	{
 		iterator	it;
@@ -396,10 +385,7 @@ public:
 		this->_nil_node->parent = NULL;
 	}
 
-	// Observers:
-
-	// Operations:
-
+	/*   Operations   */
 	iterator	find( value_type const & k )
 	{
 		return (iterator(this->searchNode(k)));
@@ -418,26 +404,7 @@ public:
 
 private:
 
-	node	*replaceNode( node *toRep , value_type const & newVal )
-	{
-		node *neww = this->newNode(newVal);
-
-		if (toRep->parent->right == toRep)
-			toRep->parent->right = neww;
-		else if (toRep->parent->left == toRep)
-			toRep->parent->left = neww;
-
-		if (toRep->right != this->_nil_node)
-			toRep->right->parent = neww;
-		if (toRep->left != this->_nil_node)
-			toRep->left->parent = neww;
-		neww->color = toRep->color;
-		this->_alloc.destroy(toRep);
-		this->_alloc.deallocate(toRep, 1);
-
-		return (neww);
-	}
-
+	/*   Handling Nodes   */
 	void	deleteNode( value_type const & srh )
 	{
 		node *y = this->_nil_node;
@@ -477,45 +444,31 @@ private:
 			if (y != z->right)
 			{
 				x->parent = y->parent;
-				if (x)
-					x->parent = y->parent;
 				y->parent->left = x;
 				y->right = z->right;
 				z->right->parent = y;
 			}
 			else
 				x->parent = y;
-			if (_root == z)
-				_root = y;
-			else if (z->parent->left == z)
+
+			if (z->parent->left == z)
 				z->parent->left = y;
-			else
+			else if (z->parent->right == z)
 				z->parent->right = y;
+			else if (this->_root == z)
+				this->_root = y;
 			y->parent = z->parent;
 			ft::swap(y->color, z->color);
 			y = z;
 		}
-		//std::cout << "exit" << std::endl;
+
 		if (y->color == BLACK)
-		{
-			//std::cout << "ENTER" << std::endl;
 			deleteFix(x);
-			//std::cout << "exit" << std::endl;
-		}
 		this->_alloc.destroy(y);
 		this->_alloc.deallocate(y, 1);
 		y = this->_nil_node;
 		this->_nil_node->parent = this->_root;
 		this->_size--;
-		//std::cout << "leave:" << std::endl;
-		//this->printTree();
-	}
-
-	void	printTree( void ) const
-	{
-		int	i = 0;
-		std::cout << std::endl;
-		this->printAllNode( this->_root , i );
 	}
 
 	void	insertNode( node *ins )
@@ -757,7 +710,6 @@ private:
 
 	void	delTree( node *nodeDel )
 	{
-
 		if (nodeDel == this->_nil_node)
 			return ;
 
@@ -765,6 +717,14 @@ private:
 		this->delTree(nodeDel->right);
 		this->_alloc.destroy(nodeDel);
 		this->_alloc.deallocate(nodeDel, 1);
+	}
+
+	/*   Tools debug   */
+	/*void	printTree( void ) const
+	{
+		int	i = 0;
+		std::cout << std::endl;
+		this->printAllNode( this->_root , i );
 	}
 
 	void	printKey( node *nodeKey, std::string const & name ) const
@@ -818,7 +778,7 @@ private:
 		this->printNode(nodePrint, i);
 		this->printAllNode(nodePrint->left, i);
 		this->printAllNode(nodePrint->right, i);
-	}
+	}*/
 
 };
 

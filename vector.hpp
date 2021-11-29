@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 09:39:39 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/27 03:36:45 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/29 10:29:22 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class Allocator = std::allocator<T>
 > class vector
 {
 
-/* Member types */
+/*   Member Types   */
 public:
 	typedef	T									value_type;
 	typedef	Allocator							allocator_type;
@@ -36,7 +36,7 @@ public:
 	typedef	typename Allocator::const_pointer	const_pointer;
 
 
-	/* Vector iterator */
+	/*   Random Access Iterator   */
 	template<
 	typename vecT,
 	bool isConst = false
@@ -164,12 +164,12 @@ public:
 
 		pointer		operator->( void ) const { return (this->_val); }
 
-		vecIterator	operator+( difference_type const &b ) const
+		vecIterator	operator+( difference_type const & b ) const
 		{
 			return (vecIterator(this->_val + b));
 		}
 
-		vecIterator	operator-( difference_type const &b ) const
+		vecIterator	operator-( difference_type const & b ) const
 		{
 			return (vecIterator(this->_val - b));
 		}
@@ -205,8 +205,8 @@ public:
 	typename vecT,
 	bool isConst
 	> friend vecIterator<vecT, isConst>	operator+(
-		const typename vecIterator<vecT, isConst>::difference_type &b,
-		const vecIterator<vecT, isConst> &rhs )
+		typename vecIterator<vecT, isConst>::difference_type const & b,
+		vecIterator<vecT, isConst> const & rhs )
 	{
 		return (vecIterator<vecT, isConst>(rhs + b));
 	}
@@ -224,8 +224,8 @@ private:
 
 
 public:
-	/* Constructors */
-	explicit vector (const allocator_type& alloc = allocator_type())
+	/*   Constructors   */
+	explicit vector( allocator_type const & alloc = allocator_type() )
 	{
 		this->_alloc = alloc;
 		this->_tab = this->_alloc.allocate(0);
@@ -233,8 +233,8 @@ public:
 		this->_capacity = 0;
 	}
 
-	explicit vector (size_type n, const value_type& val = value_type(),
-		const allocator_type& alloc = allocator_type())
+	explicit vector( size_type n, value_type const & val = value_type(),
+		allocator_type const & alloc = allocator_type() )
 	{
 		this->_alloc = alloc;
 		this->_tab = NULL;
@@ -244,9 +244,9 @@ public:
 	}
 
 	template <class InputIterator>
-	vector(InputIterator first, InputIterator last,
-		const allocator_type& alloc = allocator_type(),
-		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
+	vector( InputIterator first, InputIterator last,
+		allocator_type const & alloc = allocator_type(),
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0 )
 	{
 		this->_alloc = alloc;
 		this->_tab = NULL;
@@ -255,7 +255,7 @@ public:
 		this->assign(first, last);
 	}
 
-	vector(const vector& x)
+	vector( vector const & x )
 	{
 		this->_alloc = x._alloc;
 		this->_tab = this->_alloc.allocate(x.capacity());
@@ -266,14 +266,14 @@ public:
 		this->_size = x._size;
 	}
 
-	/* Destructor */
-	~vector()
+	/*   Destructor   */
+	~vector( void )
 	{
 		this->clear();
 		this->_alloc.deallocate(this->_tab, this->_capacity);
 	}
 
-	vector&	operator=( const vector& x )
+	vector&	operator=( vector const & x )
 	{
 		if ( this != &x )
 		{
@@ -287,7 +287,7 @@ public:
 	}
 
 
-	/*   ITERATORS   */
+	/*   Iterators   */
 	const_iterator	begin( void ) const
 	{
 		return (const_iterator(this->_tab));
@@ -328,10 +328,16 @@ public:
 		return (const_reverse_iterator(this->begin()));
 	}
 
-	/*   CAPACITY   */
-	size_type	size( void ) const { return (this->_size); }
+	/*   Capacity   */
+	size_type	size( void ) const
+	{
+		return (this->_size);
+	}
 
-	size_type	max_size( void ) const { return (this->_alloc.max_size()); }
+	size_type	max_size( void ) const
+	{
+		return (this->_alloc.max_size());
+	}
 
 	void		resize( size_type n, value_type val = value_type() )
 	{
@@ -380,7 +386,7 @@ public:
 		}
 	}
 
-	/*   ELEMENT ACCESS   */
+	/*   Element Access   */
 	reference		operator[]( size_type n ) { return (this->_tab[n]); }
 
 	const_reference	operator[]( size_type n ) const { return (this->_tab[n]); }
@@ -419,7 +425,7 @@ public:
 		return (this->_tab[this->size() - 1]);
 	}
 
-	/*   MODIFIERS   */
+	/*   Modifiers   */
 	template <class InputIterator>
 	void	assign( InputIterator first, InputIterator last,
 	typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0 )
@@ -483,8 +489,8 @@ public:
 	}
 
 	template <class InputIterator>
-	void		insert(iterator position, InputIterator first, InputIterator last,
-	typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
+	void		insert( iterator position, InputIterator first, InputIterator last,
+	typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0 )
 	{
 		size_type	start = position - this->begin();
 		size_type	n = 0;
@@ -548,23 +554,23 @@ public:
 		this->_size = 0;
 	}
 
-	/*   ALLOCATOR   */
+	/*   Allocator   */
 	allocator_type	get_allocator( void ) const
 	{
 		return (this->_alloc);
 	}
 };
 
-/*   NON-MEMBER FUNCTION   */
+/*   Non-Member Function   */
 template <class T, class Alloc>
-	void swap (vector<T, Alloc>& x, vector<T, Alloc>& y)
+	void swap( vector<T, Alloc>& x, vector<T, Alloc>& y )
 {
 	x.swap(y);
 }
 
-/*   RELATIONAL OPERATORS   */
+/*   Relational Operators   */
 template <class T, class Alloc>
-bool	operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
+bool	operator==( vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs )
 {
 	if (rhs.size() != lhs.size() || !ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
 		return (false);
@@ -572,32 +578,32 @@ bool	operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
 }
 
 template <class T, class Alloc>
-bool	operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
+bool	operator!=( vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs )
 {
 	return (!(lhs == rhs));
 }
 
 template <class T, class Alloc>
-bool	operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
+bool	operator<( vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs )
 {
 	return (ft::lexicographical_compare(lhs.begin(), lhs.end(),
 		rhs.begin(), rhs.end()));
 }
 template <class T, class Alloc>
-bool	operator>( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
+bool	operator>( vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs )
 {
 	return ((rhs < lhs));
 }
 
 template <class T, class Alloc>
-bool	operator<=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
+bool	operator<=( vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs )
 {
 	return (!(rhs < lhs));
 }
 
 
 template <class T, class Alloc>
-bool	operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )
+bool	operator>=( vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs )
 {
 	return (!(lhs < rhs));
 }
