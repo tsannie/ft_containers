@@ -172,10 +172,10 @@ public:
 			else if (x->left->left == NULL)
 			{
 				x = x->parent;
-				while (x->parent->right != NULL && x->stock > this->_it->stock)
+				while (x->parent->right != NULL && this->_comp(x->stock.first, this->_it->stock.first) == false)
 					x = x->parent;
-				if (x->stock > this->_it->stock)	// if x dont have predecessor
-					x = this->_it;
+				if ( this->_comp(x->stock.first, this->_it->stock.first) == false)	// if x dont have predecessor
+					x = NULL;
 			}
 			else
 			{

@@ -6,7 +6,7 @@
 /*   By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 07:09:14 by tsannie           #+#    #+#             */
-/*   Updated: 2021/11/25 13:45:03 by tsannie          ###   ########.fr       */
+/*   Updated: 2021/11/29 08:01:39 by tsannie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	at( void )
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cout << e.what() << std::endl;
 	}
 
 	std::cout << "------------------------------------------" << std::endl;

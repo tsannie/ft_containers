@@ -6,7 +6,7 @@
 #    By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 13:34:12 by tsannie           #+#    #+#              #
-#    Updated: 2021/11/25 18:10:55 by tsannie          ###   ########.fr        #
+#    Updated: 2021/11/29 08:49:57 by tsannie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,8 @@ test:
 			@mkdir res
 			@mv $(NAME1) res/
 			@mv $(NAME2) res/
-			@./res/$(NAME1) &> res/ft.res
-			@./res/$(NAME2) &> res/std.res
+			@./res/$(NAME1) > res/ft.res
+			@./res/$(NAME2) > res/std.res
 			@-diff -u res/ft.res res/std.res > res/diff.res
 
 fclean:
